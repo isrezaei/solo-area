@@ -18,13 +18,36 @@ import {IoSettingsSharp} from 'react-icons/io5'
 import {IoMdArrowDropdown} from 'react-icons/io'
 import {HiBellAlert} from 'react-icons/hi2'
 import {RiLogoutCircleRLine} from 'react-icons/ri'
-import {signOut} from "next-auth/react";
-import spotifyApi from "../../lib/SpotifyWebApi";
+import {signOut, useSession} from "next-auth/react";
+
 import {useEffect} from "react";
 import {getToken} from "next-auth/jwt";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {playListIdState, playListState} from "../../atoms/PlayListAtom";
+import useSpotify from "../../hooks/useSpotify";
 
 export const RootMain = () =>
 {
+
+    const {data : session} = useSession()
+    const spotifyApi = useSpotify()
+
+
+    const playListId = useRecoilValue(playListIdState)
+
+    const [playList , setPlayList] = useRecoilState(playListState)
+
+
+    useEffect(() => {
+
+
+        spotifyApi.getPlaylist(playListId).then(data => setPlayList(data.body)).catch(err => console.log(err + ' Error Fetching Data '))
+
+
+
+    } , [spotifyApi , playListId])
+
+    console.log(playList)
 
     return (
 

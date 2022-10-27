@@ -8,13 +8,33 @@ import {BsMusicPlayerFill} from 'react-icons/bs'
 import {RootMain} from "../components/ROOT_MAIN/RootMain";
 import { useSession, signIn, signOut } from "next-auth/react"
 import {getToken} from "next-auth/jwt";
-
+import {useEffect, useState} from "react";
+import spotifyApi from "../lib/SpotifyWebApi";
+import useSpotify from "../hooks/useSpotify";
+import {useRecoilState} from "recoil";
+import {playListIdState} from "../atoms/PlayListAtom";
 
 
 export default function Home() {
 
-    const { data: session } = useSession()
-    console.log(session)
+    const spotifyApi = useSpotify()
+
+    const { data: session  , status} = useSession()
+
+    const [playList , setPlayList] = useState([])
+
+    const [playListId , setPlayListId] = useRecoilState(playListIdState)
+
+    useEffect(()=>{
+
+        if (spotifyApi.getAccessToken())
+        {
+            spotifyApi.getUserPlaylists().then(data => setPlayList(data.body.items))
+        }
+    } , [session , spotifyApi])
+
+
+    console.log(playList)
 
     return (
 
@@ -53,16 +73,17 @@ export default function Home() {
 
                             <Spacer/>
 
-                            <Text fontSize={'lg'} color={'whiteAlpha.900'} my={3}>Library</Text>
-                            <Text fontSize='sm' color={'whiteAlpha.600'} my={2}>PlayList</Text>
-                            <Text fontSize='sm' color={'whiteAlpha.600'} my={2}>PlayList</Text>
-                            <Text fontSize='sm' color={'whiteAlpha.600'} my={2}>PlayList</Text>
-                            <Text fontSize='sm' color={'whiteAlpha.600'} my={2}>PlayList</Text>
-                            <Text fontSize='sm' color={'whiteAlpha.600'} my={2}>PlayList</Text>
-                            <Text fontSize='sm' color={'whiteAlpha.600'} my={2}>PlayList</Text>
-                            <Text fontSize='sm' color={'whiteAlpha.600'} my={2}>PlayList</Text>
+
+
+                            {playList.map(data => <Text onClick={() => setPlayListId(data.id)} cursor={'pointer'} id={data.id} fontSize='sm' color={'whiteAlpha.600'} my={2}>{data.name}</Text>)}
+
+
                         </Flex>
                 </Box>
+
+
+
+
 
                 <Box flexGrow={8} p={4} >
                    <RootMain/>
