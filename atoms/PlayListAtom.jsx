@@ -9,3 +9,8 @@ export const playListState = atom({
     key : 'PlayListAtom',
     default : null
 })
+
+export const NEW_RELEASES_LIST = atom({
+    key : 'NEW_RELEASES',
+    default : []
+})

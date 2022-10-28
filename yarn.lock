@@ -3648,6 +3648,11 @@
     "json-parse-even-better-errors" "^2.3.0"
     "lines-and-columns" "^1.1.6"
 
+"parse-ms@^3.0.0":
+  "integrity" "sha512-Tpb8Z7r7XbbtBTrM9UhpkzzaMrqA2VXMT3YChzYltwV3P3pM6t8wl7TvpMnSTosz1aQAdVib7kdoys7vYOPerw=="
+  "resolved" "https://registry.npmjs.org/parse-ms/-/parse-ms-3.0.0.tgz"
+  "version" "3.0.0"
+
 "path-exists@^4.0.0":
   "integrity" "sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w=="
   "resolved" "https://registry.npmjs.org/path-exists/-/path-exists-4.0.0.tgz"
@@ -3781,6 +3786,13 @@
   "integrity" "sha512-WuxUnVtlWL1OfZFQFuqvnvs6MiAGk9UNsBostyBOB0Is9wb5uRESevA6rnl/rkksXaGX3GzZhPup5d6Vp1nFew=="
   "resolved" "https://registry.npmjs.org/pretty-format/-/pretty-format-3.8.0.tgz"
   "version" "3.8.0"
+
+"pretty-ms@^8.0.0":
+  "integrity" "sha512-ASJqOugUF1bbzI35STMBUpZqdfYKlJugy6JBziGi2EE+AL5JPJGSzvpeVXojxrr0ViUYoToUjb5kjSEGf7Y83Q=="
+  "resolved" "https://registry.npmjs.org/pretty-ms/-/pretty-ms-8.0.0.tgz"
+  "version" "8.0.0"
+  dependencies:
+    "parse-ms" "^3.0.0"
 
 "proc-log@^2.0.0", "proc-log@^2.0.1":
   "version" "2.0.1"
