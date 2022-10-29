@@ -8,8 +8,7 @@ export default function useSpotify ()
 
     const {data : session , status } = useSession()
 
-
-    useLayoutEffect(()=> {
+    useEffect(()=> {
 
         if (session)
         {

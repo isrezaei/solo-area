@@ -6,6 +6,8 @@ import {useEffect, useState} from "react";
 export default function login ({providers})
 {
     console.log(providers)
+
+
     return (
         <div>
 

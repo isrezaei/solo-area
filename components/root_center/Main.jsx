@@ -10,8 +10,9 @@ import {
     Flex,
     Spacer,
     HStack,
-    Avatar, Text, Image
+    Avatar, Text, Image , Menu , MenuButton , MenuList , MenuItem , IconButton
 } from "@chakra-ui/react";
+
 import prettyMilliseconds from 'pretty-ms';
 import {TriangleDownIcon} from "@chakra-ui/icons";
 import {TbPlayerRecord , TbAdjustmentsHorizontal} from 'react-icons/tb'
@@ -25,6 +26,8 @@ import {getToken} from "next-auth/jwt";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {NEW_RELEASES_LIST, playListIdState, playListState} from "../../atoms/PlayListAtom";
 import useSpotify from "../../hooks/useSpotify";
+import {CURRENT_TRACK_ID_STATE, IS_PLAYING_SONG} from "../../atoms/SongAtom";
+import {Player} from "./Player";
 
 
 export const Main = () =>
@@ -33,7 +36,6 @@ export const Main = () =>
     const {data : session , status } = useSession()
 
 
-    console.log(status)
 
     const spotifyApi = useSpotify()
 
@@ -43,6 +45,10 @@ export const Main = () =>
     const [playList , setPlayList] = useRecoilState(playListState)
 
     const [newReleasesList , setNewReleasesList] = useRecoilState(NEW_RELEASES_LIST)
+
+
+    const [currentTrackId , setCurrentTrackId] = useRecoilState(CURRENT_TRACK_ID_STATE)
+    const [isPlayingState , setIsPlayingState] = useRecoilState(IS_PLAYING_SONG)
 
 
     useEffect(() => {
@@ -61,10 +67,7 @@ export const Main = () =>
     return (
 
         <Box flexGrow={8} p={4}>
-
-
             <Flex>
-
                 {/*SEARCH INPUT*/}
                 <InputGroup flex={6} size={'lg'}>
                     <InputLeftElement
@@ -104,9 +107,8 @@ export const Main = () =>
 
                     </InputRightElement>
                 </InputGroup>
-
-
                 {/*SETTING CONTROL*/}
+
                 <Flex flex={1}
                       justify={'center'}
                       align={'center'}
@@ -120,16 +122,27 @@ export const Main = () =>
                     <RiLogoutCircleRLine color={'#fff'} onClick={() => signOut()}/>
                 </Flex>
 
+                <Menu>
+                    <MenuButton
+                        bgColor={'#1c1c1c'}
+                        color={'whiteAlpha.800'}
+                        height={'auto'}
+                        rounded={'3xl'}
+                        pl={3}
+                        as={IconButton}
+                        rightIcon={<Avatar name={session?.user.name} src={session?.user.image}/>}
+                        _hover={{ bg: 'transparent' }}
+                        _expanded={{ bg: '#1c1c1c' }}
+                        _focus={{ bg : '#1c1c1c' , boxShadow : 'none'}}>
+                        <TriangleDownIcon w={3} h={3} mr={2} color={'whiteAlpha.600'} />
+                        {session?.user.name}
+                    </MenuButton>
 
-                {/*AVATAR AND USER CONTROL*/}
-                <Flex flex={.7} justify={'space-between'} align={'center'} bg={'rgba(72,72,72,0.7)'} rounded={'full'}>
-                    <TriangleDownIcon w={4} h={4} ml={15} color={'whiteAlpha.600'} />
-                    <Avatar name={'mohammad hossein'} src=''/>
-                </Flex>
-
-
+                    <MenuList>
+                        <MenuItem>Sign Out</MenuItem>
+                    </MenuList>
+                </Menu>
             </Flex>
-
 
             {/*MUSIC CARD*/}
             <Flex justify={'center'} align={'center'} gap={5} my={8} >
@@ -148,36 +161,31 @@ export const Main = () =>
             {/***MUSIC ALL***/}
             <Flex>
 
-                <Flex direction={"column"} justify={'center'} align={'center'} gap={3} flex={2} h={'20vw'} background={'darkcyan'}>
-                    <Box w={'8vw'} h={'8vw'} background={'blue.300'}>
-                    </Box>
-                    <Text>
-                        Music Name
-                    </Text>
-                    <Text>
-                        Artist Name
-                    </Text>
-                    <Divider w={'15vw'}/>
-                </Flex>
+                <Player/>
 
 
                 <Flex flex={3} direction={"column"} h={'30vw'} px={5}  overflowY={'scroll'} css={{'&::-webkit-scrollbar':{display: 'none'}}}>
 
 
-                    {playList?.tracks?.items.map(MUSIC_DATA => {
-
+                    {playList?.tracks?.items.map((MUSIC_DATA , INDEX) => {
 
                         const {track} = MUSIC_DATA
+                        // console.log(track)
 
-                        console.log(track)
+                        const playSong = async () =>
+                        {
+                            setCurrentTrackId(track.id)
+                            setIsPlayingState(true)
+                            spotifyApi.play({ uris : [track.id]}).then(() =>  console.log('Playback started') ).catch(error => console.log(error))
+                        }
 
                         return (
-                            <Flex key={MUSIC_DATA.id} my={3} p={3} rounded={'1vw'} bgColor={'#1c1c1c'} justify={'space-between'} align={'center'} w={"full"} h={'5vw'}>
+                            <Flex onClick={playSong} key={MUSIC_DATA.id} mb={3} p={3} rounded={'1vw'} bgColor={'#1c1c1c'} justify={'space-between'} align={'center'} w={"full"} h={'5vw'}>
 
                                 {/************/}
 
                                 <Flex flex={1} justify={'space-around'} align={'center'}>
-                                    <Text  color={'whiteAlpha.800'} w={'.5vw'} >{track.track_number}</Text>
+                                    <Text fontSize={"sm"}  color={'whiteAlpha.800'} w={'1vw'} >{INDEX + 1}</Text>
                                     <Image src={track.album.images[0]?.url} boxSize={'4vw'} rounded={'xl'}/>
                                     <Text  fontSize={'sm'} color={'whiteAlpha.800'} w={'10vw'} align={"center"} >{track.name}</Text>
                                 </Flex>
