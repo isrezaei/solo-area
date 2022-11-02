@@ -23,10 +23,10 @@ import {RiLogoutCircleRLine} from 'react-icons/ri'
 import {signOut, useSession} from "next-auth/react";
 import {useEffect} from "react";
 import {getToken} from "next-auth/jwt";
-import {useRecoilState, useRecoilValue} from "recoil";
+import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {NEW_RELEASES_LIST, playListIdState, playListState} from "../../atoms/PlayListAtom";
 import useSpotify from "../../hooks/useSpotify";
-import {CURRENT_TRACK_ID_STATE, IS_PLAYING_SONG} from "../../atoms/SongAtom";
+import {CURRENT_TRACK_ID_STATE, IS_PLAYING_SONG, IS_UPDATE} from "../../atoms/SongAtom";
 import {Player} from "./Player";
 
 
@@ -47,8 +47,11 @@ export const Main = () =>
     const [newReleasesList , setNewReleasesList] = useRecoilState(NEW_RELEASES_LIST)
 
 
-    const [currentTrackId , setCurrentTrackId] = useRecoilState(CURRENT_TRACK_ID_STATE)
-    const [isPlayingState , setIsPlayingState] = useRecoilState(IS_PLAYING_SONG)
+    const setCurrentTrackId = useSetRecoilState(CURRENT_TRACK_ID_STATE)
+    const setIsPlayingState = useSetRecoilState(IS_PLAYING_SONG)
+
+    const setISUpdate = useSetRecoilState(IS_UPDATE)
+
 
 
     useEffect(() => {
@@ -172,11 +175,12 @@ export const Main = () =>
                         const {track} = MUSIC_DATA
                         // console.log(track)
 
-                        const playSong = async () =>
+                        const playSong = () =>
                         {
                             setCurrentTrackId(track.id)
                             setIsPlayingState(true)
-                            spotifyApi.play({ uris : [track.id]}).then(() =>  console.log('Playback started') ).catch(error => console.log(error))
+                            spotifyApi.play({uris:[track.uri]}).then(() =>  console.log('Playback started') ).catch(error => console.log(error))
+                            setISUpdate(Math.random())
                         }
 
                         return (
@@ -186,7 +190,7 @@ export const Main = () =>
 
                                 <Flex flex={1} justify={'space-around'} align={'center'}>
                                     <Text fontSize={"sm"}  color={'whiteAlpha.800'} w={'1vw'} >{INDEX + 1}</Text>
-                                    <Image src={track.album.images[0]?.url} boxSize={'4vw'} rounded={'xl'}/>
+                                    <Image src={track.album.images[0]?.url} boxSize={'4vw'} />
                                     <Text  fontSize={'sm'} color={'whiteAlpha.800'} w={'10vw'} align={"center"} >{track.name}</Text>
                                 </Flex>
 

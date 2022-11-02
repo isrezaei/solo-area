@@ -12,7 +12,7 @@ export default function login ({providers})
         <div>
 
             {
-                Object?.values(providers).map(provider => <Button onClick={()=> signIn(provider.id , {callbackUrl : "/"})}>Login with {provider.name}</Button>)
+                Object?.values(providers).map(provider => <Button key={provider.id} onClick={()=> signIn(provider.id , {callbackUrl : "/"})}>Login with {provider.name}</Button>)
             }
 
         </div>
