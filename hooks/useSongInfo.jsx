@@ -11,63 +11,33 @@ import {IS_UPDATE} from "../atoms/SongAtom";
 export default function useSongInfo ()
 {
     const spotifyApi = useSpotify()
-
     const {data : session , status} = useSession()
-
-    const updateCurrentTrack = useRecoilValue(IS_UPDATE)
 
     const CURRENT_TRACK_ID_PLAYED = useRecoilValue(CURRENT_TRACK_ID_STATE)
 
-    const [lastlySongPlayed , setLastlySongPlayed] = useState(null)
-
+    const [currentlyTrack , setCurrentlyTrack] = useState([])
 
     useAsync(async () => {
-
-                if (CURRENT_TRACK_ID_PLAYED) {
-
-                    const trackInfo = await fetch(
-                        `	https://api.spotify.com/v1/me/player/currently-playing`,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${spotifyApi.getAccessToken()}`,
-                            },
-                        }
-                    );
-
-                    const res = await trackInfo.json();
-
-                    setLastlySongPlayed(res.item);
+        if (CURRENT_TRACK_ID_PLAYED && spotifyApi.getAccessToken())
+        {
+            await fetch(
+                `https://api.spotify.com/v1/tracks/${CURRENT_TRACK_ID_PLAYED}` , {
+                    method : 'GET',
+                    headers: {
+                        Authorization: `Bearer ${spotifyApi.getAccessToken()}`,
+                    },
                 }
+            )
+                .then(async res => setCurrentlyTrack(await res.json()))
+                .catch(reason => console.log(reason))
+        }
 
-    } , [CURRENT_TRACK_ID_PLAYED , spotifyApi , updateCurrentTrack])
-
-
-    // useEffect(() => {
-    //
-    //     const fetchSongInfo = async () => {
-    //
-    //         if (CURRENT_TRACK_ID_PLAYED) {
-    //
-    //             const trackInfo = await fetch(
-    //                 `	https://api.spotify.com/v1/me/player/currently-playing`,
-    //                 {
-    //                     headers: {
-    //                         Authorization: `Bearer ${spotifyApi.getAccessToken()}`,
-    //                     },
-    //                 }
-    //             );
-    //
-    //             const res = await trackInfo.json();
-    //
-    //             setLastlySongPlayed(res.item);
-    //         }
-    //     };
-    //     fetchSongInfo();
-    //
-    //
-    // } , [CURRENT_TRACK_ID_PLAYED , spotifyApi , updateCurrentTrack])
+    } , [CURRENT_TRACK_ID_PLAYED])
 
 
-    return lastlySongPlayed
+
+
+
+    return {currentlyTrack}
 }
 

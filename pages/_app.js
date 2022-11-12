@@ -1,34 +1,27 @@
 import { SessionProvider } from "next-auth/react"
 import {ChakraProvider} from "@chakra-ui/react";
-import { extendTheme } from '@chakra-ui/react'
 import {RecoilRoot} from "recoil";
-import useSpotify from "../hooks/useSpotify";
-
 import '/globals.css'
-import {useEffect} from "react";
-
-//!MAYBE NEEDED
-const colors = {
-
-    styles : {
-        global : {
-            'body' : {
-                background : 'red'
-            }
-        }
-    }
-
-}
-const theme = extendTheme({ colors })
-
-
+import Layout from "../components/layout";
+import {useRouter} from "next/router";
+import 'react-indiana-drag-scroll/dist/style.css';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+
+    const router = useRouter()
+
     return (
         <RecoilRoot>
             <SessionProvider session={session}>
-                <ChakraProvider theme={theme}>
-                    <Component {...pageProps} />
+                <ChakraProvider>
+
+                    {
+                        router.pathname === '/login' ?
+                            <Component {...pageProps} /> :
+                            <Layout>
+                                <Component {...pageProps} />
+                            </Layout>
+                    }
                 </ChakraProvider>
             </SessionProvider>
         </RecoilRoot>

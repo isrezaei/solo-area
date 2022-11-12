@@ -18,7 +18,7 @@ export const Sidebar = () =>
 
     const [playList , setPlayList] = useState([])
 
-    const [playListId , setPlayListId] = useRecoilState(playListIdState)
+
 
 
 
@@ -35,7 +35,7 @@ export const Sidebar = () =>
 
 
     return (
-        <Box flexGrow={1}  h={'100vh'} p={4}>
+        <Box  flex={1}  h={'100vh'} p={4}>
             <Text  color={'whiteAlpha.900'} my={3}>Browser Music</Text>
             <Flex direction={'column'}>
                 <HStack spacing='.8vw' my={'1rem'}>
@@ -55,7 +55,7 @@ export const Sidebar = () =>
                     <Text fontSize='sm' color={'whiteAlpha.700'}>Genres</Text>
                 </HStack>
                 <Spacer/>
-                {playList.map(data => <Text onClick={() => setPlayListId(data.id)} cursor={'pointer'} id={data.id} fontSize='sm' color={'whiteAlpha.600'} my={2}>{data.name}</Text>)}
+                {playList.map(data => <Text key={Math.random()}  cursor={'pointer'} id={data.id} fontSize='sm' color={'whiteAlpha.600'} my={2}>{data.name}</Text>)}
             </Flex>
         </Box>
     )
