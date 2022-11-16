@@ -15,8 +15,6 @@ export const TracksInfo = () =>
 
     const SPOTIFY_DEVICE_ID = useRecoilValue(SPOTIFY_DEVICE_ID_ATOM)
 
-    const SET_TRACK_FOR_WEB_PLAY_BACK = useSetRecoilState(TRACK_FOR_WEB_PLAY_BACK)
-
     const NEW_RELEASES_ALBUM_TRACK = useRecoilValue(NEW_RELEASES_ALBUMS_TRACK_ATOM)
 
     const {tracks} = NEW_RELEASES_ALBUM_TRACK
@@ -25,33 +23,16 @@ export const TracksInfo = () =>
 
 
 
-    const Kilyed = async (access_token , spotify_uri) =>
+    const PlayMusic = async (Track) =>
     {
         await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${SPOTIFY_DEVICE_ID}`, {
             method: 'PUT',
-            body: JSON.stringify({ uris: [spotify_uri] }),
+            body: JSON.stringify({ uris: [Track.uri] }),
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${access_token}`
+                'Authorization': `Bearer ${spotifyApi.getAccessToken()}`
             },
         });
-    }
-
-
-
-
-    const PlayMusic = (Track) =>
-    {
-        SET_TRACK_FOR_WEB_PLAY_BACK(Track.uri)
-
-        // await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${SPOTIFY_DEVICE_ID}`, {
-        //     method: 'PUT',
-        //     body: JSON.stringify({ uris: [Track.uri] }),
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': `Bearer ${spotifyApi.getMyCurrentPlaybackState()}`
-        //     },
-        // });
     }
 
 

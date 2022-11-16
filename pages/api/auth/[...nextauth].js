@@ -4,38 +4,9 @@ import spotifyApi, {FIRST_INITIAL_URL_DATA} from "../../../lib/SpotifyWebApi";
 
 
 
-// async function refreshAccessToken(token) {
-//     try {
-//
-//
-//
-//         spotifyApi.setAccessToken(token.accessToken)
-//         spotifyApi.setRefreshToken(token.refreshToken)
-//
-//         const {body : refreshedTokens} = await spotifyApi.refreshAccessToken()
-//
-//         console.log('Refreshed token is', refreshedTokens);
-//
-//         return {
-//             ...token,
-//             accessToken: refreshedTokens.access_token,
-//             accessTokenExpires: Date.now() + refreshedTokens.expires_at * 1000,
-//             refreshToken: refreshedTokens.refresh_token ?? token.refreshToken, // Fall back to old refresh token
-//         }
-//
-//     } catch (error) {
-//
-//         console.log(error + 'Token is Expire')
-//
-//         return {
-//             ...token,
-//             error: "RefreshAccessTokenError",
-//         }
-//     }
-// }
-
 
 async function refreshAccessToken(token) {
+
     try {
         const url =
             "https://accounts.spotify.com/api/token" +
@@ -56,7 +27,7 @@ async function refreshAccessToken(token) {
         const refreshedTokens = await response.json()
 
         if (!response.ok) {
-            throw refreshedTokens
+            return  refreshedTokens
         }
 
         return {
@@ -67,7 +38,7 @@ async function refreshAccessToken(token) {
         }
     }
     catch (error) {
-        console.log(error)
+
         return {
             ...token,
             error: "RefreshAccessTokenError",
@@ -92,6 +63,7 @@ export default NextAuth({
     },
 
     callbacks: {
+
         async jwt({ token, user, account }) {
             //?First sign in
             if (account && user) {
@@ -105,14 +77,17 @@ export default NextAuth({
                 }
             }
             //?Return previous token if the access token has not expired yet
-            if (Date.now() < token.accessTokenExpires) {
+
+            if (Date.now() < token?.accessTokenExpires) {
                 return token
             }
+
+
             //?Access token has expired, try to update it
             return await refreshAccessToken(token)
-
-
         },
+
+
         async session({ session, token }) {
             session.user = token.user
             session.accessToken = token.accessToken
