@@ -19,11 +19,6 @@ export const Sidebar = () =>
     const [playList , setPlayList] = useState([])
 
 
-
-
-
-
-
     useEffect(()=>{
 
         if (spotifyApi.getAccessToken())

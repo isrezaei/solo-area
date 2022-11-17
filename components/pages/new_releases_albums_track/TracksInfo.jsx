@@ -6,7 +6,7 @@ import {TRACK_FOR_WEB_PLAY_BACK} from "../../../atoms/ItemsAtom";
 import {useSetRecoilState} from "recoil";
 import useSpotify from "../../../hooks/useSpotify";
 import {useSession} from "next-auth/react";
-import {Fetch_AccessToken} from "../../../lib/FetcherFuncs/Fetch_AccessToken";
+import {FETCH_ACCESS_TOKEN} from "../../../lib/FetcherFuncs/FETCH_ACCESS_TOKEN";
 import {SPOTIFY_DEVICE_ID_ATOM} from "../../../atoms/ItemsAtom";
 
 

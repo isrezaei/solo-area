@@ -17,5 +17,5 @@ export const TRACK_FOR_WEB_PLAY_BACK = atom({
 
 export const SPOTIFY_DEVICE_ID_ATOM = atom({
     key : 'TRACK FOR WEB PLAY BACK',
-    default : ''
+    default : undefined
 })

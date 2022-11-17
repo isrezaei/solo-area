@@ -27,7 +27,7 @@ async function refreshAccessToken(token) {
         const refreshedTokens = await response.json()
 
         if (!response.ok) {
-            return  refreshedTokens
+            throw refreshedTokens
         }
 
         return {
@@ -77,14 +77,14 @@ export default NextAuth({
                 }
             }
             //?Return previous token if the access token has not expired yet
-
             if (Date.now() < token?.accessTokenExpires) {
                 return token
             }
 
-
             //?Access token has expired, try to update it
-            return await refreshAccessToken(token)
+            if (Date.now() > token?.accessTokenExpires) {
+                return await refreshAccessToken(token)
+            }
         },
 
 

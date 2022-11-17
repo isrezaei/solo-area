@@ -1,29 +1,21 @@
 import {useSession , signIn} from "next-auth/react";
 import {useEffect, useLayoutEffect} from "react";
 import spotifyApi from "../lib/SpotifyWebApi";
+import {FETCH_ACCESS_TOKEN} from "../lib/FetcherFuncs/FETCH_ACCESS_TOKEN";
+import useSWR from "swr";
 
 
 export default function useSpotify ()
 {
-
-    const { data : session , status } = useSession()
-
-    console.log(session)
+    const {data : GET_ACCESS_TOKEN} = useSWR('GET ACCESS TOKEN' , ()=> (FETCH_ACCESS_TOKEN()))
 
     useEffect(()=> {
 
-        if (session)
+        if (GET_ACCESS_TOKEN)
         {
-            //! IF REFRESH TOKEN IS BROKEN , GO TO SIGN IN AGAIN
-            if (session.error === 'RefreshAccessTokenError')
-            {
-                signIn()
-            }
-
-            //? IF EVERY THINGS IS OKY , RETURN TO ME ACCESS TOKEN
-            spotifyApi.setAccessToken(session?.accessToken)
+            spotifyApi.setAccessToken(GET_ACCESS_TOKEN.access_token)
         }
-    } , [session])
+    } , [GET_ACCESS_TOKEN])
 
     return spotifyApi
 }
