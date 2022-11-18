@@ -1,8 +1,22 @@
-import {Button, Divider, Input, InputGroup, InputLeftElement, InputRightElement} from "@chakra-ui/react";
+import {
+    Button, color,
+    Divider,
+    Input,
+    InputGroup,
+    InputLeftElement,
+    InputRightElement,
+    useColorModeValue
+} from "@chakra-ui/react";
 import {TbAdjustmentsHorizontal, TbPlayerRecord} from "react-icons/tb";
 
 export const Search = () =>
 {
+
+    const bg = useColorModeValue('blackAlpha.200', 'whiteAlpha.200')
+    const color = useColorModeValue('whiteAlpha.800' , 'blackAlpha.800')
+    const border = useColorModeValue('blackAlpha.300' , 'whiteAlpha.300')
+
+
     return (
         <InputGroup flex={6} size={'lg'}>
             <InputLeftElement
@@ -11,9 +25,9 @@ export const Search = () =>
                 type={"search"}
                 placeholder={'Search...'}
                 rounded={'50vw'}
-                color={'#d7d7d7'}
-                bg={'#1c1c1c'}
-                borderColor={'#505050'}
+                color={color}
+                bg={bg}
+                borderColor={border}
                 fontSize={12}/>
             <InputRightElement width={"auto"} mx={5}>
                 <Button h={'1.75rem'} size={'xs'} mx={1} rounded={12} colorScheme={'blackAlpha'}  >

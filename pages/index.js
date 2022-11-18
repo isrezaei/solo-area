@@ -1,4 +1,4 @@
-import {Flex, Container} from "@chakra-ui/react";
+import {Flex, Container, Button, useColorMode} from "@chakra-ui/react";
 import {Main} from "../components/root_center/Main";
 import  {SWRConfig} from "swr";
 import {Fetch_New_Releases_Albums} from "../lib/FetcherFuncs/Fetch_New_Releases_Albums";
@@ -7,11 +7,13 @@ import {getSession} from "next-auth/react";
 
 
 
+
 export default function Home({fallback}) {
     //
     // const session = getSession()
     //
     // session.then(res => console.log(res))
+
 
     return (
         <Container maxW={'1990px'}>

@@ -5,16 +5,21 @@ import '/globals.css'
 import Layout from "../components/layout";
 import {useRouter} from "next/router";
 import 'react-indiana-drag-scroll/dist/style.css';
+import {theme} from "@chakra-ui/react";
+import "@fontsource/karla"
+
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
     const router = useRouter()
 
+
+
     return (
         <RecoilRoot>
             <SessionProvider session={session}>
-                <ChakraProvider>
-
+                <main style={{fontFamily : 'Karla'}}>
+                <ChakraProvider theme={theme}>
                     {
                         router.pathname === '/login' ?
                             <Component {...pageProps} /> :
@@ -23,6 +28,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
                             </Layout>
                     }
                 </ChakraProvider>
+                </main>
             </SessionProvider>
         </RecoilRoot>
     )

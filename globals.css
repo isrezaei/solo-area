@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    background-color: black !important;
+
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
