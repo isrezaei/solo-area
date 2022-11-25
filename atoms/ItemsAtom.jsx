@@ -16,6 +16,16 @@ export const TRACK_FOR_WEB_PLAY_BACK = atom({
 })
 
 export const SPOTIFY_DEVICE_ID_ATOM = atom({
-    key : 'TRACK FOR WEB PLAY BACK',
+    key : 'SPOTIFY DEVICE ID',
     default : undefined
+})
+
+export const SPOTIFY_TRACKS_URI_ATOM = atom({
+    key : 'SPOTIFY TRACKS URI',
+    default : ''
+})
+
+export const MY_PLAY_LIST_ID_ATOM = atom({
+    key : 'MY PLAY LIST ID',
+    default : '33gqi6xuZrpWLxHHW1pxyf'
 })

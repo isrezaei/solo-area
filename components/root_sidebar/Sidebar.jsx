@@ -1,57 +1,99 @@
-import {Box, Flex, HStack, Spacer, Text} from "@chakra-ui/react";
+import {Box, Flex, HStack, Image, Spacer, Text} from "@chakra-ui/react";
 import {RiHome6Line, RiMusicFill} from "react-icons/ri";
 import {BsMusicPlayerFill} from "react-icons/bs";
 import {MdOutlineQueueMusic} from "react-icons/md";
-import useSpotify from "../../hooks/useSpotify";
-import {useSession} from "next-auth/react";
-import {useRecoilState} from "recoil";
-import {playListIdState , NEW_RELEASES_LIST} from "../../atoms/PlayListAtom";
-import {useEffect , useState} from "react";
+import {FETCH_ALL_PLAYLIST} from "../../lib/FetcherFuncs/FETCH_ALL_PLAYLIST";
+import useSWR from "swr";
+import dynamic from "next/dynamic";
+const Animator = dynamic(
+    import("react-scroll-motion").then((it) => it.Animator),
+    { ssr: false }
+);
+
+import { ScrollContainer, ScrollPage, batch, Fade, FadeIn, FadeOut, Move, MoveIn, MoveOut, Sticky, StickyIn, StickyOut, Zoom, ZoomIn, ZoomOut } from "react-scroll-motion";
+import {useSetRecoilState , useRecoilState} from "recoil";
+import {MY_PLAY_LIST_ID_ATOM} from "../../atoms/ItemsAtom"
+import Tilt from 'react-parallax-tilt'
+
 
 
 export const Sidebar = () =>
 {
 
-    const spotifyApi = useSpotify()
+    const {data : MY_PLAY_LISTS} = useSWR('FETCH MY PLAYLIST' , async () => (await FETCH_ALL_PLAYLIST()))
 
-    const { data: session  , status} = useSession()
-
-    const [playList , setPlayList] = useState([])
-
-
-    useEffect(()=>{
-
-        if (spotifyApi.getAccessToken())
-        {
-            spotifyApi.getUserPlaylists().then(data => setPlayList(data.body.items))
-        }
-    } , [session , spotifyApi])
-
+    const [PLAYLIST_ID , SET_PLAYLIST_ID] = useRecoilState(MY_PLAY_LIST_ID_ATOM)
 
 
     return (
-        <Box  flex={1}  h={'100vh'} p={4}>
+        <Box  flex={1.5}  h={'100vh'} p={4}  top={0}>
+
             <Text  color={'whiteAlpha.900'} my={3}>Browser Music</Text>
-            <Flex direction={'column'}>
-                <HStack spacing='.8vw' my={'1rem'}>
-                    <RiHome6Line color={'#989898'}/>
-                    <Text fontSize='sm' color={'whiteAlpha.700'}>Home</Text>
-                </HStack>
-                <HStack spacing='.8vw' my={'1rem'}>
-                    <BsMusicPlayerFill color={'#989898'}/>
-                    <Text fontSize='sm' color={'whiteAlpha.700'}>Albums</Text>
-                </HStack>
-                <HStack spacing='.8vw' my={'1rem'}>
-                    <MdOutlineQueueMusic color={'#989898'}/>
-                    <Text fontSize='sm' color={'whiteAlpha.700'}>Tracks</Text>
-                </HStack>
-                <HStack spacing='.8vw' my={'1rem'}>
-                    <RiMusicFill color={'#989898'}/>
-                    <Text fontSize='sm' color={'whiteAlpha.700'}>Genres</Text>
-                </HStack>
-                <Spacer/>
-                {playList.map(data => <Text key={Math.random()}  cursor={'pointer'} id={data.id} fontSize='sm' color={'whiteAlpha.600'} my={2}>{data.name}</Text>)}
-            </Flex>
+
+            <ScrollContainer>
+
+
+                <ScrollPage>
+                    <Animator animation={batch(Fade(), MoveOut(0, -200))}>
+                        <Flex direction={'column'}>
+                            <HStack spacing='.8vw' my={'1rem'}>
+                                <RiHome6Line color={'#989898'}/>
+                                <Text fontSize='sm' color={'whiteAlpha.700'}>Home</Text>
+                            </HStack>
+                            <HStack spacing='.8vw' my={'1rem'}>
+                                <BsMusicPlayerFill color={'#989898'}/>
+                                <Text fontSize='sm' color={'whiteAlpha.700'}>Albums</Text>
+                            </HStack>
+                            <HStack spacing='.8vw' my={'1rem'}>
+                                <MdOutlineQueueMusic color={'#989898'}/>
+                                <Text fontSize='sm' color={'whiteAlpha.700'}>Tracks</Text>
+                            </HStack>
+                            <HStack spacing='.8vw' my={'1rem'}>
+                                <RiMusicFill color={'#989898'}/>
+                                <Text fontSize='sm' color={'whiteAlpha.700'}>Genres</Text>
+                            </HStack>
+                            <Spacer/>
+                        </Flex>
+                    </Animator>
+                </ScrollPage>
+
+
+                <ScrollPage>
+                    <Animator animation={batch(MoveIn(-100 , 0))}>
+
+                        <Flex w={"full"} h={'100vh'}  direction={'column'} justify={'flex-start'} align={"center"} gap={3} py={3} overflowY={'scroll'}  css={{
+                                '&::-webkit-scrollbar': {
+                                    width: '0px',
+                                }}}>
+
+                            <Text>PLAY LISTS</Text>
+
+                            {MY_PLAY_LISTS?.map(data => (
+                                <Box w={"full"}>
+                                    <Tilt glareEnable={true} glareBorderRadius={'15px'} glareMaxOpacity={0.5} glareColor="#689f38" glarePosition="all">
+                                        <HStack w={"full"}
+                                                key={Math.random()}
+                                                p={1}
+                                                cursor={'pointer'}
+                                                fontSize='sm'
+                                                bg={PLAYLIST_ID === data.id ? 'green.600' : 'whiteAlpha.200'}
+                                                rounded={'xl'}
+                                                onClick={() => SET_PLAYLIST_ID(data.id)}>
+
+                                            <Image src={data?.images[0]?.url} boxSize={45} rounded={'xl'}/>
+                                            <Text fontSize={12} whiteSpace={'nowrap'} overflow={'hidden'} textOverflow={'ellipsis'}>{data.name}</Text>
+                                        </HStack>
+                                    </Tilt>
+                                </Box>
+                            ) )}
+                        </Flex>
+
+
+                    </Animator>
+                </ScrollPage>
+
+            </ScrollContainer>
+
         </Box>
     )
 }

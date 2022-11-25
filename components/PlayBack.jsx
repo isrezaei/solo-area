@@ -53,8 +53,6 @@ export const PlayBack = () =>
     const [volume , setDeviceVolume] = useState(0.5)
     const [SPOTIFY_DEVICE_ID , SET_SPOTIFY_DEVICE_ID] = useRecoilState(SPOTIFY_DEVICE_ID_ATOM)
 
-    console.log('device id ' + SPOTIFY_DEVICE_ID)
-
 
     //*HANDEL CHANGE VOLUME IN DEBOUNCE MOOD
     useDebounce(() => {
@@ -70,7 +68,8 @@ export const PlayBack = () =>
             setTrack(state?.track_window.current_track);
             setPaused(state?.paused)
             player.getCurrentState().then( state => {
-                !state?.context?.uri ? setActive(false) : setActive(true)
+                if (state?.track_window?.current_track !== null) return setActive(true)
+                return setActive(false)
             }).catch(reason => console.log(reason))
         }))
     } , [player , connect_stream])
@@ -123,6 +122,7 @@ export const PlayBack = () =>
         }
     } , [is_active])
 
+    console.log(is_active)
 
     //* HANDEL GENERATE NEW DEVICE ID OR REMOVE DEVICE ID
     const stream_connector = () =>
@@ -157,17 +157,15 @@ export const PlayBack = () =>
 
 
     return (
-        <Flex direction={"column"} justifyContent={'space-around'} alignItems={'center'}  w={'20vw'} h={'100vh'} bg={"#181818"}>
+        <Flex direction={"column"} justifyContent={'space-around'} alignItems={'center'}  w={'20vw'} h={'100vh'} position={'sticky'} top={0} bg={"#181818"}>
 
             <Text textColor={'white'}>Your Flowing</Text>
 
             <Grid templateColumns={'repeat(3 , 1fr)'}  w={'95%'} h={'15vw'} gap={1.5}>
                 {
-
-
                     FLOWING_ARTISTS?.map(ARTIST => {
                         return (
-                            <VStack my={1} bg={'#0e0e0e'} p={'.5vw'} rounded={'.8vw'}>
+                            <VStack key={Math.random()} my={1} bg={'#0e0e0e'} p={'.5vw'} rounded={'.8vw'}>
                                 <Image src={ARTIST?.images?.[0].url} alt={ARTIST?.name} boxSize={'4vw'} rounded={"3xl"}/>
                                 <Text textAlign={'center'} fontSize={10} fontWeight={'bold'} color={'white'}>{ARTIST?.name}</Text>
                             </VStack>
@@ -195,31 +193,31 @@ export const PlayBack = () =>
                         </Box>
                 }
 
-                        <Flex opacity={is_active ? '100%' : '30%'} pointerEvents={is_active ? 'auto' : 'none'} cursor={'pointer'} w={"full"} h={'5vw'} justify={'space-evenly'} alignItems={'center'}>
+                <Flex opacity={is_active ? '100%' : '30%'} pointerEvents={is_active ? 'auto' : 'none'} cursor={'pointer'} w={"full"} h={'5vw'} justify={'space-evenly'} alignItems={'center'}>
 
-                            <Center w={'2vw'} h={'2vw'} bg={'#424242'} rounded={'xl'}>
-                                <MdRepeat color={'white'} size={20}/>
-                            </Center>
-
-
-                            <Center w={'2.8vw'} h={'2.8vw'} bg={'#424242'} rounded={'full'}>
-                                <FaStepBackward color={'#efefef'} onClick={() => player.previousTrack()} size={25}/>
-                            </Center>
+                    <Center w={'2vw'} h={'2vw'} bg={'#424242'} rounded={'xl'}>
+                        <MdRepeat color={'white'} size={20}/>
+                    </Center>
 
 
-                            <Center  w={'3vw'} h={'3vw'} bg={'#424242'} rounded={'full'} onClick={()=> player.togglePlay().then(() => console.log(current_track ? 'Web Playback is active' : 'need web play back active !'))} >
-                                { is_paused ?  <FaPlay color={'#efefef'} size={23}/> : <FaPause color={'#efefef'} size={23}/> }
-                            </Center>
+                    <Center w={'2.8vw'} h={'2.8vw'} bg={'#424242'} rounded={'full'}>
+                        <FaStepBackward color={'#efefef'} onClick={() => player.previousTrack()} size={25}/>
+                    </Center>
 
-                            <Center w={'2.8vw'} h={'2.8vw'} bg={'#424242'} rounded={'full'}>
-                                <FaStepForward color={'#efefef'} size={25} onClick={() => player.nextTrack()} />
-                            </Center>
 
-                            <Center w={'2vw'} h={'2vw'} bg={'#424242'} rounded={'xl'}>
-                                <MdShuffle color={'white'} size={20}/>
-                            </Center>
+                    <Center  w={'3vw'} h={'3vw'} bg={'#424242'} rounded={'full'} onClick={()=> player.togglePlay().then(() => console.log(current_track ? 'Web Playback is active' : 'need web play back active !'))} >
+                        { is_paused ?  <FaPlay color={'#efefef'} size={23}/> : <FaPause color={'#efefef'} size={23}/> }
+                    </Center>
 
-                        </Flex>
+                    <Center w={'2.8vw'} h={'2.8vw'} bg={'#424242'} rounded={'full'}>
+                        <FaStepForward color={'#efefef'} size={25} onClick={() => player.nextTrack()} />
+                    </Center>
+
+                    <Center w={'2vw'} h={'2vw'} bg={'#424242'} rounded={'xl'}>
+                        <MdShuffle color={'white'} size={20}/>
+                    </Center>
+
+                </Flex>
 
 
 
@@ -227,14 +225,14 @@ export const PlayBack = () =>
                 <Flex justify={'space-evenly'} alignItems={'center'} w={'full'}>
 
                     <Skeleton  flex={1}  height={'1vw'} isLoaded={is_active} rounded={'.3vw'} startColor='#212121' endColor='#424242'>
-                    <Flex w={'full'} justify={'center'} alignItems={'center'} gap={3}  >
-                        <BiVolumeFull  color={'white'} size={20}/>
-                        <RangeSlider w={'8vw'} ariaLabel={['min', 'max']} defaultValue={[0, volume * 100]} onChange={e => setDeviceVolume(e[1] / 100)}>
-                            <RangeSliderTrack boxSize={'.8vw'} bg='red.100' rounded={'1vw'}>
-                                <RangeSliderFilledTrack bg={'#81c784'} />
-                            </RangeSliderTrack>
-                        </RangeSlider>
-                    </Flex>
+                        <Flex w={'full'} justify={'center'} alignItems={'center'} gap={3}  >
+                            <BiVolumeFull  color={'white'} size={20}/>
+                            <RangeSlider w={'8vw'} ariaLabel={['min', 'max']} defaultValue={[0, volume * 100]} onChange={e => setDeviceVolume(e[1] / 100)}>
+                                <RangeSliderTrack boxSize={'.8vw'} bg='red.100' rounded={'1vw'}>
+                                    <RangeSliderFilledTrack bg={'#81c784'} />
+                                </RangeSliderTrack>
+                            </RangeSlider>
+                        </Flex>
 
                     </Skeleton>
 

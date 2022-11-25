@@ -16,13 +16,13 @@ export default function Home({fallback}) {
 
 
     return (
-        <Container maxW={'1990px'}>
+
             <Flex>
                 <SWRConfig value={{fallback , refreshInterval : 5000}}>
                         <Main/>
                 </SWRConfig>
             </Flex>
-        </Container>
+
     )
 }
 
