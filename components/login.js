@@ -1,7 +1,6 @@
-import {Button, VStack, Link, Flex} from "@chakra-ui/react";
-import {signIn} from "next-auth/react";
-import {getProviders} from "next-auth/react";
-import {useEffect, useState} from "react";
+import {Link, Flex} from "@chakra-ui/react";
+
+import {useEffect} from "react";
 import {LOGIN_TOKEN_ATOM} from "../atoms/atoms";
 import {useRecoilState} from "recoil";
 

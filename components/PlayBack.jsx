@@ -5,10 +5,9 @@ import {
     Flex,
     Image,
     Text,
-    HStack,
     RangeSlider,
     RangeSliderTrack,
-    RangeSliderFilledTrack, RangeSliderThumb, VStack, Grid, useToast, SkeletonCircle,
+    RangeSliderFilledTrack, VStack, Grid, useToast,
     Modal,
     ModalOverlay,
     ModalContent,
@@ -19,14 +18,10 @@ import {
 } from "@chakra-ui/react";
 import {usePlayer} from "../hooks/usePlayer";
 import {Skeleton , SkeletonText} from "@chakra-ui/react";
-import {CiPlay1 , CiPause1} from 'react-icons/ci'
-import {MdOutlineSkipNext, MdOutlineSkipPrevious, MdShuffle, MdRepeat, MdGraphicEq , MdComputer} from 'react-icons/md'
-import {SlControlForward , SlControlRewind , SlControlPause , SlControlPlay} from 'react-icons/sl'
+import {MdShuffle, MdRepeat , MdComputer} from 'react-icons/md'
 import {FaStepForward , FaStepBackward , FaPlay , FaPause} from 'react-icons/fa'
 import {BiVolumeFull} from 'react-icons/bi'
-import {useToasts} from "react-toast-notifications";
-import {HiComputerDesktop} from 'react-icons/hi2'
-import {useSetRecoilState , useRecoilState} from "recoil";
+import {useRecoilState} from "recoil";
 import {SPOTIFY_DEVICE_ID_ATOM} from "../atoms/atoms";
 import PulseDot from 'react-pulse-dot'
 import 'react-pulse-dot/dist/index.css'

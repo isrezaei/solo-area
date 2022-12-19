@@ -1,11 +1,10 @@
-import {useRecoilValue} from "recoil";
-import {NEW_RELEASES_ALBUMS_ATOM} from "../../../atoms/atoms";
-import {Flex, Image, Text , Box , VStack ,HStack} from "@chakra-ui/react";
+import { Image, Text , Box , VStack ,HStack} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {ScrollContainer} from "react-indiana-drag-scroll";
 
 import useSWR from "swr";
-import axios from "axios";
+
+
 import {Fetch_New_Releases_Albums} from "../../../lib/FetcherFuncs/Fetch_New_Releases_Albums";
 
 export const NewReleasesAlbumsList = () =>

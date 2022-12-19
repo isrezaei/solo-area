@@ -1,25 +1,14 @@
 import useSWR from "swr";
-import {FETCH_FEATURED_PLAYLIST} from "../../../lib/FetcherFuncs/FETCH_FEATURED_PLAYLIST";
-import {Box, Image, Text, VStack, Flex, Circle, HStack, Divider, Center , Progress} from "@chakra-ui/react";
-import {ScrollContainer} from "react-indiana-drag-scroll";
+import {Box, Image, Text, VStack, Flex, HStack, Divider, Center , Progress} from "@chakra-ui/react";
 import {useRecoilValue} from "recoil";
 import {MY_PLAY_LIST_ID_ATOM , SPOTIFY_DEVICE_ID_ATOM} from "../../../atoms/atoms";
 import {FETCH_ONE_PLAYLIST} from "../../../lib/FetcherFuncs/FETCH_ONE_PLAYLIST";
 import prettyMilliseconds from "pretty-ms";
 import {PUT_SPOTIFY_PLAY_MUSIC} from "../../../lib/PuterFuncs/PUT_SPOTIFY_PLAY_MUSIC";
 import Tilt from 'react-parallax-tilt';
-import {Swiper , SwiperSlide} from "swiper/react";
-import "swiper/css";
-import "swiper/css/grid";
-import "swiper/css/pagination";
-
-import {Grid , Pagination} from "swiper";
-
-
 
 export const FeaturedPlayList = () =>
 {
-
     const GET_PLAY_LIST_ID = useRecoilValue(MY_PLAY_LIST_ID_ATOM)
     const GET_SPOTIFY_DEVICE_ID = useRecoilValue(SPOTIFY_DEVICE_ID_ATOM)
 

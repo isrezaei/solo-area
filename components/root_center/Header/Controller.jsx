@@ -1,8 +1,6 @@
-import {Button, Flex, useColorMode, useColorModeValue} from "@chakra-ui/react";
+import {Flex, useColorMode, useColorModeValue} from "@chakra-ui/react";
 import {IoSettingsSharp} from "react-icons/io5";
-import {HiBellAlert} from "react-icons/hi2";
 import {RiLogoutCircleRLine} from "react-icons/ri";
-import {signOut} from "next-auth/react";
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
 export const Controller = () =>
@@ -27,7 +25,7 @@ export const Controller = () =>
 
             <IoSettingsSharp color={'whiteAlpha.800'}/>
 
-            <RiLogoutCircleRLine color={'whiteAlpha.800'} onClick={() => signOut()}/>
+            <RiLogoutCircleRLine color={'whiteAlpha.800'}/>
 
             <DarkModeSwitch
                 moonColor={'#fff'}

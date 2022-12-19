@@ -1,12 +1,9 @@
 import {useRecoilValue} from "recoil";
 import {NEW_RELEASES_ALBUMS_TRACK_ATOM} from "../../../atoms/atoms";
-import {HStack, Text, VStack, Flex, Center, Box} from "@chakra-ui/react";
+import {Text, VStack, Flex, Center, Box} from "@chakra-ui/react";
 import prettyMilliseconds from "pretty-ms";
-import {TRACK_FOR_WEB_PLAY_BACK} from "../../../atoms/atoms";
-import {useSetRecoilState} from "recoil";
+
 import useSpotify from "../../../hooks/useSpotify";
-import {useSession} from "next-auth/react";
-import {FETCH_ACCESS_TOKEN} from "../../../lib/FetcherFuncs/FETCH_ACCESS_TOKEN";
 import {SPOTIFY_DEVICE_ID_ATOM} from "../../../atoms/atoms";
 import {PUT_SPOTIFY_PLAY_MUSIC} from "../../../lib/PuterFuncs/PUT_SPOTIFY_PLAY_MUSIC";
 

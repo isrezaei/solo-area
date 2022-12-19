@@ -5,8 +5,6 @@ import {NewReleasesAlbumsList} from "./New_Releases_Albums_List/NewReleasesAlbum
 import {RecentlyPlayedList} from "./Recently_Played_List/RecentlyPlayedList";
 import {FeaturedPlayList} from "./Featured_playList/FeaturedPlayList";
 import {Box, Flex, Text} from "@chakra-ui/react";
-import { Parallax } from 'react-parallax';
-
 import dynamic from "next/dynamic";
 
 const Animator = dynamic(

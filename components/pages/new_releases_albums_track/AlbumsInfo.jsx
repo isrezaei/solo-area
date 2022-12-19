@@ -4,12 +4,10 @@ import {NEW_RELEASES_ALBUMS_TRACK_ATOM} from "../../../atoms/atoms";
 import {Suspense, useEffect, useState} from "react";
 import useSpotify from "../../../hooks/useSpotify";
 
-import {useSession} from "next-auth/react";
 
 export const AlbumsInfo = () =>
 {
 
-    const {data : session , status} = useSession()
 
     const spotifyApi = useSpotify()
 
@@ -23,16 +21,14 @@ export const AlbumsInfo = () =>
 
     useEffect(() => {
 
-        if (status === 'authenticated' && artists)
-        {
+
             spotifyApi.getArtist(artists?.[0]?.id).then(artist => SET_ALBUM_ARTIST_DATA(artist.body))
-        }
 
 
         return () => SET_ALBUM_ARTIST_DATA('')
 
 
-    } , [status , artists , spotifyApi])
+    } , [artists , spotifyApi])
 
 
 

@@ -1,6 +1,4 @@
 import {IconButton, Menu, MenuButton, MenuItem, MenuList , Avatar} from "@chakra-ui/react";
-import {TriangleDownIcon} from "@chakra-ui/icons";
-import {useSession} from "next-auth/react";
 
 export const Account = () =>
 {
