@@ -17,7 +17,7 @@ import {
     ModalBody,
     ModalCloseButton, Button, Center,
 } from "@chakra-ui/react";
-import {usePlayer} from "../lib/usePlayer";
+import {usePlayer} from "../hooks/usePlayer";
 import {Skeleton , SkeletonText} from "@chakra-ui/react";
 import {CiPlay1 , CiPause1} from 'react-icons/ci'
 import {MdOutlineSkipNext, MdOutlineSkipPrevious, MdShuffle, MdRepeat, MdGraphicEq , MdComputer} from 'react-icons/md'
@@ -27,7 +27,7 @@ import {BiVolumeFull} from 'react-icons/bi'
 import {useToasts} from "react-toast-notifications";
 import {HiComputerDesktop} from 'react-icons/hi2'
 import {useSetRecoilState , useRecoilState} from "recoil";
-import {SPOTIFY_DEVICE_ID_ATOM} from "../atoms/ItemsAtom";
+import {SPOTIFY_DEVICE_ID_ATOM} from "../atoms/atoms";
 import PulseDot from 'react-pulse-dot'
 import 'react-pulse-dot/dist/index.css'
 import {FETCH_MY_FLOWING_ARTISTS} from "../lib/FetcherFuncs/FETCH_MY_FLOWING_ARTISTS";
@@ -43,6 +43,8 @@ export const PlayBack = () =>
     const {data : FLOWING_ARTISTS} = useSWR('FETCH FLOWING ARTIST' , async () => (await FETCH_MY_FLOWING_ARTISTS()))
 
     const player = usePlayer()
+
+
     const toast = useToast()
     const [is_paused, setPaused] = useState(false);
     const [is_active, setActive] = useState(false);
@@ -122,7 +124,7 @@ export const PlayBack = () =>
         }
     } , [is_active])
 
-    console.log(is_active)
+    // console.log(is_active)
 
     //* HANDEL GENERATE NEW DEVICE ID OR REMOVE DEVICE ID
     const stream_connector = () =>
@@ -227,7 +229,7 @@ export const PlayBack = () =>
                     <Skeleton  flex={1}  height={'1vw'} isLoaded={is_active} rounded={'.3vw'} startColor='#212121' endColor='#424242'>
                         <Flex w={'full'} justify={'center'} alignItems={'center'} gap={3}  >
                             <BiVolumeFull  color={'white'} size={20}/>
-                            <RangeSlider w={'8vw'} ariaLabel={['min', 'max']} defaultValue={[0, volume * 100]} onChange={e => setDeviceVolume(e[1] / 100)}>
+                            <RangeSlider w={'8vw'} aria-label={['min', 'max']} defaultValue={[0, volume * 100]} onChange={e => setDeviceVolume(e[1] / 100)}>
                                 <RangeSliderTrack boxSize={'.8vw'} bg='red.100' rounded={'1vw'}>
                                     <RangeSliderFilledTrack bg={'#81c784'} />
                                 </RangeSliderTrack>

@@ -5,14 +5,9 @@ import {MdOutlineQueueMusic} from "react-icons/md";
 import {FETCH_ALL_PLAYLIST} from "../../lib/FetcherFuncs/FETCH_ALL_PLAYLIST";
 import useSWR from "swr";
 import dynamic from "next/dynamic";
-const Animator = dynamic(
-    import("react-scroll-motion").then((it) => it.Animator),
-    { ssr: false }
-);
 
-import { ScrollContainer, ScrollPage, batch, Fade, FadeIn, FadeOut, Move, MoveIn, MoveOut, Sticky, StickyIn, StickyOut, Zoom, ZoomIn, ZoomOut } from "react-scroll-motion";
 import {useSetRecoilState , useRecoilState} from "recoil";
-import {MY_PLAY_LIST_ID_ATOM} from "../../atoms/ItemsAtom"
+import {MY_PLAY_LIST_ID_ATOM} from "../../atoms/atoms"
 import Tilt from 'react-parallax-tilt'
 
 
@@ -26,15 +21,11 @@ export const Sidebar = () =>
 
 
     return (
-        <Box  flex={1.5}  h={'100vh'} p={4}  top={0}>
+        <Box  flex={1.5}  h={'100vh'} p={4} position={"sticky"} top={0}>
 
             <Text  color={'whiteAlpha.900'} my={3}>Browser Music</Text>
 
-            <ScrollContainer>
 
-
-                <ScrollPage>
-                    <Animator animation={batch(Fade(), MoveOut(0, -200))}>
                         <Flex direction={'column'}>
                             <HStack spacing='.8vw' my={'1rem'}>
                                 <RiHome6Line color={'#989898'}/>
@@ -54,12 +45,8 @@ export const Sidebar = () =>
                             </HStack>
                             <Spacer/>
                         </Flex>
-                    </Animator>
-                </ScrollPage>
 
 
-                <ScrollPage>
-                    <Animator animation={batch(MoveIn(-100 , 0))}>
 
                         <Flex w={"full"} h={'100vh'}  direction={'column'} justify={'flex-start'} align={"center"} gap={3} py={3} overflowY={'scroll'}  css={{
                                 '&::-webkit-scrollbar': {
@@ -69,7 +56,7 @@ export const Sidebar = () =>
                             <Text>PLAY LISTS</Text>
 
                             {MY_PLAY_LISTS?.map(data => (
-                                <Box w={"full"}>
+                                <Box w={"full"} key={Math.random()} >
                                     <Tilt glareEnable={true} glareBorderRadius={'15px'} glareMaxOpacity={0.5} glareColor="#689f38" glarePosition="all">
                                         <HStack w={"full"}
                                                 key={Math.random()}
@@ -89,10 +76,9 @@ export const Sidebar = () =>
                         </Flex>
 
 
-                    </Animator>
-                </ScrollPage>
 
-            </ScrollContainer>
+
+
 
         </Box>
     )

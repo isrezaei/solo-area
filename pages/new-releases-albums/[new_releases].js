@@ -1,5 +1,5 @@
 import axios from "axios";
-import {NEW_RELEASES_ALBUMS_TRACK_ATOM} from "../../atoms/ItemsAtom";
+import {NEW_RELEASES_ALBUMS_TRACK_ATOM} from "../../atoms/atoms";
 import {useSetRecoilState} from "recoil";
 import {useEffect} from "react";
 import {AlbumsInfo} from "../../components/pages/new_releases_albums_track/AlbumsInfo";
@@ -39,8 +39,6 @@ export const getStaticPaths  = async () =>
 {
     //?GET NEW RELEASES FROM SPOTIFY API AND SET ALL NEED PARAMS FOR FIRST BUILD
     const GET_NEW_RELEASES = await Fetch_New_Releases_Albums()
-
-
 
     const PATH_URL = GET_NEW_RELEASES.map(value => {
         return {

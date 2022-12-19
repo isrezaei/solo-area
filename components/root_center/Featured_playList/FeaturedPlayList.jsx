@@ -3,7 +3,7 @@ import {FETCH_FEATURED_PLAYLIST} from "../../../lib/FetcherFuncs/FETCH_FEATURED_
 import {Box, Image, Text, VStack, Flex, Circle, HStack, Divider, Center , Progress} from "@chakra-ui/react";
 import {ScrollContainer} from "react-indiana-drag-scroll";
 import {useRecoilValue} from "recoil";
-import {MY_PLAY_LIST_ID_ATOM , SPOTIFY_DEVICE_ID_ATOM} from "../../../atoms/ItemsAtom";
+import {MY_PLAY_LIST_ID_ATOM , SPOTIFY_DEVICE_ID_ATOM} from "../../../atoms/atoms";
 import {FETCH_ONE_PLAYLIST} from "../../../lib/FetcherFuncs/FETCH_ONE_PLAYLIST";
 import prettyMilliseconds from "pretty-ms";
 import {PUT_SPOTIFY_PLAY_MUSIC} from "../../../lib/PuterFuncs/PUT_SPOTIFY_PLAY_MUSIC";
@@ -25,19 +25,13 @@ export const FeaturedPlayList = () =>
 
     const {data : PLAYLIST_DATA} = useSWR('FETCH FEATURED PLAYLIST' , () => FETCH_ONE_PLAYLIST(GET_PLAY_LIST_ID))
 
-    console.log(PLAYLIST_DATA)
-
 
 
     return (
 
         <Box w={'full'} >
             <Flex w={'full'}   direction={'column'}  px={5} bg={"whiteAlpha.100"} >
-
-
                 <Flex w={"full"} h={'22vw'}  justify={'flex-start'} align={'center'} bgGradient='linear(to-b, green.800 , blackAlpha.200)'>
-
-
                     <Image src={PLAYLIST_DATA?.images[0]?.url} alt='' boxSize={250} mx={6} boxShadow={'2xl'}/>
                     <VStack align={'start'}>
                         <Text fontWeight={'bold'}>PUBLIC PLAYLIST</Text>
@@ -65,7 +59,7 @@ export const FeaturedPlayList = () =>
                         {
                             PLAYLIST_DATA?.tracks.items.map((TRACKS , INDEX) => {
                                 return (
-                                        <Box w={'full'}>
+                                        <Box w={'full'} key={TRACKS.track.id}>
                                             <Tilt tiltEnable={false} glareEnable={true} glareBorderRadius={'.8vw'} glareMaxOpacity={0.3} glareColor="#6d6d6d" glarePosition="all">
                                                 <Flex key={Math.random()}
                                                       w={"full"}
@@ -103,30 +97,6 @@ export const FeaturedPlayList = () =>
 
 
             </Flex>
-
-
-            {/*<Box w={'50vw'}>*/}
-            {/*    <Swiper*/}
-            {/*        scrollbar={{*/}
-            {/*            hide: true,*/}
-            {/*        }}*/}
-            {/*        modules={[Scrollbar]}*/}
-            {/*        className="mySwiper bg-red-500">*/}
-
-
-            {/*        <SwiperSlide>Slide 1</SwiperSlide>*/}
-            {/*        <SwiperSlide>Slide 2</SwiperSlide>*/}
-            {/*        <SwiperSlide>Slide 3</SwiperSlide>*/}
-            {/*        <SwiperSlide>Slide 4</SwiperSlide>*/}
-            {/*        <SwiperSlide>Slide 5</SwiperSlide>*/}
-            {/*        <SwiperSlide>Slide 6</SwiperSlide>*/}
-            {/*        <SwiperSlide>Slide 7</SwiperSlide>*/}
-            {/*        <SwiperSlide>Slide 8</SwiperSlide>*/}
-            {/*        <SwiperSlide>Slide 9</SwiperSlide>*/}
-
-            {/*    </Swiper>*/}
-
-            {/*</Box>*/}
 
 
         </Box>

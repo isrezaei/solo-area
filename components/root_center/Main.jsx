@@ -4,26 +4,29 @@ import {Account} from "./Header/Account";
 import {NewReleasesAlbumsList} from "./New_Releases_Albums_List/NewReleasesAlbumsList";
 import {RecentlyPlayedList} from "./Recently_Played_List/RecentlyPlayedList";
 import {FeaturedPlayList} from "./Featured_playList/FeaturedPlayList";
-import {Box, Flex} from "@chakra-ui/react";
+import {Box, Flex, Text} from "@chakra-ui/react";
 import { Parallax } from 'react-parallax';
 
 import dynamic from "next/dynamic";
+
 const Animator = dynamic(
     import("react-scroll-motion").then((it) => it.Animator),
-    { ssr: false }
+    { ssr: true }
 );
 
-import { ScrollContainer, ScrollPage, batch, Fade, FadeIn, FadeOut, Move, MoveIn, MoveOut, Sticky, StickyIn, StickyOut, Zoom, ZoomIn, ZoomOut } from "react-scroll-motion";
+import {ScrollContainer , ScrollPage, batch, Fade, FadeIn, FadeOut, Move, MoveIn, MoveOut , Zoom, ZoomIn, ZoomOut } from "react-scroll-motion";
 
 
 export const Main = () =>
 {
 
-    const ZoomInScrollOut = batch(StickyIn(), FadeIn(), ZoomIn());
 
     return (
-        <Box w={"full"}>
+        <Box>
+
+
             {/*HEADER COMPONENTS*/}
+
             <Flex>
                 <Search/>
                 <Controller/>
@@ -32,8 +35,9 @@ export const Main = () =>
 
 
             <ScrollContainer>
+
                 <ScrollPage>
-                    <Animator animation={batch(Fade(), MoveOut(0, -50) , ZoomOut())}>
+                    <Animator animation={batch(Move() , MoveOut(300 , -100) )}>
                         {/*NEW RELEASES COMPONENTS*/}
                         <NewReleasesAlbumsList/>
                         {/*RECENTLY PLAYED LIST*/}
@@ -41,14 +45,18 @@ export const Main = () =>
                     </Animator>
                 </ScrollPage>
 
+
                 <ScrollPage>
-                        <Animator animation={batch(FadeIn() , MoveIn(50 , 0) )} >
-                            <FeaturedPlayList/>
-                        </Animator>
+                    <Animator  animation={batch(FadeIn() , MoveIn(-300 , 200) )}>
+                        <FeaturedPlayList/>
+                    </Animator>
                 </ScrollPage>
 
 
             </ScrollContainer>
+
+
+
         </Box>
     )
 }

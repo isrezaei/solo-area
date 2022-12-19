@@ -1,4 +1,4 @@
-import { SessionProvider } from "next-auth/react"
+
 import {ChakraProvider} from "@chakra-ui/react";
 import {RecoilRoot} from "recoil";
 import '/globals.css'
@@ -7,6 +7,7 @@ import {useRouter} from "next/router";
 import 'react-indiana-drag-scroll/dist/style.css';
 import {theme} from "@chakra-ui/react";
 import "@fontsource/karla"
+import {ScrollContainer} from "react-scroll-motion";
 
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
@@ -17,8 +18,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
     return (
         <RecoilRoot>
-            <SessionProvider session={session}>
                 <main style={{fontFamily : 'Karla'}}>
+
                 <ChakraProvider theme={theme}>
                     {
                         router.pathname === '/login' ?
@@ -29,7 +30,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
                     }
                 </ChakraProvider>
                 </main>
-            </SessionProvider>
         </RecoilRoot>
     )
 }

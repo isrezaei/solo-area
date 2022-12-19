@@ -1,5 +1,11 @@
 import {atom} from "recoil";
 
+
+export const LOGIN_TOKEN_ATOM = atom({
+    key : 'LOGIN TOKEN',
+    default : undefined
+})
+
 export const NEW_RELEASES_ALBUMS_ATOM = atom({
     key : 'NEW RELEASES' + Math.random() ,
     default : []
@@ -29,3 +35,4 @@ export const MY_PLAY_LIST_ID_ATOM = atom({
     key : 'MY PLAY LIST ID',
     default : '33gqi6xuZrpWLxHHW1pxyf'
 })
+

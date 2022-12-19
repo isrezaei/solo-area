@@ -1,13 +1,7 @@
-import useSpotify from "../../../hooks/useSpotify";
 import useSWR from 'swr'
-import {Box, Center, Circle, Flex, Grid, Image, Text, VStack , Fade} from "@chakra-ui/react";
-import axios from "axios";
-import { ScrollContainer } from 'react-indiana-drag-scroll'
-import {useRef , useEffect} from "react";
-import {Fetch_New_Releases_Albums} from "../../../lib/FetcherFuncs/Fetch_New_Releases_Albums";
+import {Box, Circle, Flex, Grid, Image, Text, VStack , Fade} from "@chakra-ui/react";
 import {FETCH_RECENTLY_PLAYED_TRACK} from "../../../lib/FetcherFuncs/Fetch_Recently_Played_Track";
-import {FaPlay} from 'react-icons/fa'
-import {GrCirclePlay} from 'react-icons/gr'
+
 
 export const RecentlyPlayedList = () =>
 {
@@ -16,8 +10,10 @@ export const RecentlyPlayedList = () =>
     const { data, error } = useSWR('/api/get_recently_played_list' , async () => (await FETCH_RECENTLY_PLAYED_TRACK()))
 
     const RENDER = data?.slice(0 , 10).map(value => {
+
         return (
-            <Flex w={'full'}
+            <Flex key={value.id}
+                  w={'full'}
                   justify={'space-between'}
                   align={'center'}
                   bg={'whiteAlpha.200'}
@@ -27,8 +23,7 @@ export const RecentlyPlayedList = () =>
                   cursor={'pointer'}
                   role={'group'}>
 
-                <Image key={Math.random()}
-                       src={value?.album?.images?.[0].url}
+                <Image src={value?.album?.images?.[0].url}
                        boxSize={59}
                        position={'relative'}
                        filter={'auto'}
@@ -38,7 +33,7 @@ export const RecentlyPlayedList = () =>
                 <Flex flex={2}
                       mx={3}
                       direction={'column'}>
-                    <Text color={'whiteAlpha'} fontWeight={'bold'} whiteSpace={'nowrap'} overflow={'hidden'} textOverflow={'ellipsis'}>{value.name}</Text>
+                    <Text w={150} color={'whiteAlpha'}  fontWeight={'bold'} whiteSpace={'nowrap'} overflow={'hidden'} textOverflow={'ellipsis'}>{value.name}</Text>
                     <Text fontSize={'xs'} color={'whiteAlpha.500'}>{value.artists[0].name}</Text>
                 </Flex>
 

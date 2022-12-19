@@ -6,7 +6,7 @@ export default function Document() {
     return (
         <Html lang="en">
             <Head>
-                <title></title>
+                <title>main</title>
             </Head>
             <body>
             <ColorModeScript initialColorMode={theme.config.initialColorMode} />

@@ -1,6 +1,6 @@
 import {Box, Flex, Image, Text , HStack} from "@chakra-ui/react";
 import {useRecoilValue} from "recoil";
-import {NEW_RELEASES_ALBUMS_TRACK_ATOM} from "../../../atoms/ItemsAtom";
+import {NEW_RELEASES_ALBUMS_TRACK_ATOM} from "../../../atoms/atoms";
 import {Suspense, useEffect, useState} from "react";
 import useSpotify from "../../../hooks/useSpotify";
 
