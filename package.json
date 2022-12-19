@@ -22,6 +22,7 @@
     "@next/font": "^13.0.4",
     "axios": "^1.1.3",
     "device-uuid": "^1.0.4",
+    "framer-motion": "^7.10.2",
     "lodash": "^4.17.21",
     "next": "12.3",
     "npm": "^8.19.2",
