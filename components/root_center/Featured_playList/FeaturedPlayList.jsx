@@ -12,6 +12,7 @@ export const FeaturedPlayList = () =>
     const GET_PLAY_LIST_ID = useRecoilValue(MY_PLAY_LIST_ID_ATOM)
     const GET_SPOTIFY_DEVICE_ID = useRecoilValue(SPOTIFY_DEVICE_ID_ATOM)
 
+
     const {data : PLAYLIST_DATA} = useSWR('FETCH FEATURED PLAYLIST' , () => FETCH_ONE_PLAYLIST(GET_PLAY_LIST_ID))
 
 

@@ -1,4 +1,4 @@
-import { Image, Text , Box , VStack ,HStack} from "@chakra-ui/react";
+import {Image, Text, Box, VStack, HStack, Divider, Center} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {ScrollContainer} from "react-indiana-drag-scroll";
 
@@ -30,7 +30,10 @@ export const NewReleasesAlbumsList = () =>
 
     return (
         <Box my={4}>
-            <Text fontSize={'2vw'} color={'whiteAlpha.800'} my={5}>New Releases</Text>
+            <Text fontSize={'lg'} color={'whiteAlpha.600'} >Weekly musics</Text>
+
+                <Divider orientation='horizontal' mb={5} />
+
 
             <ScrollContainer style={{display : 'flex'}}>
                 {Render}

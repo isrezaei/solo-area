@@ -1,26 +1,31 @@
 import {
     Button, color,
-    Divider,
+    Divider, HStack,
     Input,
     InputGroup,
     InputLeftElement,
-    InputRightElement,
+    InputRightElement, Tag, TagCloseButton, TagLabel,
     useColorModeValue
 } from "@chakra-ui/react";
 import {TbAdjustmentsHorizontal, TbPlayerRecord} from "react-icons/tb";
+import {PhoneIcon, SpinnerIcon} from "@chakra-ui/icons";
 
 export const Search = () =>
 {
 
     const bg = useColorModeValue('blackAlpha.200', 'whiteAlpha.200')
-    const color = useColorModeValue('whiteAlpha.800' , 'blackAlpha.800')
+    const color = useColorModeValue('blackAlpha.600' , 'whiteAlpha.600')
     const border = useColorModeValue('blackAlpha.300' , 'whiteAlpha.300')
 
 
     return (
         <InputGroup flex={6} size={'lg'}>
+
             <InputLeftElement
-                pointerEvents='none'/>
+                pointerEvents='none'
+                children={<SpinnerIcon boxSize={'1.5em'} color={'whiteAlpha.500'} />}
+            />
+
             <Input
                 type={"search"}
                 placeholder={'Search...'}
@@ -29,20 +34,27 @@ export const Search = () =>
                 bg={bg}
                 borderColor={border}
                 fontSize={12}/>
+
+
             <InputRightElement width={"auto"} mx={5}>
-                <Button h={'1.75rem'} size={'xs'} mx={1} rounded={12} colorScheme={'blackAlpha'}  >
-                    Minimal
-                </Button>
-                <Button h={'1.75rem'} size={'xs'} mx={1} rounded={12} colorScheme={'blackAlpha'}  >
-                    House
-                </Button>
-                <Button h={'1.75rem'} size={'xs'} mx={1} rounded={12} colorScheme={'blackAlpha'} >
-                    Rack
-                </Button>
-                <Divider height={5} orientation={'vertical'} mx={2}/>
-                <Button leftIcon={<TbAdjustmentsHorizontal size={18}/>} h={'1.75rem'} size={'xs'} mx={1} rounded={12} variant={'link'} >
-                    Filters
-                </Button>
+
+
+
+                <HStack>
+                    <Tag size={'sm'}>
+                        <TagLabel>Minimal</TagLabel>
+                        <TagCloseButton />
+                    </Tag>
+
+                    <Tag size={'sm'}>
+                        <TagLabel>House</TagLabel>
+                        <TagCloseButton />
+                    </Tag>
+                    <Divider height={5} orientation={'vertical'} mx={2}/>
+                    <Tag colorScheme={'green'} size={'sm'}>Filters</Tag>
+                </HStack>
+
+
             </InputRightElement>
         </InputGroup>
     )

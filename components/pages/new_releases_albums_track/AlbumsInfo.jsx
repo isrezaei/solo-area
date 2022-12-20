@@ -1,35 +1,15 @@
 import {Box, Flex, Image, Text , HStack} from "@chakra-ui/react";
 import {useRecoilValue} from "recoil";
 import {NEW_RELEASES_ALBUMS_TRACK_ATOM} from "../../../atoms/atoms";
-import {Suspense, useEffect, useState} from "react";
-import useSpotify from "../../../hooks/useSpotify";
+import useSWR from "swr";
+import {FETCH_ARTIST} from "../../../lib/FetcherFuncs/FETCH_ARTIST";
+import {FETCH_NEW_RELESES_TRACK} from "../../../lib/FetcherFuncs/FETCH_NEW_RELESES_TRACK";
 
 
 export const AlbumsInfo = () =>
 {
 
-
-    const spotifyApi = useSpotify()
-
-
-
-    const NEW_RELEASES_ALBUM_TRACK = useRecoilValue(NEW_RELEASES_ALBUMS_TRACK_ATOM)
-
-    const {images , type , name  , artists , release_date , total_tracks} = NEW_RELEASES_ALBUM_TRACK
-
-    const [ALBUM_ARTIST_DATA , SET_ALBUM_ARTIST_DATA] = useState('')
-
-    useEffect(() => {
-
-
-            spotifyApi.getArtist(artists?.[0]?.id).then(artist => SET_ALBUM_ARTIST_DATA(artist.body))
-
-
-        return () => SET_ALBUM_ARTIST_DATA('')
-
-
-    } , [artists , spotifyApi])
-
+    const {images , type , name  , artists , release_date , total_tracks} = useRecoilValue(NEW_RELEASES_ALBUMS_TRACK_ATOM)
 
 
     return (
@@ -51,7 +31,6 @@ export const AlbumsInfo = () =>
                 <Text color={'whiteAlpha.900'} fontSize={'5vw'} fontWeight={'bold'}>{name}</Text>
 
                 <HStack>
-                    <Image src={ALBUM_ARTIST_DATA?.images?.[0].url} boxSize={'3vw'} rounded={'full'} alt=''/>
                     <Text color={'whiteAlpha.900'}>{artists?.[0].name}</Text>
                     <Text color={'whiteAlpha.900'}>{release_date}</Text>
                     <Text color={'whiteAlpha.900'}>{total_tracks} Songs</Text>

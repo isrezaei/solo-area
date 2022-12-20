@@ -20,12 +20,12 @@ export const Main = () =>
 
 
     return (
-        <Box>
+        <Box py={5}>
 
 
             {/*HEADER COMPONENTS*/}
 
-            <Flex>
+            <Flex px={5}>
                 <Search/>
                 <Controller/>
                 <Account/>
@@ -35,7 +35,7 @@ export const Main = () =>
             <ScrollContainer>
 
                 <ScrollPage>
-                    <Animator animation={batch(Move() , MoveOut(300 , -100) )}>
+                    <Animator animation={batch(Move() , MoveOut(300 , 0) )}>
                         {/*NEW RELEASES COMPONENTS*/}
                         <NewReleasesAlbumsList/>
                         {/*RECENTLY PLAYED LIST*/}
@@ -45,7 +45,7 @@ export const Main = () =>
 
 
                 <ScrollPage>
-                    <Animator  animation={batch(FadeIn() , MoveIn(-300 , 200) )}>
+                    <Animator  animation={batch(FadeIn() , MoveIn(-300 , 0) )}>
                         <FeaturedPlayList/>
                     </Animator>
                 </ScrollPage>

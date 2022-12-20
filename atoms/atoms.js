@@ -3,7 +3,7 @@ import {atom} from "recoil";
 
 export const LOGIN_TOKEN_ATOM = atom({
     key : 'LOGIN TOKEN',
-    default : undefined
+    default : typeof window !== "undefined" && localStorage.getItem('token')
 })
 
 export const NEW_RELEASES_ALBUMS_ATOM = atom({

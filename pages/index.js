@@ -2,6 +2,7 @@ import {Main} from "../components/root_center/Main";
 import  {SWRConfig} from "swr";
 import {Fetch_New_Releases_Albums} from "../lib/FetcherFuncs/Fetch_New_Releases_Albums";
 import {FETCH_RECENTLY_PLAYED_TRACK} from "../lib/FetcherFuncs/Fetch_Recently_Played_Track";
+import {FETCH_ME} from "../lib/FetcherFuncs/FETCH_ME";
 
 
 export default function Home({fallback}) {
@@ -23,12 +24,15 @@ export const getStaticProps = async (context) =>
     //?GET RECENTLY PLAYED LIST AS A PRE-RENDERING
     const GET_RECENTLY_PLAYED_TRACK = await FETCH_RECENTLY_PLAYED_TRACK()
 
+    //?GET HOST USER INFO
+    const GET_ME_INFORMATION = await FETCH_ME()
 
     return {
         props : {
             fallback : {
                 '/api/get_new_releases_albums_list': GET_NEW_RELEASES,
-                '/api/get_recently_played_list': GET_RECENTLY_PLAYED_TRACK
+                '/api/get_recently_played_list': GET_RECENTLY_PLAYED_TRACK,
+                'GET ME INFORMATION' : GET_ME_INFORMATION
             },
         },
     }

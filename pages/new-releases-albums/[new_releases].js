@@ -5,7 +5,7 @@ import {AlbumsInfo} from "../../components/pages/new_releases_albums_track/Album
 import {Box} from "@chakra-ui/react";
 import {TracksInfo} from "../../components/pages/new_releases_albums_track/TracksInfo";
 import {Fetch_New_Releases_Albums} from "../../lib/FetcherFuncs/Fetch_New_Releases_Albums";
-import {Fetch_New_Releases_Tracks} from "../../lib/FetcherFuncs/Fetch_New_Releases_Tracks";
+import {FETCH_NEW_RELESES_TRACK} from "../../lib/FetcherFuncs/FETCH_NEW_RELESES_TRACK";
 
 function NewReleasesAlbumsTrack ({GET_NEW_RELEASES_ALL_DATA})
 {
@@ -52,7 +52,8 @@ export const getStaticPaths  = async () =>
 export const getStaticProps = async ({params : {new_releases : NEW_RELEASES_TRACK_ID}}) =>
 {
     //?GET NEW RELEASES ALBUMS TRACKS
-    const GET_NEW_RELEASES_ALBUM_TRACKS = await Fetch_New_Releases_Tracks(NEW_RELEASES_TRACK_ID)
+    const GET_NEW_RELEASES_ALBUM_TRACKS = await FETCH_NEW_RELESES_TRACK(NEW_RELEASES_TRACK_ID)
+
 
     return {
         props : {
@@ -62,16 +63,3 @@ export const getStaticProps = async ({params : {new_releases : NEW_RELEASES_TRAC
     }
 }
 
-
-// export const getServerSideProps = async (context) =>
-// {
-//
-//     //?GET NEW RELEASES ALBUMS TRACKS
-//     const GET_NEW_RELEASES_ALBUM_TRACKS = (await axios.get(process.env.NEXT_PUBLIC_BASE_URL + `/api/${context.params.new_releases}`)).data
-//
-//     return {
-//         props : {
-//             GET_NEW_RELEASES_ALL_DATA : JSON.stringify(GET_NEW_RELEASES_ALBUM_TRACKS)
-//         }
-//     }
-// }

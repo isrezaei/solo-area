@@ -2,8 +2,6 @@ import {useRecoilValue} from "recoil";
 import {NEW_RELEASES_ALBUMS_TRACK_ATOM} from "../../../atoms/atoms";
 import {Text, VStack, Flex, Center, Box} from "@chakra-ui/react";
 import prettyMilliseconds from "pretty-ms";
-
-import useSpotify from "../../../hooks/useSpotify";
 import {SPOTIFY_DEVICE_ID_ATOM} from "../../../atoms/atoms";
 import {PUT_SPOTIFY_PLAY_MUSIC} from "../../../lib/PuterFuncs/PUT_SPOTIFY_PLAY_MUSIC";
 
@@ -13,13 +11,7 @@ export const TracksInfo = () =>
 
     const SPOTIFY_DEVICE_ID = useRecoilValue(SPOTIFY_DEVICE_ID_ATOM)
 
-    const NEW_RELEASES_ALBUM_TRACK = useRecoilValue(NEW_RELEASES_ALBUMS_TRACK_ATOM)
-
-    const {tracks} = NEW_RELEASES_ALBUM_TRACK
-
-    const spotifyApi = useSpotify()
-
-
+    const {tracks} = useRecoilValue(NEW_RELEASES_ALBUMS_TRACK_ATOM)
 
 
     return (
