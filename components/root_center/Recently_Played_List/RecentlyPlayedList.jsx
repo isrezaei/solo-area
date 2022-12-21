@@ -1,5 +1,18 @@
 import useSWR from 'swr'
-import {Box, Circle, Flex, Grid, Image, Text, VStack, Fade, Divider} from "@chakra-ui/react";
+import {
+    Box,
+    Circle,
+    Flex,
+    Grid,
+    Image,
+    Text,
+    VStack,
+    Fade,
+    Divider,
+    Menu,
+    MenuButton,
+    MenuList, MenuItem, MenuDivider, Center
+} from "@chakra-ui/react";
 import {FETCH_RECENTLY_PLAYED_TRACK} from "../../../lib/FetcherFuncs/Fetch_Recently_Played_Track";
 import {RiPlayCircleLine} from 'react-icons/ri'
 import Tilt from 'react-parallax-tilt'
@@ -9,11 +22,17 @@ import {useRecoilValue} from "recoil";
 import {FETCH_TRACK} from "../../../lib/FetcherFuncs/FETCH_TRACK";
 import {useState} from "react";
 import _ from 'lodash'
+import { Icon } from '@chakra-ui/react'
+import { HiDotsHorizontal } from 'react-icons/hi'
+import {RiPlayFill} from 'react-icons/ri'
+import {useRouter} from "next/router";
 
 
 
 export const RecentlyPlayedList = () =>
 {
+
+    const router = useRouter()
 
     //?GET RECENTLY PLAYED LIST AS A FIRST CLINE SIDE RENDERING
     const {data : RECENTLY_PLAYED} = useSWR('/api/get_recently_played_list' , async () => (await FETCH_RECENTLY_PLAYED_TRACK()))
@@ -39,13 +58,11 @@ export const RecentlyPlayedList = () =>
     //? This render we don't have track uri
     const RENDER = _.unionBy(RECENTLY_PLAYED , 'id')?.slice(0 , 10).map(TRACK => {
 
-        // console.log(TRACK)
-
         return (
-            <Tilt key={TRACK.id} scale={0.95} transitionSpeed={1500} glareBorderRadius={'150px'}>
+
                 <Flex
                     w={'full'}
-                    justify={'space-between'}
+                    justify={'space-evenly'}
                     align={'center'}
                     bg={'whiteAlpha.200'}
                     _hover={{bg : 'whiteAlpha.300' , transition : '.3s'}}
@@ -69,21 +86,37 @@ export const RecentlyPlayedList = () =>
                     </Flex>
 
 
-                    <Circle
+                    <Center
+                        flex={3}
                         onClick={() => PLAY_TRACK(TRACK.id)}
-                        size={10}
-                        bg={'#8bc34a'}
-                        mx={2}
                         opacity={TRACK.id === activePlaying ? '100%' : '0%'}
                         pointerEvents={TRACK.id === activePlaying ? 'visible' : 'none'}
                         transition={'.5s'}
                         _groupHover={{opacity : '100%' , pointerEvents : 'auto'}}>
 
-                        <RiPlayCircleLine size={30} color={'rgba(0,0,0,0.63)'}/>
+                      <Icon boxSize={25} as={RiPlayFill} color={'whiteAlpha.600'}/>
+                    </Center>
 
-                    </Circle>
+
+
+                    <Box flex={2}>
+                        <Menu>
+                            <MenuButton>
+                                <Icon color={"whiteAlpha.500"} as={HiDotsHorizontal}/>
+                            </MenuButton>
+                            <MenuList bg={'blackAlpha.900'}>
+                                <MenuItem>Add to queue</MenuItem>
+                                <MenuDivider />
+                                <MenuItem onClick={() => router.push(`/artist/${TRACK.artists[0].id}`)}>Go to artist</MenuItem>
+                                <MenuItem>Got to albums</MenuItem>
+                                <MenuDivider />
+                                <MenuItem>Save to your Liked Songs </MenuItem>
+                            </MenuList>
+                        </Menu>
+                    </Box>
+
                 </Flex>
-            </Tilt>
+
         )
     })
 
