@@ -6,6 +6,7 @@ import {RecentlyPlayedList} from "./Recently_Played_List/RecentlyPlayedList";
 import {FeaturedPlayList} from "./Featured_playList/FeaturedPlayList";
 import {Box, Flex, Text} from "@chakra-ui/react";
 import dynamic from "next/dynamic";
+import {useRouter} from "next/router";
 
 const Animator = dynamic(
     import("react-scroll-motion").then((it) => it.Animator),
@@ -18,14 +19,12 @@ import {ScrollContainer , ScrollPage, batch, Fade, FadeIn, FadeOut, Move, MoveIn
 export const Main = () =>
 {
 
-
     return (
-        <Box py={5}>
-
+        <Box py={5} position={"relative"}>
 
             {/*HEADER COMPONENTS*/}
 
-            <Flex px={5}>
+            <Flex w={"full"} px={5} position={'absolute'}>
                 <Search/>
                 <Controller/>
                 <Account/>
@@ -36,10 +35,12 @@ export const Main = () =>
 
                 <ScrollPage>
                     <Animator animation={batch(Move() , MoveOut(300 , 0) )}>
-                        {/*NEW RELEASES COMPONENTS*/}
-                        <NewReleasesAlbumsList/>
-                        {/*RECENTLY PLAYED LIST*/}
-                        <RecentlyPlayedList/>
+                        <Flex direction={'column'} justify={"center"} h={'100vh'}>
+                            {/*NEW RELEASES COMPONENTS*/}
+                            <NewReleasesAlbumsList/>
+                            {/*RECENTLY PLAYED LIST*/}
+                            <RecentlyPlayedList/>
+                        </Flex>
                     </Animator>
                 </ScrollPage>
 

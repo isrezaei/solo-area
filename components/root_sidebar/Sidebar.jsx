@@ -28,24 +28,26 @@ export const Sidebar = () =>
 
 
     return (
-        <Box  flex={1.5}  h={'100vh'} p={4} position={"sticky"} top={0} >
+        <Flex direction={"column"} justify={'center'} gap={5} flex={1.5}  h={'100vh'} p={4} position={"sticky"} top={0} >
 
-            <Text  color={'whiteAlpha.900'} my={3}>Browser Music</Text>
+
 
             <Flex direction={'column'}>
-                <HStack spacing='.8vw' my={'1rem'}>
+                <Text  color={'whiteAlpha.900'} my={1}>Browser Music</Text>
+
+                <HStack spacing='.8vw' mb={2}>
                     <RiHome6Line color={'#989898'}/>
                     <Text fontSize='sm' color={'whiteAlpha.700'}>Home</Text>
                 </HStack>
-                <HStack spacing='.8vw' my={'1rem'}>
+                <HStack spacing='.8vw' my={2}>
                     <BsMusicPlayerFill color={'#989898'}/>
                     <Text fontSize='sm' color={'whiteAlpha.700'}>Albums</Text>
                 </HStack>
-                <HStack spacing='.8vw' my={'1rem'}>
+                <HStack spacing='.8vw' my={2}>
                     <MdOutlineQueueMusic color={'#989898'}/>
                     <Text fontSize='sm' color={'whiteAlpha.700'}>Tracks</Text>
                 </HStack>
-                <HStack spacing='.8vw' my={'1rem'}>
+                <HStack spacing='.8vw' my={2}>
                     <RiMusicFill color={'#989898'}/>
                     <Text fontSize='sm' color={'whiteAlpha.700'}>Genres</Text>
                 </HStack>
@@ -53,14 +55,11 @@ export const Sidebar = () =>
             </Flex>
 
 
-            <Text>PLAY LISTS</Text>
-
-
             <Flex w={"full"} h={'50vh'}  direction={'column'} justify={'flex-start'} align={"center"} gap={3} py={3} overflowY={'scroll'}  css={{
                 '&::-webkit-scrollbar': {
                     width: '0px',
                 }}}>
-
+                <Text w={"full"} textAlign={'left'}>Playlists</Text>
                 {MY_PLAY_LISTS?.map(data => (
                         <Box w={"full"} key={Math.random()} >
                             <Tilt glareEnable={true} glareBorderRadius={'15px'} glareMaxOpacity={0.5} glareColor="#689f38" glarePosition="all">
@@ -90,6 +89,6 @@ export const Sidebar = () =>
 
 
 
-        </Box>
+        </Flex>
     )
 }

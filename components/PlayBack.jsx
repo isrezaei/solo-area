@@ -28,7 +28,7 @@ import 'react-pulse-dot/dist/index.css'
 import {FETCH_MY_FLOWING_ARTISTS} from "../lib/FetcherFuncs/FETCH_MY_FLOWING_ARTISTS";
 import useSWR from "swr";
 import {useDebounce} from "react-use";
-
+import {useRouter} from "next/router";
 
 
 
@@ -38,6 +38,8 @@ export const PlayBack = () =>
     const {data : FLOWING_ARTISTS} = useSWR('FETCH FLOWING ARTIST' , async () => (await FETCH_MY_FLOWING_ARTISTS()))
 
     const player = usePlayer()
+
+    const router = useRouter()
 
 
     const toast = useToast()
@@ -154,15 +156,16 @@ export const PlayBack = () =>
 
 
     return (
-        <Flex direction={"column"} justifyContent={'space-around'} alignItems={'center'}  w={'20vw'} h={'100vh'} position={'sticky'} top={0} bg={"#181818"}>
+        <Flex direction={"column"} justify={'space-around'} alignItems={'center'} flex={2} h={'100vh'} position={'sticky'} top={0} bg={"#181818"}>
 
-            <Text textColor={'white'}>Your Flowing</Text>
+            <Text w={"full"} fontSize={'1.5vw'} px={4} fontWeight={'bold'} textColor={'whiteAlpha.600'}>Your Flowing</Text>
 
             <Grid templateColumns={'repeat(3 , 1fr)'}  w={'95%'} h={'15vw'} gap={1.5}>
                 {
                     FLOWING_ARTISTS?.map(ARTIST => {
+
                         return (
-                            <VStack key={Math.random()} my={1} bg={'#0e0e0e'} p={'.5vw'} rounded={'.8vw'}>
+                            <VStack key={Math.random()} onClick={() => router.push(`/artist/${ARTIST.id}`)} cursor={'pointer'} my={1} bg={'#0e0e0e'} p={'.5vw'} rounded={'.8vw'}>
                                 <Image src={ARTIST?.images?.[0].url} alt={ARTIST?.name} boxSize={'4vw'} rounded={"3xl"}/>
                                 <Text textAlign={'center'} fontSize={10} fontWeight={'bold'} color={'white'}>{ARTIST?.name}</Text>
                             </VStack>

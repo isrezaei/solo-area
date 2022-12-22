@@ -1,31 +1,27 @@
-import useSWR from "swr";
-import {FETCH_ARTIST} from "../../../lib/FetcherFuncs/FETCH_ARTIST";
-import {useRouter} from "next/router";
-import {Box, Flex, HStack, Image, Text, VStack, Button, Icon, Center} from "@chakra-ui/react";
-import {useState} from "react";
+import {
+    Box, Flex, HStack, Image, Text, VStack, Button, Icon, Center,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton, Grid
+} from "@chakra-ui/react";
 import { Img } from '@chakra-ui/react'
-import { HiDotsHorizontal } from 'react-icons/hi'
 import {RiPlayFill} from 'react-icons/ri'
 import Tilt from "react-parallax-tilt";
-import {PUT_SPOTIFY_PLAY_MUSIC} from "../../../lib/PuterFuncs/PUT_SPOTIFY_PLAY_MUSIC";
 import prettyMilliseconds from "pretty-ms";
 import {ScrollContainer} from "react-indiana-drag-scroll";
+import {useState} from "react";
 
-export const ArtistCOMP = () =>
+export const ArtistCOMP = ({ARTIST}) =>
 {
-
-    const [artistImage , setArtistImage] = useState()
-
-    const {query : {artist : artistID}} = useRouter()
-
-    const {data : ARTIST} = useSWR('GET ARTIST INFORMATION' , ()  => (FETCH_ARTIST(artistID)))
-
-    // const images = data?.map(value => value?.images?.[0].url)
-
 
     console.log(ARTIST)
 
-
+    //? For Modal
+    const [open , setOpen] = useState(false)
 
         return (
             <Box position={"relative"}>
@@ -53,9 +49,9 @@ export const ArtistCOMP = () =>
                     <VStack justify={'start'} align={'start'} w={"full"}>
 
                         <VStack w={"full"}  align={"start"}>
-                            <Text>Popular</Text>
+                            <Text  align={'left'} color={"whiteAlpha.800"} fontWeight={'bold'} fontSize={'2vw'}>Popular</Text>
                             {
-                                ARTIST?.top_track.map((TRACKS , INDEX) => (
+                                ARTIST?.top_track.slice(0 , 5).map((TRACKS , INDEX) => (
                                     <Box w={'full'} key={TRACKS.id}>
                                         <Tilt tiltEnable={false} glareEnable={true} glareBorderRadius={'.8vw'} glareMaxOpacity={0.3} glareColor="#6d6d6d" glarePosition="all">
                                             <Flex key={Math.random()}
@@ -65,7 +61,7 @@ export const ArtistCOMP = () =>
                                                   my={1}
                                                   p={2}
                                                   rounded={'lg'}
-                                                  bg={'whiteAlpha.50'}>
+                                                  bg={'whiteAlpha.200'}>
 
                                                 <Flex flex={1.1} justify={'space-around'} align={'center'}>
                                                     <Text flex={.5} align={'center'} >{INDEX + 1}</Text>
@@ -75,7 +71,7 @@ export const ArtistCOMP = () =>
                                                     </Center>
 
                                                     <Box flex={2} align={'start'}>
-                                                        <Text>{TRACKS?.name}</Text>
+                                                        <Text w={200} overflow={'hidden'} whiteSpace={"nowrap"} textOverflow={'ellipsis'}>{TRACKS?.name}</Text>
                                                         <Text fontSize={'sm'}>{TRACKS?.artists?.[0]?.name}</Text>
                                                     </Box>
                                                 </Flex>
@@ -92,17 +88,33 @@ export const ArtistCOMP = () =>
                         </VStack>
 
 
-                        <Text fontWeight={'bold'} fontSize={'2vw'}>More albums from {ARTIST?.artist_info.name}</Text>
+                        <HStack w={"full"} justify={'space-between'}>
+                            <Text  align={'left'} color={"whiteAlpha.800"} fontWeight={'bold'} fontSize={'2vw'}>More albums from {ARTIST?.artist_info.name}</Text>
+                            <Text onClick={() => setOpen(prevState => !prevState)}>SHOW ALL</Text>
+                        </HStack>
 
 
                             <ScrollContainer style={{display : 'flex' , width : '100%'}}>
                                 {
-                                    ARTIST?.artist_albums.items.map(ALBUMS => (
 
-                                        <VStack  key={ALBUMS.id} flex={'none'} bg={"blackAlpha.500"} p={1} mr={3} rounded={'.8vw'} _hover={{ bg: "#212121"}}>
-                                            <Image src={ALBUMS?.images[0].url} boxSize={'15vw'} p={3} rounded={'1.5vw'} alt=''/>
-                                            <Text  textAlign={'left'} fontWeight={'bold'} fontSize={'md'} align={'left'} color={'whitesmoke'}>{ALBUMS?.name}</Text>
-                                            <Text  textAlign={'left'} fontSize={'.8vw'} align={'left'} color={'#9e9e9e'}>{ALBUMS?.artists[0]?.name}</Text>
+                                    ARTIST?.artist_albums.items.slice(0 , 8).map(ALBUMS => (
+
+                                        <VStack  key={ALBUMS.id} flex={'none'} bg={'whiteAlpha.200'} p={1} mr={3} rounded={'.8vw'} _hover={{ bg: "whiteAlpha.300" , transition : '.3s'}}>
+                                            <Image src={ALBUMS?.images[0].url} boxSize={200} p={2} rounded={'1.5vw'} alt=''/>
+                                            <Text w={200}
+                                                  whiteSpace={"nowrap"}
+                                                  overflow={'hidden'}
+                                                  textOverflow={'ellipsis'}
+                                                  textAlign={'center'}
+                                                  fontWeight={'bold'}
+                                                  fontSize={'md'}
+                                                  color={'whitesmoke'}>{ALBUMS?.name}</Text>
+
+                                            <HStack>
+                                                <Text fontWeight={'bold'} fontSize={'sm'} color={'#9e9e9e'}>{ALBUMS.release_date.slice(0 , 4)}</Text>
+                                                <Text fontWeight={'bold'} fontSize={'sm'} color={'#9e9e9e'}>{ALBUMS.type}</Text>
+                                            </HStack>
+
                                         </VStack>
 
                                     ))
@@ -113,6 +125,52 @@ export const ArtistCOMP = () =>
                     </VStack>
 
                 </Flex>
+
+
+                {/*More Albums*/}
+
+                <Modal size={'full'} isOpen={open} onClose={() => setOpen(prevState => !prevState)}>
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalHeader bg={"black"}>Modal Title</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody bg={"black"}>
+
+                            <Grid templateColumns='repeat(5, 1fr)' gap={6}>
+                            {
+                                ARTIST?.artist_albums.items.map(ALBUMS => (
+
+                                    <VStack  key={ALBUMS.id} flex={'none'} bg={'whiteAlpha.200'} p={1} mr={3} rounded={'.8vw'} _hover={{ bg: "whiteAlpha.300" , transition : '.3s'}}>
+                                        <Image src={ALBUMS?.images[0].url} boxSize={200} p={2} rounded={'1.5vw'} alt=''/>
+                                        <Text w={200}
+                                              whiteSpace={"nowrap"}
+                                              overflow={'hidden'}
+                                              textOverflow={'ellipsis'}
+                                              textAlign={'center'}
+                                              fontWeight={'bold'}
+                                              fontSize={'md'}
+                                              color={'whitesmoke'}>{ALBUMS?.name}</Text>
+
+                                        <HStack>
+                                            <Text fontWeight={'bold'} fontSize={'sm'} color={'#9e9e9e'}>{ALBUMS.release_date.slice(0 , 4)}</Text>
+                                            <Text fontWeight={'bold'} fontSize={'sm'} color={'#9e9e9e'}>{ALBUMS.type}</Text>
+                                        </HStack>
+
+                                    </VStack>
+                                ))
+                            }
+                            </Grid>
+                        </ModalBody>
+
+                        <ModalFooter>
+                            <Button colorScheme='blue' mr={3} onClick={() => setOpen(prevState => !prevState)}>
+                                Close
+                            </Button>
+                            <Button variant='ghost'>Secondary Action</Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
+
             </Box>
 
         )

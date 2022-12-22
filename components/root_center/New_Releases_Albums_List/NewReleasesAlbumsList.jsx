@@ -29,11 +29,8 @@ export const NewReleasesAlbumsList = () =>
 
 
     return (
-        <Box my={4}>
-            <Text fontSize={'lg'} color={'whiteAlpha.600'} >Weekly musics</Text>
-
-                <Divider orientation='horizontal' mb={5} />
-
+        <Box my={4} px={5}>
+            <Text my={2} fontSize={'2vw'} fontWeight={"bold"} color={'whiteAlpha.700'} >Weekly musics</Text>
 
             <ScrollContainer style={{display : 'flex'}}>
                 {Render}

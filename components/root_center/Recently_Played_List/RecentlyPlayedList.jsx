@@ -125,9 +125,9 @@ export const RecentlyPlayedList = () =>
 
         <Box w={"full"} h={'auto'}  my={4} px={5}>
 
-            <Text fontSize={'lg'} color={'whiteAlpha.600'} >Let's listen again</Text>
+            <Text my={2} fontSize={'2vw'} fontWeight={"bold"} color={'whiteAlpha.700'} >Let's listen again</Text>
 
-            <Divider orientation='horizontal' mb={3} />
+
 
             <Grid templateColumns='repeat(3, 1fr)' gap={4}>
                 {RENDER}

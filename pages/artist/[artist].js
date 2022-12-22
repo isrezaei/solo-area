@@ -1,10 +1,9 @@
 import {FETCH_ARTIST} from "../../lib/FetcherFuncs/FETCH_ARTIST";
 import {ArtistCOMP} from "../../components/pages/artist/ArtistCOMP";
 
-
-export default function artist()
+export default function artist({GET_ARTIST_INFO})
 {
-    return <ArtistCOMP/>
+    return <ArtistCOMP ARTIST={GET_ARTIST_INFO}/>
 }
 
 
@@ -17,9 +16,7 @@ export const getServerSideProps = async ({params : {artist : artistID}}) =>
 
     return {
         props : {
-            fallback : {
-                'GET ARTIST INFORMATION' : GET_ARTIST_INFO
-            }
+                GET_ARTIST_INFO
         }
     }
 }
