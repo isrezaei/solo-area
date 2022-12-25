@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import {Box, Image, Text, VStack, Flex, HStack, Divider, Center , Progress} from "@chakra-ui/react";
-import {useRecoilValue} from "recoil";
-import {MY_PLAY_LIST_ID_ATOM , SPOTIFY_DEVICE_ID_ATOM} from "../../../atoms/atoms";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {MY_PLAY_LIST_ID_ATOM, SPOTIFY_DEVICE_ID_ATOM, SPOTIFY_TRACKS_ID_ATOM} from "../../../atoms/atoms";
 import {FETCH_ONE_PLAYLIST} from "../../../lib/FetcherFuncs/FETCH_ONE_PLAYLIST";
 import prettyMilliseconds from "pretty-ms";
 import {PUT_SPOTIFY_PLAY_MUSIC} from "../../../lib/PuterFuncs/PUT_SPOTIFY_PLAY_MUSIC";
@@ -15,12 +15,15 @@ export const FeaturedPlayList = () =>
 
     const {data : PLAYLIST_DATA} = useSWR('FETCH FEATURED PLAYLIST' , () => FETCH_ONE_PLAYLIST(GET_PLAY_LIST_ID))
 
+    const [trackID , setTrackID] = useRecoilState(SPOTIFY_TRACKS_ID_ATOM)
 
+
+    console.log(trackID)
 
     return (
 
         <Box w={'full'} >
-            <Flex w={'full'}   direction={'column'}  px={5} bg={"whiteAlpha.100"} >
+            <Flex w={'full'}   direction={'column'}  px={5}  >
                 <Flex w={"full"} h={'22vw'}  justify={'flex-start'} align={'center'} bgGradient='linear(to-b, green.800 , blackAlpha.200)'>
                     <Image src={PLAYLIST_DATA?.images[0]?.url} alt='' boxSize={250} mx={6} boxShadow={'2xl'}/>
                     <VStack align={'start'}>
@@ -48,6 +51,8 @@ export const FeaturedPlayList = () =>
 
                         {
                             PLAYLIST_DATA?.tracks.items.map((TRACKS , INDEX) => {
+
+
                                 return (
                                         <Box w={'full'} key={TRACKS.track.id}>
                                             <Tilt tiltEnable={false} glareEnable={true} glareBorderRadius={'.8vw'} glareMaxOpacity={0.3} glareColor="#6d6d6d" glarePosition="all">
@@ -59,7 +64,7 @@ export const FeaturedPlayList = () =>
                                                       p={2}
                                                       rounded={'lg'}
                                                       bg={'whiteAlpha.50'}
-                                                      onClick={() => PUT_SPOTIFY_PLAY_MUSIC(TRACKS.track.uri , GET_SPOTIFY_DEVICE_ID)}>
+                                                      onClick={() => setTrackID(TRACKS.track.id)}>
 
                                                     <Flex flex={1.1} justify={'space-around'} align={'center'}>
                                                         <Text flex={.5} align={'center'} >{INDEX + 1}</Text>

@@ -24,7 +24,7 @@ export const Main = () =>
 
             {/*HEADER COMPONENTS*/}
 
-            <Flex w={"full"} px={5} position={'absolute'}>
+            <Flex w={"full"} px={5} position={'absolute'} zIndex={1000}>
                 <Search/>
                 <Controller/>
                 <Account/>
@@ -35,7 +35,7 @@ export const Main = () =>
 
                 <ScrollPage>
                     <Animator animation={batch(Move() , MoveOut(300 , 0) )}>
-                        <Flex direction={'column'} justify={"center"} h={'100vh'}>
+                        <Flex  direction={'column'} justify={"center"} align={'start'}  h={'100vh'}>
                             {/*NEW RELEASES COMPONENTS*/}
                             <NewReleasesAlbumsList/>
                             {/*RECENTLY PLAYED LIST*/}

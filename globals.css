@@ -1,4 +1,87 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
+.rhap_main ,  .rhap_stacked
+{
+    justify-content: center!important;
+    align-items: center!important;
+}
+
+.rhap_progress-bar {
+    background-color: aquamarine;
+}
+
+.rhap_container {
+    padding: 0!important;
+    margin: 0!important;
+}
+.rhap_loop--off {
+
+}
+.rhap_play-status--paused {
+
+}
+
+.rhap_controls-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.rhap_volume-controls
+{
+    width: 100% !important;
+    justify-content:space-around !important;
+}
+
+.rhap_current-time , .rhap_time , .rhap_total-time
+{
+    color: white!important;
+    font-size: .8vw!important;
+}
+
+.rhap_progress-indicator
+{
+    display: none;
+    width: 10px !important;
+    height: 14px!important;
+    top : -4px!important;
+    background-color: #679b41 !important;
+}
+
+.rhap_progress-section
+{
+    width: 95%;
+    background-color: rgba(52, 52, 52, 0.72);
+    padding: .4vw;
+    border-radius: .5vw;
+}
+
+.rhap_progress-filled
+{
+    background-color: #679b41 !important;
+}
+
+.rhap_download-progress
+{
+    background-color: rgba(56, 56, 56, 0.41) !important;
+}
+
+.rhap_progress-container
+{
+    margin: 0 19px !important
+}
+
+.rhap_progress-bar {
+    height: 3px;
+    background-color: darkgray!important;
+}
+
+.rhap_volume-container
+{
+    height: 100% !important;
+    margin: .5vw 0;
+}
+
+.rhap_volume-bar
+{
+    background-color: #679b41 !important;
+}

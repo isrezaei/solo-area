@@ -26,9 +26,9 @@ export const SPOTIFY_DEVICE_ID_ATOM = atom({
     default : undefined
 })
 
-export const SPOTIFY_TRACKS_URI_ATOM = atom({
-    key : 'SPOTIFY TRACKS URI',
-    default : ''
+export const SPOTIFY_TRACKS_ID_ATOM = atom({
+    key : 'SPOTIFY TRACKS ID',
+    default : undefined
 })
 
 export const MY_PLAY_LIST_ID_ATOM = atom({

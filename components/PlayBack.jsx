@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {
     Box,
     Divider,
@@ -29,6 +29,8 @@ import {FETCH_MY_FLOWING_ARTISTS} from "../lib/FetcherFuncs/FETCH_MY_FLOWING_ART
 import useSWR from "swr";
 import {useDebounce} from "react-use";
 import {useRouter} from "next/router";
+import {SPOTIFY_DOWNLOADER} from "../lib/FetcherFuncs/SPOTIFY_DOWNLOADER";
+import {Howl, Howler} from 'howler';
 
 
 
@@ -37,9 +39,11 @@ export const PlayBack = () =>
 
     const {data : FLOWING_ARTISTS} = useSWR('FETCH FLOWING ARTIST' , async () => (await FETCH_MY_FLOWING_ARTISTS()))
 
+
     const player = usePlayer()
 
     const router = useRouter()
+
 
 
     const toast = useToast()
@@ -53,10 +57,12 @@ export const PlayBack = () =>
     const [SPOTIFY_DEVICE_ID , SET_SPOTIFY_DEVICE_ID] = useRecoilState(SPOTIFY_DEVICE_ID_ATOM)
 
 
+
+
     //*HANDEL CHANGE VOLUME IN DEBOUNCE MOOD
     useDebounce(() => {
         player?.setVolume(volume).then(() => {
-            console.log('Volume updated!');
+            // console.log('Volume updated!');
         });
     } , 1000 , [volume])
 
@@ -191,9 +197,10 @@ export const PlayBack = () =>
                             <SkeletonText padding={3} noOfLines={1} startColor='#212121' endColor='#424242'/>
                             <SkeletonText paddingX={'5vw'} noOfLines={1} startColor='#212121' endColor='#424242'/>
                         </Box>
+
                 }
 
-                <Flex opacity={is_active ? '100%' : '30%'} pointerEvents={is_active ? 'auto' : 'none'} cursor={'pointer'} w={"full"} h={'5vw'} justify={'space-evenly'} alignItems={'center'}>
+                <Flex cursor={'pointer'} w={"full"} h={'5vw'} justify={'space-evenly'} alignItems={'center'}>
 
                     <Center w={'2vw'} h={'2vw'} bg={'#424242'} rounded={'xl'}>
                         <MdRepeat color={'white'} size={20}/>
@@ -218,6 +225,8 @@ export const PlayBack = () =>
                     </Center>
 
                 </Flex>
+
+
 
 
 

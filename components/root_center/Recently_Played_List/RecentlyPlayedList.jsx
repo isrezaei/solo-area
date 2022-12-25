@@ -18,7 +18,7 @@ import {RiPlayCircleLine} from 'react-icons/ri'
 import Tilt from 'react-parallax-tilt'
 import {PUT_SPOTIFY_PLAY_MUSIC} from "../../../lib/PuterFuncs/PUT_SPOTIFY_PLAY_MUSIC";
 import {SPOTIFY_DEVICE_ID_ATOM} from "../../../atoms/atoms";
-import {useRecoilValue} from "recoil";
+import {useRecoilValue , useRecoilState} from "recoil";
 import {FETCH_TRACK} from "../../../lib/FetcherFuncs/FETCH_TRACK";
 import {useState} from "react";
 import _ from 'lodash'
@@ -26,7 +26,8 @@ import { Icon } from '@chakra-ui/react'
 import { HiDotsHorizontal } from 'react-icons/hi'
 import {RiPlayFill} from 'react-icons/ri'
 import {useRouter} from "next/router";
-
+import {SPOTIFY_DOWNLOADER} from "../../../lib/FetcherFuncs/SPOTIFY_DOWNLOADER";
+import {SPOTIFY_TRACKS_ID_ATOM} from "../../../atoms/atoms";
 
 
 export const RecentlyPlayedList = () =>
@@ -40,6 +41,8 @@ export const RecentlyPlayedList = () =>
 
     const [activePlaying , setActivePlaying] = useState()
 
+    const [trackID , setTrackID] = useRecoilState(SPOTIFY_TRACKS_ID_ATOM)
+
 
     const PLAY_TRACK = async (trackID) =>
     {
@@ -48,8 +51,10 @@ export const RecentlyPlayedList = () =>
         //? ID from get track
         setActivePlaying(TRACK.id)
 
+        setTrackID(TRACK.id)
+
         //? Get track uri for playing song
-        return PUT_SPOTIFY_PLAY_MUSIC(TRACK.uri , DEVICE_ID)
+        // return PUT_SPOTIFY_PLAY_MUSIC(TRACK.uri , DEVICE_ID)
     }
 
 
@@ -61,7 +66,7 @@ export const RecentlyPlayedList = () =>
         return (
 
                 <Flex
-                    w={'full'}
+                    w={'20vw'}
                     justify={'space-evenly'}
                     align={'center'}
                     bg={'whiteAlpha.200'}
