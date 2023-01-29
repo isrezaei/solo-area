@@ -17,9 +17,6 @@ export const FeaturedPlayList = () =>
 
     const [trackID , setTrackID] = useRecoilState(SPOTIFY_TRACKS_ID_ATOM)
 
-
-    console.log(trackID)
-
     return (
 
         <Box w={'full'} >

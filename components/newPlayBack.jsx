@@ -6,7 +6,7 @@ import {
     Grid,
     HStack,
     Icon,
-    Image,
+    Image, Link,
     Skeleton,
     SkeletonText,
     Text,
@@ -118,7 +118,9 @@ export const NewPlayBack =() =>
                     customVolumeControls={
                         [RHAP_UI.VOLUME,
                             <HStack>
-                                <Icon boxSize={6} bg={"whiteAlpha.300"} color={"whiteAlpha.600"} rounded={50} p={1}  as={RiDownload2Fill}/> ,
+                                <Link href={PLAYBACK?.soundcloudTrack?.audio[0].url} download>
+                                    <Icon boxSize={6} bg={"whiteAlpha.300"} color={"whiteAlpha.600"} rounded={50} p={1}  as={RiDownload2Fill}/>
+                                </Link>
                                 <Icon boxSize={6} bg={"whiteAlpha.300"} color={"whiteAlpha.600"} rounded={50} p={1}  as={RiHeart3Line}/>
                             </HStack>]}
                     customControlsSection={
