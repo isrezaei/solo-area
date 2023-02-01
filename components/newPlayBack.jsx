@@ -34,12 +34,10 @@ export const NewPlayBack =() =>
     const trackID = useRecoilValue(SPOTIFY_TRACKS_ID_ATOM)
 
     const {data : FLOWING_ARTISTS} = useSWR('FETCH FLOWING ARTIST' , async () => (await FETCH_MY_FLOWING_ARTISTS()))
-    // const {data : PLAYBACK} = useSWR('GET PLAY MUSIC' , async () => (await SPOTIFY_DOWNLOADER(trackID)))
-
 
     const [PLAYBACK , setPLAYBACK] = useState()
 
-    const [play , setPlay] = useState(false)
+
 
     console.log(trackID)
 
@@ -50,7 +48,6 @@ export const NewPlayBack =() =>
             const getData = async () =>
             {
                 const Data = await SPOTIFY_DOWNLOADER(trackID)
-                console.log(Data)
                 setPLAYBACK(Data)
             }
             getData()

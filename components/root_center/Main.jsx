@@ -7,52 +7,55 @@ import {FeaturedPlayList} from "./Featured_playList/FeaturedPlayList";
 import {Box, Flex, Text} from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import {useRouter} from "next/router";
-
-const Animator = dynamic(
-    import("react-scroll-motion").then((it) => it.Animator),
-    { ssr: true }
-);
-
-import {ScrollContainer , ScrollPage, batch, Fade, FadeIn, FadeOut, Move, MoveIn, MoveOut , Zoom, ZoomIn, ZoomOut } from "react-scroll-motion";
-
+import {useRecoilValue, useSetRecoilState} from "recoil";
+import {RANDOM_COLOR} from "../../atoms/atoms";
+import _ from "lodash";
+import {useEffect, useMemo, useState} from "react";
+import {SearchBarModal} from "./SearchBarModal";
+import randomColor from 'randomcolor'
+import {useInterval} from "react-use";
 
 export const Main = () =>
 {
 
+
+    const color = randomColor({
+        count: 10,
+        hue: 'green'
+    });
+
+    const [count , setCount] = useState(0)
+
+    useInterval(() => setCount(prevState => prevState === 9 ? 0 : prevState + 1) ,3000);
+
+
     return (
-        <Box py={5} position={"relative"}>
+        <Box position={"relative"}>
+
+            <Box bgGradient={'linear(to-b, whatsapp.800 , blackAlpha.500)'} w={"full"} h={380} position={'absolute'} ></Box>
+
 
             {/*HEADER COMPONENTS*/}
 
-            <Flex w={"full"} px={5} position={'absolute'} zIndex={1000}>
+            <Flex  w={"full"} p={5} >
+                <SearchBarModal/>
                 <Search/>
                 <Controller/>
                 <Account/>
             </Flex>
 
 
-            <ScrollContainer>
-
-                <ScrollPage>
-                    <Animator animation={batch(Move() , MoveOut(300 , 0) )}>
-                        <Flex  direction={'column'} justify={"center"} align={'start'}  h={'100vh'}>
-                            {/*NEW RELEASES COMPONENTS*/}
-                            <NewReleasesAlbumsList/>
-                            {/*RECENTLY PLAYED LIST*/}
-                            <RecentlyPlayedList/>
-                        </Flex>
-                    </Animator>
-                </ScrollPage>
 
 
-                <ScrollPage>
-                    <Animator  animation={batch(FadeIn() , MoveIn(-300 , 0) )}>
-                        <FeaturedPlayList/>
-                    </Animator>
-                </ScrollPage>
+            <Flex  direction={'column'} justify={"start"} align={'start'}  >
+                {/*NEW RELEASES COMPONENTS*/}
+                <NewReleasesAlbumsList/>
+                {/*RECENTLY PLAYED LIST*/}
+                <RecentlyPlayedList/>
+            </Flex>
 
+            <FeaturedPlayList/>
 
-            </ScrollContainer>
 
 
 

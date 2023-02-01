@@ -37,7 +37,7 @@ export const RecentlyPlayedList = () =>
 
     //?GET RECENTLY PLAYED LIST AS A FIRST CLINE SIDE RENDERING
     const {data : RECENTLY_PLAYED} = useSWR('/api/get_recently_played_list' , async () => (await FETCH_RECENTLY_PLAYED_TRACK()))
-    const DEVICE_ID = useRecoilValue(SPOTIFY_DEVICE_ID_ATOM)
+
 
     const [activePlaying , setActivePlaying] = useState()
 
@@ -46,15 +46,13 @@ export const RecentlyPlayedList = () =>
 
     const PLAY_TRACK = async (trackID) =>
     {
+        //?She's going to take a song ID and bring
         const TRACK = await FETCH_TRACK(trackID)
 
         //? ID from get track
         setActivePlaying(TRACK.id)
-
         setTrackID(TRACK.id)
 
-        //? Get track uri for playing song
-        // return PUT_SPOTIFY_PLAY_MUSIC(TRACK.uri , DEVICE_ID)
     }
 
 

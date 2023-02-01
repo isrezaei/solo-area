@@ -19,43 +19,18 @@ export const Search = () =>
 
 
     return (
-        <InputGroup flex={6} size={'lg'}>
+        <HStack flex={1} zIndex={1000}>
+            <Tag size={'sm'}>
+                <TagLabel>Minimal</TagLabel>
+                <TagCloseButton />
+            </Tag>
 
-            <InputLeftElement
-                pointerEvents='none'
-                children={<SpinnerIcon boxSize={'1.5em'} color={'whiteAlpha.500'} />}
-            />
-
-            <Input
-                type={"search"}
-                placeholder={'Search...'}
-                rounded={'50vw'}
-                color={color}
-                bg={bg}
-                borderColor={border}
-                fontSize={12}/>
-
-
-            <InputRightElement width={"auto"} mx={5}>
-
-
-
-                <HStack>
-                    <Tag size={'sm'}>
-                        <TagLabel>Minimal</TagLabel>
-                        <TagCloseButton />
-                    </Tag>
-
-                    <Tag size={'sm'}>
-                        <TagLabel>House</TagLabel>
-                        <TagCloseButton />
-                    </Tag>
-                    <Divider height={5} orientation={'vertical'} mx={2}/>
-                    <Tag colorScheme={'green'} size={'sm'}>Filters</Tag>
-                </HStack>
-
-
-            </InputRightElement>
-        </InputGroup>
+            <Tag size={'sm'}>
+                <TagLabel>House</TagLabel>
+                <TagCloseButton />
+            </Tag>
+            <Divider height={5} orientation={'vertical'} mx={2}/>
+            <Tag colorScheme={'green'} size={'sm'}>Filters</Tag>
+        </HStack>
     )
 }

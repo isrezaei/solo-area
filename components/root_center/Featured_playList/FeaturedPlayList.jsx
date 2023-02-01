@@ -17,11 +17,16 @@ export const FeaturedPlayList = () =>
 
     const [trackID , setTrackID] = useRecoilState(SPOTIFY_TRACKS_ID_ATOM)
 
+
+
+
     return (
 
-        <Box w={'full'} >
-            <Flex w={'full'}   direction={'column'}  px={5}  >
-                <Flex w={"full"} h={'22vw'}  justify={'flex-start'} align={'center'} bgGradient='linear(to-b, green.800 , blackAlpha.200)'>
+
+
+            <Flex w={'full'} h={'100vh'} overflow={'hidden'}  direction={'column'} px={5} mt={5}  >
+
+                <Flex w={"full"} justify={'start'} align={'center'} py={8} >
                     <Image src={PLAYLIST_DATA?.images[0]?.url} alt='' boxSize={250} mx={6} boxShadow={'2xl'}/>
                     <VStack align={'start'}>
                         <Text fontWeight={'bold'}>PUBLIC PLAYLIST</Text>
@@ -45,7 +50,7 @@ export const FeaturedPlayList = () =>
 
                 {PLAYLIST_DATA?.id === GET_PLAY_LIST_ID ?  <Divider my={3} bg={'whiteAlpha.700'} p={.4}/> : <Progress my={3} size='xs' isIndeterminate />}
 
-
+                <Box w={"full"} h={'100vh'} overflowY={'scroll'} overflowX={"hidden"}>
                         {
                             PLAYLIST_DATA?.tracks.items.map((TRACKS , INDEX) => {
 
@@ -71,14 +76,15 @@ export const FeaturedPlayList = () =>
                                                         </Center>
 
                                                         <Box flex={2} align={'start'}>
-                                                            <Text>{TRACKS?.track?.name}</Text>
-                                                            <Text fontSize={'sm'}>{TRACKS?.track?.artists?.[0]?.name}</Text>
+                                                            <Text w={100} whiteSpace={'nowrap'} textOverflow={"ellipsis"} overflow={'hidden'}>{TRACKS?.track?.name}</Text>
+                                                            <Text w={79} whiteSpace={'nowrap'} textOverflow={"ellipsis"} overflow={'hidden'} fontSize={'sm'}>{TRACKS?.track?.artists?.[0]?.name}</Text>
                                                         </Box>
                                                     </Flex>
 
-                                                    <Text flex={1}  textAlign={'center'}>{TRACKS?.track?.album?.name}</Text>
-                                                    <Text flex={1}  textAlign={'center'}>{TRACKS?.added_at}</Text>
-                                                    <Text flex={1}  textAlign={'center'}>  {prettyMilliseconds(TRACKS?.track?.duration_ms , {secondsDecimalDigits : 0 , colonNotation : true})}</Text>
+                                                    <Text flex={1} w={1} whiteSpace={'nowrap'} textOverflow={"ellipsis"} overflow={'hidden'} fontSize={"sm"} textAlign={'center'}>{TRACKS?.track?.album?.name}</Text>
+                                                    <Text flex={1}  textAlign={'center'} fontSize={"sm"}>{TRACKS?.added_at.slice(0 , 10)}</Text>
+                                                    <Text flex={1}  textAlign={'center'} fontSize={"sm"}>  {prettyMilliseconds(TRACKS?.track?.duration_ms , {secondsDecimalDigits : 0 , colonNotation : true})}</Text>
+                                                    <Text flex={.2} >{trackID === TRACKS.track.id ? 'play' : ''}</Text>
                                                 </Flex>
                                             </Tilt>
                                         </Box>
@@ -86,12 +92,12 @@ export const FeaturedPlayList = () =>
                             })
                         }
 
+                </Box>
 
 
             </Flex>
 
 
-        </Box>
 
 
     )

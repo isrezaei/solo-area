@@ -36,3 +36,8 @@ export const MY_PLAY_LIST_ID_ATOM = atom({
     default : '33gqi6xuZrpWLxHHW1pxyf'
 })
 
+export const RANDOM_COLOR = atom({
+    key : 'RANDOM COLOR',
+    default : 'whatsapp'
+})
+
