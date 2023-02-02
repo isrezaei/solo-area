@@ -10,13 +10,15 @@ export const Controller = () =>
     const bg = useColorModeValue('blackAlpha.200', 'whiteAlpha.200')
 
     return (
-        <Flex flex={.4}
-              justify={'center'}
-              align={'center'}
-              bg={bg}
-              rounded={50}
-              gap={5}
-              mx={8}>
+        <Flex
+            zIndex={1000}
+            flex={.4}
+            justify={'center'}
+            align={'center'}
+            bg={bg}
+            rounded={50}
+            gap={5}
+            mx={8}>
 
             <DarkModeSwitch
                 moonColor={'#fff'}

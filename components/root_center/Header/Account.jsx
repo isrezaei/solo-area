@@ -22,15 +22,15 @@ export const Account = () =>
     return (
         <Menu>
             <MenuButton
-                bgColor={'#1c1c1c'}
+                bgColor={'whiteAlpha.200'}
                 color={'whiteAlpha.800'}
                 height={'auto'}
                 rounded={'3xl'}
                 pl={3}
                 as={IconButton}
                 rightIcon={<Avatar name={ME?.display_name} src={ME?.images[0]?.url}/>}
-                _hover={{ bg: 'transparent' }}
-                _expanded={{ bg: '#1c1c1c' }}
+
+                _expanded={{ bg: 'whiteAlpha.200' }}
                 _focus={{ bg : '#1c1c1c' , boxShadow : 'none'}}>
                 <TriangleDownIcon w={3} h={3} mr={2} color={'whiteAlpha.600'} />
                 {ME?.display_name}

@@ -32,7 +32,7 @@ export const Main = () =>
     return (
         <Box position={"relative"}>
 
-            <Box bgGradient={'linear(to-b, whatsapp.800 , blackAlpha.500)'} w={"full"} h={380} position={'absolute'} ></Box>
+            <Box  bgGradient={'linear(to-b, whatsapp.800 , blackAlpha.500)'} w={"full"} h={380} position={'absolute'} ></Box>
 
 
             {/*HEADER COMPONENTS*/}

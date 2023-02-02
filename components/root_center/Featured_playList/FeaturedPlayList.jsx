@@ -24,10 +24,10 @@ export const FeaturedPlayList = () =>
 
 
 
-            <Flex w={'full'} h={'100vh'} overflow={'hidden'}  direction={'column'} px={5} mt={5}  >
+            <Flex w={'full'} h={'100vh'} overflow={'hidden'}  direction={'column'}  mt={5}  >
 
-                <Flex w={"full"} justify={'start'} align={'center'} py={8} >
-                    <Image src={PLAYLIST_DATA?.images[0]?.url} alt='' boxSize={250} mx={6} boxShadow={'2xl'}/>
+                <Flex w={"full"} justify={'start'} align={'center'} py={8} bgGradient={'linear(to-b , blackAlpha.100, whatsapp.800 , blackAlpha.100)'}>
+                    <Image src={PLAYLIST_DATA?.images[0]?.url} alt='' boxSize={230} mx={6} boxShadow={'2xl'}/>
                     <VStack align={'start'}>
                         <Text fontWeight={'bold'}>PUBLIC PLAYLIST</Text>
                         <Text fontSize={50} fontWeight={'bold'}>{PLAYLIST_DATA?.name}</Text>
