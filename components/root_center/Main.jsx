@@ -19,15 +19,6 @@ export const Main = () =>
 {
 
 
-    const color = randomColor({
-        count: 10,
-        hue: 'green'
-    });
-
-    const [count , setCount] = useState(0)
-
-    useInterval(() => setCount(prevState => prevState === 9 ? 0 : prevState + 1) ,3000);
-
 
     return (
         <Box position={"relative"}>
@@ -39,7 +30,6 @@ export const Main = () =>
 
             <Flex  w={"full"} p={5} >
                 <SearchBarModal/>
-                <Search/>
                 <Controller/>
                 <Account/>
             </Flex>
