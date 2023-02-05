@@ -34,10 +34,12 @@ export const NewPlayBack =() =>
     const trackID = useRecoilValue(SPOTIFY_TRACKS_ID_ATOM)
 
     const {data : FLOWING_ARTISTS} = useSWR('FETCH FLOWING ARTIST' , async () => (await FETCH_MY_FLOWING_ARTISTS()))
+    // const {data : PLAYBACK} = useSWR('GET PLAY MUSIC' , async () => (await SPOTIFY_DOWNLOADER(trackID)))
+
 
     const [PLAYBACK , setPLAYBACK] = useState()
 
-
+    const [play , setPlay] = useState(false)
 
     console.log(trackID)
 
@@ -48,6 +50,7 @@ export const NewPlayBack =() =>
             const getData = async () =>
             {
                 const Data = await SPOTIFY_DOWNLOADER(trackID)
+                console.log(Data)
                 setPLAYBACK(Data)
             }
             getData()
@@ -87,7 +90,7 @@ export const NewPlayBack =() =>
                     {
                         PLAYBACK ?
                             <VStack spacing={0} my={1}>
-                                <Text  w={150}  whiteSpace={"nowrap"} textOverflow={'ellipsis'} overflow={'hidden'}  align={'center'}  color={'whiteAlpha.800'} fontWeight={'bold'} fontSize={'md'}>{PLAYBACK?.spotifyTrack.name}</Text>
+                                <Text  w={150}  whiteSpace={"nowrap"} textOverflow={'ellipsis'} overflow={'hidden'}  align={'center'}  color={'whiteAlpha.800'} fontWeight={'bold'} fontSize={'md'}>{PLAYBACK?.spotifyTrack?.name}</Text>
                                 <Text  fontSize={'xs'} color={'whiteAlpha.800'}>{PLAYBACK?.spotifyTrack?.artists?.[0].name} {PLAYBACK?.name}</Text>
                             </VStack>
                             :

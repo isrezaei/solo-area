@@ -9,8 +9,9 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-    Icon, InputGroup, InputLeftElement, Input, HStack, VStack, Image , Img, Text, Tooltip
+    Icon, InputGroup, InputLeftElement, Input, HStack, VStack , Img, Text, Tooltip
 } from "@chakra-ui/react";
+import Image from "next/image";
 
 import {RiSearchLine} from 'react-icons/ri'
 import {PhoneIcon} from "@chakra-ui/icons";
@@ -18,13 +19,17 @@ import {FETCH_SEARCH_RESULT} from "../../lib/FetcherFuncs/FETCH_SEARCH_RESULT";
 import {useAsync, useDebounce} from "react-use";
 import ScrollContainer from 'react-indiana-drag-scroll'
 import 'react-indiana-drag-scroll/dist/style.css'
+import Tilt from "react-parallax-tilt";
+import {useRouter} from "next/router";
+
 
 export const SearchBarModal = () =>
 {
+    const router = useRouter()
     const [isOpen, onOpen] = useState(false)
     const [searchInput , setSearchInput] = useState(null)
     const [searchResult , setSearchResult] = useState({})
-    const [searchStatus , setSearchStatus] = useState('pending')
+    const [searchStatus , setSearchStatus] = useState('idle')
 
 
 
@@ -32,6 +37,7 @@ export const SearchBarModal = () =>
 
         if (searchInput?.length >=2)
         {
+            setSearchStatus('pending')
             const FETCH_RESULT = await FETCH_SEARCH_RESULT(searchInput)
             setSearchResult(FETCH_RESULT)
             setSearchStatus('success')
@@ -39,6 +45,7 @@ export const SearchBarModal = () =>
         if (searchInput?.length <= 2)
         {
             setSearchResult({})
+            setSearchStatus('idle')
         }
 
 
@@ -68,10 +75,7 @@ export const SearchBarModal = () =>
                                 pointerEvents='none'
                                 children={<Icon as={RiSearchLine} />}
                             />
-                            <Input type='text' w={"xl"} fontSize={12} bg={"whiteAlpha.200"} color={"white"} _placeholder={{ color: 'whiteAlpha.800' }} rounded={"full"} focusBorderColor={'transparent'} placeholder='What do you want to listen to ? ' onChange={e => {
-                                setSearchInput(e.target.value)
-                                setSearchStatus('pending')
-                            }} />
+                            <Input type='text' w={"xl"} fontSize={12} bg={"whiteAlpha.200"} color={"white"} _placeholder={{ color: 'whiteAlpha.800' }} rounded={"full"} focusBorderColor={'transparent'} placeholder='What do you want to listen to ? ' onChange={e => setSearchInput(e.target.value)} />
                         </InputGroup>
 
 
@@ -83,12 +87,16 @@ export const SearchBarModal = () =>
                     <ModalBody>
 
                         {
-                           searchStatus === 'success' ?  <HStack w={"full"} justify={"space-around"} align={'start'} >
+                            searchStatus === 'success' &&  <HStack w={"full"} justify={"space-around"} align={'start'} >
 
                                 <VStack justify={"space-between"} position={"relative"} flex={1} h={350} >
 
                                     <VStack w={"full"} spacing={0}  align={'center'} >
-                                        <Img src={artists?.items[0].images[0].url}  boxSize={230}  objectFit={'contain'}  rounded={"full"}/>
+                                        <Tilt  scale={.90} transitionSpeed={1000}>
+                                            <Box w={250} h={250} rounded={"full"}  position={"relative"} cursor={"pointer"} onClick={() => router.push(`/artist/${artists.items[0].id}`)}>
+                                                <Image style={{borderRadius : "100%"}} layout={"fill"}  src={artists?.items[0].images[0].url} priority={true}  placeholder={"blur"} blurDataURL={artists?.items[0].images[0].url}/>
+                                            </Box>
+                                        </Tilt>
                                         <Text zIndex={1} fontSize={"4xl"} fontWeight={'bold'} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={'hidden'}>{artists?.items[0].name}</Text>
                                         <Text zIndex={1} fontSize={"sm"} fontWeight={'bold'} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={'hidden'}>{artists?.items[0].type}</Text>
                                     </VStack>
@@ -102,7 +110,7 @@ export const SearchBarModal = () =>
                                                 artists?.items.map(ARTIST => {
                                                     return (
                                                         <Tooltip key={ARTIST.id} label={ARTIST.name} bg={"blackAlpha.600"} color={"white"}>
-                                                            <Img p={1} boxSize={55} src={ARTIST?.images[0]?.url} rounded={"full"} cursor={"pointer"}/>
+                                                                <Img onClick={() => router.push(`/artist/${ARTIST.id}`)} src={ARTIST?.images[0]?.url} boxSize={50} mr={2} rounded={'full'}/>
                                                         </Tooltip>
 
                                                     )
@@ -124,7 +132,9 @@ export const SearchBarModal = () =>
                                                 <HStack bg={"whiteAlpha.300"} rounded={"xl"} spacing={0} justify={"space-between"} align={"start"} p={2} mb={4}>
 
                                                     <HStack justify={"center"} align={"start"}>
-                                                        <Img loading={"lazy"} rounded={"xl"} src={TRACKS.album.images[0].url} boxSize={50}/>
+                                                        <Box w={50} h={50} position={"relative"} >
+                                                            <Image style={{borderRadius : '.5rem'}} layout={"fill"} src={TRACKS.album.images[0].url} placeholder={"blur"} blurDataURL={TRACKS.album.images[0].url}/>
+                                                        </Box>
                                                         <VStack>
                                                             <Text fontSize={"sm"} w={200} fontWeight={'bold'} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={'hidden'}>{TRACKS.name}</Text>
                                                             <Text fontSize={"xs"} w={200} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={'hidden'} >{TRACKS.artists[0].name}</Text>
@@ -135,16 +145,12 @@ export const SearchBarModal = () =>
                                             )
                                         })
                                     }
-
-
-
-
-
-
                                 </Box>
-
-                            </HStack> : 'Loading ....'
+                            </HStack>
                         }
+
+                        {searchStatus === 'pending' && 'Loading'}
+                        {searchStatus === 'idle' && 'please search'}
 
 
 
