@@ -49,6 +49,8 @@ export const RecentlyPlayedList = () =>
         //?She's going to take a song ID and bring
         const TRACK = await FETCH_TRACK(trackID)
 
+        console.log(TRACK.name)
+
         //? ID from get track
         setActivePlaying(TRACK.id)
         setTrackID(TRACK.id)

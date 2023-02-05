@@ -25,6 +25,7 @@ import {useEffect, useState} from "react";
 import AudioPlayer , {RHAP_UI} from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import {useRouter} from "next/router";
+import {useDebounce} from "react-use";
 
 
 export const NewPlayBack =() =>
@@ -36,27 +37,38 @@ export const NewPlayBack =() =>
     const {data : FLOWING_ARTISTS} = useSWR('FETCH FLOWING ARTIST' , async () => (await FETCH_MY_FLOWING_ARTISTS()))
     // const {data : PLAYBACK} = useSWR('GET PLAY MUSIC' , async () => (await SPOTIFY_DOWNLOADER(trackID)))
 
-
     const [PLAYBACK , setPLAYBACK] = useState()
+    const [playBackStatus , setPlayBackStatus] = useState('success')
 
-    const [play , setPlay] = useState(false)
+    // useEffect(() => {
+    //     if (trackID)
+    //     {
+    //         const getData = async () =>
+    //         {
+    //             const Data = await SPOTIFY_DOWNLOADER(trackID)
+    //             console.log(Data)
+    //             setPLAYBACK(Data)
+    //         }
+    //         getData()
+    //     }
+    //
+    // } , [trackID])
+    //
 
-    console.log(trackID)
 
+    useDebounce(async () => {
 
-    useEffect(() => {
-        if (trackID)
-        {
-            const getData = async () =>
-            {
-                const Data = await SPOTIFY_DOWNLOADER(trackID)
-                console.log(Data)
-                setPLAYBACK(Data)
-            }
-            getData()
+        setPlayBackStatus('pending')
+
+        if (trackID) {
+            const Data = await SPOTIFY_DOWNLOADER(trackID)
+            console.log(Data)
+            setPLAYBACK(Data)
+            setPlayBackStatus('success')
         }
 
-    } , [trackID])
+
+    } , 2000 , [trackID])
 
 
     return (
@@ -79,19 +91,19 @@ export const NewPlayBack =() =>
             </VStack>
 
 
-
-            <VStack w={"full"} justify={"center"} align={"center"} >
+            {playBackStatus === 'pending' && "Loading 000"}
+            {playBackStatus === 'success' &&  <VStack w={"full"} justify={"center"} align={"center"} >
 
                 <Flex direction={'column'} justify={'center'} alignItems={'center'} w={"full"} height={"auto"} >
                     <Skeleton isLoaded={PLAYBACK} startColor='#212121' endColor='#424242'>
-                        <Image src={PLAYBACK?.spotifyTrack?.album?.cover[0].url} alt='' boxSize={220} rounded={'md'} boxShadow={'2xl'}/>
+                        <Image src={PLAYBACK?.metadata.cover} alt='' boxSize={220} rounded={'md'} boxShadow={'2xl'}/>
                     </Skeleton>
 
                     {
                         PLAYBACK ?
                             <VStack spacing={0} my={1}>
-                                <Text  w={150}  whiteSpace={"nowrap"} textOverflow={'ellipsis'} overflow={'hidden'}  align={'center'}  color={'whiteAlpha.800'} fontWeight={'bold'} fontSize={'md'}>{PLAYBACK?.spotifyTrack?.name}</Text>
-                                <Text  fontSize={'xs'} color={'whiteAlpha.800'}>{PLAYBACK?.spotifyTrack?.artists?.[0].name} {PLAYBACK?.name}</Text>
+                                <Text  w={150}  whiteSpace={"nowrap"} textOverflow={'ellipsis'} overflow={'hidden'}  align={'center'}  color={'whiteAlpha.800'} fontWeight={'bold'} fontSize={'md'}>{PLAYBACK?.metadata.title}</Text>
+                                <Text  fontSize={'xs'} color={'whiteAlpha.800'}>{PLAYBACK?.metadata.artist}</Text>
                             </VStack>
                             :
                             <Box w={"full"}>
@@ -113,7 +125,7 @@ export const NewPlayBack =() =>
                         volume: <Icon boxSize={6} bg={"whiteAlpha.300"} rounded={50} p={1} as={BiVolumeFull}/>,
                         volumeMute: <Icon boxSize={6} bg={"whiteAlpha.300"} rounded={50} p={1} as={BiVolume}/>
                     }}
-                    src={PLAYBACK?.soundcloudTrack?.audio[0].url}
+                    src={PLAYBACK?.link}
                     style={{background : "transparent" , opacity : PLAYBACK ? '100%' : '30%' , pointerEvents : PLAYBACK ? 'visible' : 'none'}}
                     customVolumeControls={
                         [RHAP_UI.VOLUME,
@@ -130,7 +142,8 @@ export const NewPlayBack =() =>
                         ]
                     }
                 />
-            </VStack>
+            </VStack>}
+
 
 
 
