@@ -7,8 +7,8 @@ import {
     HStack,
     Icon,
     Image, Link,
-    Skeleton,
-    SkeletonText,
+    Skeleton, SkeletonCircle,
+    SkeletonText, Stack,
     Text,
     VStack
 } from "@chakra-ui/react";
@@ -25,129 +25,80 @@ import {useEffect, useState} from "react";
 import AudioPlayer , {RHAP_UI} from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import {useRouter} from "next/router";
-import {useDebounce} from "react-use";
-
+import {useAsync} from "react-use";
+import {PropagateLoader} from "react-spinners";
 
 export const NewPlayBack =() =>
 {
 
-    const router = useRouter()
     const trackID = useRecoilValue(SPOTIFY_TRACKS_ID_ATOM)
 
-    const {data : FLOWING_ARTISTS} = useSWR('FETCH FLOWING ARTIST' , async () => (await FETCH_MY_FLOWING_ARTISTS()))
-    // const {data : PLAYBACK} = useSWR('GET PLAY MUSIC' , async () => (await SPOTIFY_DOWNLOADER(trackID)))
+    const [metaData , setMetaData] = useState()
+    const [playBackStatus , setPlayBackStatus] = useState('idle')
 
-    const [PLAYBACK , setPLAYBACK] = useState()
-    const [playBackStatus , setPlayBackStatus] = useState('success')
+    useAsync(async () => {
 
-    // useEffect(() => {
-    //     if (trackID)
-    //     {
-    //         const getData = async () =>
-    //         {
-    //             const Data = await SPOTIFY_DOWNLOADER(trackID)
-    //             console.log(Data)
-    //             setPLAYBACK(Data)
-    //         }
-    //         getData()
-    //     }
-    //
-    // } , [trackID])
-    //
-
-
-    useDebounce(async () => {
-
-        setPlayBackStatus('pending')
+        setPlayBackStatus('idle')
 
         if (trackID) {
-            const Data = await SPOTIFY_DOWNLOADER(trackID)
-            console.log(Data)
-            setPLAYBACK(Data)
+            setPlayBackStatus('pending')
+            const getMetaData = await SPOTIFY_DOWNLOADER(trackID)
+            setMetaData(getMetaData)
             setPlayBackStatus('success')
         }
 
+    } , [trackID])
 
-    } , 2000 , [trackID])
+    console.log(playBackStatus)
 
 
     return (
-        <Flex flex={1.8} direction={'column'} justify={'space-around'} align={'center'} h={'100vh'} bg={"whiteAlpha.100"} px={3} position={'sticky'} top={0}>
-
-            <VStack >
-                <Text w={"full"} fontSize={'1.5vw'} fontWeight={'bold'} textColor={'whiteAlpha.600'}>Your Flowing</Text>
-                <Grid templateColumns={'repeat(3 , 1fr)'}  h={'15vw'} gap={1.5}>
-                    {
-                        FLOWING_ARTISTS?.map(ARTIST => {
-                            return (
-                                <VStack key={Math.random()} onClick={() => router.push(`/artist/${ARTIST.id}`)} cursor={'pointer'} my={1} bg={'#0e0e0e'} p={'.5vw'} rounded={'.8vw'}>
-                                    <Image src={ARTIST?.images?.[0].url} alt={ARTIST?.name} boxSize={'4vw'} rounded={"3xl"}/>
-                                    <Text textAlign={'center'} fontSize={10} fontWeight={'bold'} color={'white'}>{ARTIST?.name}</Text>
-                                </VStack>
-                            )
-                        })
-                    }
-                </Grid>
-            </VStack>
-
-
-            {playBackStatus === 'pending' && "Loading 000"}
-            {playBackStatus === 'success' &&  <VStack w={"full"} justify={"center"} align={"center"} >
-
-                <Flex direction={'column'} justify={'center'} alignItems={'center'} w={"full"} height={"auto"} >
-                    <Skeleton isLoaded={PLAYBACK} startColor='#212121' endColor='#424242'>
-                        <Image src={PLAYBACK?.metadata.cover} alt='' boxSize={220} rounded={'md'} boxShadow={'2xl'}/>
-                    </Skeleton>
-
-                    {
-                        PLAYBACK ?
-                            <VStack spacing={0} my={1}>
-                                <Text  w={150}  whiteSpace={"nowrap"} textOverflow={'ellipsis'} overflow={'hidden'}  align={'center'}  color={'whiteAlpha.800'} fontWeight={'bold'} fontSize={'md'}>{PLAYBACK?.metadata.title}</Text>
-                                <Text  fontSize={'xs'} color={'whiteAlpha.800'}>{PLAYBACK?.metadata.artist}</Text>
-                            </VStack>
-                            :
-                            <Box w={"full"}>
-                                <SkeletonText padding={3} noOfLines={2} startColor='#212121' endColor='#424242'/>
-                            </Box>
-                    }
-                </Flex>
-
-                <AudioPlayer
-                    autoPlay
-                    width={'100px'}
-                    progressJumpSteps = {{forward: 30000, backward: 10000}}
-                    layout="stacked-reverse"
-                    customIcons={{
-                        play : <Icon boxSize={7} as={IoPlay}/>,
-                        pause : <Icon boxSize={7} as={IoPause}/>,
-                        rewind : <Icon boxSize={8} bg={"whiteAlpha.300"} rounded={50} p={1} as={HiRewind}/>,
-                        forward : <Icon boxSize={8} bg={"whiteAlpha.300"} rounded={50} p={1} as={HiFastForward}/>,
-                        volume: <Icon boxSize={6} bg={"whiteAlpha.300"} rounded={50} p={1} as={BiVolumeFull}/>,
-                        volumeMute: <Icon boxSize={6} bg={"whiteAlpha.300"} rounded={50} p={1} as={BiVolume}/>
-                    }}
-                    src={PLAYBACK?.link}
-                    style={{background : "transparent" , opacity : PLAYBACK ? '100%' : '30%' , pointerEvents : PLAYBACK ? 'visible' : 'none'}}
-                    customVolumeControls={
-                        [RHAP_UI.VOLUME,
-                            <HStack>
-                                <Link href={PLAYBACK?.soundcloudTrack?.audio[0].url} download>
-                                    <Icon boxSize={6} bg={"whiteAlpha.300"} color={"whiteAlpha.600"} rounded={50} p={1}  as={RiDownload2Fill}/>
-                                </Link>
-                                <Icon boxSize={6} bg={"whiteAlpha.300"} color={"whiteAlpha.600"} rounded={50} p={1}  as={RiHeart3Line}/>
-                            </HStack>]}
-                    customControlsSection={
-                        [
-                            RHAP_UI.MAIN_CONTROLS,
-                            RHAP_UI.VOLUME_CONTROLS,
-                        ]
-                    }
-                />
-            </VStack>}
-
-
-
-
-
+        <Flex w={"full"} bgGradient={'linear(to-tl, whatsapp.800 , black)'}  justify={'space-around'} align={'center'} zIndex={1000}  position={'fixed'} bottom={0}>
+            <Flex w={"full"} justify={"space-between"} align={"center"} p={2}  >
+                <Box  flex={1} >
+                    <HStack spacing={0}>
+                        {playBackStatus === 'idle' && <Skeleton rounded={'md'} boxSize={50} startColor='#212121' endColor='#424242'/>}
+                        {playBackStatus === 'success' && <Image src={metaData?.metadata?.cover} alt='' boxSize={65} rounded={'md'} boxShadow={'2xl'}/>}
+                        {playBackStatus === 'pending' && <Center w={"full"}><PropagateLoader color={'#41d636'} size={10}/></Center>}
+                        <VStack spacing={0} align={"start"} px={2}>
+                            {playBackStatus === 'idle' && <SkeletonText  noOfLines={2} startColor='#212121' endColor='#424242'/>}
+                            {
+                                playBackStatus === 'success'&&
+                                <>
+                                    <Text  w={150}  whiteSpace={"nowrap"} textOverflow={'ellipsis'} overflow={'hidden'}  color={'whiteAlpha.800'} fontWeight={'bold'} fontSize={'md'}>{metaData?.metadata?.title}</Text>
+                                    <Text  fontSize={'xs'} color={'whiteAlpha.800'}>{metaData?.metadata?.artists}</Text>
+                                </>
+                            }
+                        </VStack>
+                    </HStack>
+                </Box>
+                <Box flex={5} >
+                    <AudioPlayer
+                        autoPlay={false}
+                        progressJumpSteps = {{forward: 30000, backward: 10000}}
+                        layout="stacked-reverse"
+                        customIcons={{
+                            play : <Icon boxSize={7} as={IoPlay}/>,
+                            pause : <Icon boxSize={7} as={IoPause}/>,
+                            rewind : <Icon boxSize={8}  rounded={50} p={1} as={HiRewind}/>,
+                            forward : <Icon boxSize={8} rounded={50} p={1} as={HiFastForward}/>,
+                            volume: <Icon boxSize={6} bg={"whiteAlpha.300"} rounded={50} p={1} as={BiVolumeFull}/>,
+                            volumeMute: <Icon boxSize={6} bg={"whiteAlpha.300"} rounded={50} p={1} as={BiVolume}/>
+                        }}
+                        src={metaData?.link}
+                        style={{background : "transparent" , opacity : metaData ? '100%' : '30%' , pointerEvents : metaData ? 'visible' : 'none'}}
+                        customVolumeControls={
+                            [RHAP_UI.VOLUME,
+                                <HStack>
+                                    <Link href={metaData?.link} download>
+                                        <Icon boxSize={6} bg={"whiteAlpha.300"} color={"whiteAlpha.600"} rounded={50} p={1}  as={RiDownload2Fill}/>
+                                    </Link>
+                                    <Icon boxSize={6} bg={"whiteAlpha.300"} color={"whiteAlpha.600"} rounded={50} p={1}  as={RiHeart3Line}/>
+                                </HStack>]
+                        }
+                    />
+                </Box>
+            </Flex>
         </Flex>
     )
 }

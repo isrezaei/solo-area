@@ -1,6 +1,7 @@
 
 .rhap_main ,  .rhap_stacked
 {
+    padding: .2rem 2rem;
     justify-content: center!important;
     align-items: center!important;
 }
@@ -23,13 +24,13 @@
 .rhap_controls-section {
     width: 100%;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    margin: 0!important;
 }
 
 .rhap_volume-controls
 {
-    width: 100% !important;
-    justify-content:space-around !important;
+
 }
 
 .rhap_current-time , .rhap_time , .rhap_total-time
@@ -50,9 +51,6 @@
 .rhap_progress-section
 {
     width: 95%;
-    background-color: rgba(52, 52, 52, 0.72);
-    padding: .4vw;
-    border-radius: .5vw;
 }
 
 .rhap_progress-filled
@@ -77,8 +75,7 @@
 
 .rhap_volume-container
 {
-    height: 100% !important;
-    margin: .5vw 0;
+    margin: 0 1rem;
 }
 
 .rhap_volume-bar

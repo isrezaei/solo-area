@@ -22,7 +22,7 @@ export default function Layout({ children }) {
 
             <Flex  bg={bg}>
                 <Sidebar/>
-                <Box flex={8}>
+                <Box flex={8} >
                     {children}
                 </Box>
                 <NewPlayBack/>
