@@ -66,7 +66,7 @@ export const RecentlyPlayedList = () =>
         return (
 
                 <Flex
-                    w={'20vw'}
+                    w={{base : 'full' , md : '20vw'}}
                     justify={'space-evenly'}
                     align={'center'}
                     bg={'whiteAlpha.200'}
@@ -132,9 +132,7 @@ export const RecentlyPlayedList = () =>
 
             <Text my={2} fontSize={'2vw'} fontWeight={"bold"} color={'whiteAlpha.700'} >Let's listen again</Text>
 
-
-
-            <Grid templateColumns='repeat(3, 1fr)' gap={4}>
+            <Grid templateColumns={{base : 'repeat(1, 1fr)' , md : 'repeat(3, 1fr)'}} gap={4}>
                 {RENDER}
             </Grid>
 

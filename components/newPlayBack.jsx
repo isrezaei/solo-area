@@ -53,7 +53,7 @@ export const NewPlayBack =() =>
 
 
     return (
-        <Flex w={"full"} bgGradient={'linear(to-tl, whatsapp.800 , black)'}  justify={'space-around'} align={'center'} zIndex={1000}  position={'fixed'} bottom={0}>
+        <Flex w={"full"} bg={'black'} justify={'space-around'} align={'center'} zIndex={1000}  position={'fixed'} bottom={0}>
             <Flex w={"full"} justify={"space-between"} align={"center"} p={2}  >
                 <Box  flex={1} >
                     <HStack spacing={0}>
@@ -61,7 +61,7 @@ export const NewPlayBack =() =>
                         {playBackStatus === 'success' && <Image src={metaData?.metadata?.cover} alt='' boxSize={65} rounded={'md'} boxShadow={'2xl'}/>}
                         {playBackStatus === 'pending' && <Center w={"full"}><PropagateLoader color={'#41d636'} size={10}/></Center>}
                         <VStack spacing={0} align={"start"} px={2}>
-                            {playBackStatus === 'idle' && <SkeletonText  noOfLines={2} startColor='#212121' endColor='#424242'/>}
+                            {playBackStatus === 'idle' && <SkeletonText  spacing='4' skeletonHeight='2' noOfLines='2' startColor='#212121' endColor='#424242'/>}
                             {
                                 playBackStatus === 'success'&&
                                 <>

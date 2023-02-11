@@ -1,6 +1,5 @@
 import {Sidebar} from "./root_sidebar/Sidebar";
 import {Flex, Box, useColorModeValue} from "@chakra-ui/react";
-import {PlayBack} from "./PlayBack";
 import {useRecoilValue} from "recoil";
 import {LOGIN_TOKEN_ATOM} from "../atoms/atoms";
 import Login from "./login";

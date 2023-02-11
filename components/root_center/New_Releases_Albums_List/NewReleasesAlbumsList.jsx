@@ -22,7 +22,7 @@ export const NewReleasesAlbumsList = () =>
 
         return (
             <Tilt className="parallax-effect" perspective={500} scale={1.1}>
-                <VStack onMouseEnter={play}   cursor={"pointer"} spacing={0} key={id} bg={'whiteAlpha.200'} p={1}  rounded={'.8vw'} _hover={{ bg: "whiteAlpha.300"}}>
+                <VStack onClick={play}   cursor={"pointer"} spacing={0} key={id} bg={'whiteAlpha.200'} p={1}  rounded={'.8vw'} _hover={{ bg: "whiteAlpha.300"}}>
                     <Image onClick={() => router.push(`/new-releases-albums/${id}`)} src={images[0].url} boxSize={180} p={3} rounded={'1.5vw'} alt=''/>
                     <Text px={5} w={150} textAlign={'center'} whiteSpace={'nowrap'} textOverflow={'ellipsis'} overflow={'hidden'} fontWeight={'bold'} fontSize={'sm'} color={'whitesmoke'}>{name}</Text>
                     <Text fontSize={'xs'}  color={'#9e9e9e'}>{artists[0]?.name}</Text>
@@ -35,7 +35,7 @@ export const NewReleasesAlbumsList = () =>
     return (
         <Box w={"full"} zIndex={1000}  px={5}>
             <Text my={2} fontSize={'2vw'} fontWeight={"bold"} color={'whiteAlpha.800'} >Weekly musics</Text>
-            <Grid templateColumns='repeat(5, 1fr)' gap={6} >
+            <Grid templateColumns={{base : 'repeat(2, 1fr)' , md : 'repeat(5, 1fr)'}} gap={6} >
                 {Render}
             </Grid>
         </Box>

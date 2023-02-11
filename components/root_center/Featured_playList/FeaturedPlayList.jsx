@@ -24,21 +24,17 @@ export const FeaturedPlayList = () =>
 
 
 
-            <Flex w={'full'} h={'100vh'} overflow={'hidden'}  direction={'column'}  mt={5}  >
+            <Flex  w={'full'} h={'100vh'} overflow={'hidden'}  direction={'column'}   >
 
-                <Flex w={"full"} justify={'start'} align={'center'} py={8} bgGradient={'linear(to-b , blackAlpha.100, whatsapp.800 , blackAlpha.100)'}>
-                    <Image src={PLAYLIST_DATA?.images[0]?.url} alt='' boxSize={230} mx={6} boxShadow={'2xl'}/>
-                    <VStack align={'start'}>
+                <Flex w={"full"} justify={'start'} align={'center'} direction={{base : "column" , md : 'row'}} py={8} bgGradient={'linear(to-b , blackAlpha.100, whatsapp.800 , blackAlpha.100)'}>
+
+                    <Image src={PLAYLIST_DATA?.images[0]?.url} alt={PLAYLIST_DATA?.name} boxSize={230} mx={6} boxShadow={'2xl'}/>
+                    <VStack spacing={0} py={{base : 3 , md : 0}} align={{base : 'center' , md :'start'}}>
                         <Text fontWeight={'bold'}>PUBLIC PLAYLIST</Text>
-                        <Text fontSize={50} fontWeight={'bold'}>{PLAYLIST_DATA?.name}</Text>
-                        <HStack>
-                            <Text>{PLAYLIST_DATA?.owner.display_name}</Text>
-                            <Center height={8}>
-                                <Divider orientation='vertical' />
-                            </Center>
-                            <Text>{PLAYLIST_DATA?.tracks.total} Songs</Text>
-                        </HStack>
+                        <Text fontSize={{base : 30 , md:50}} fontWeight={'bold'}>{PLAYLIST_DATA?.name}</Text>
+                        <Text>{PLAYLIST_DATA?.tracks.total} Songs</Text>
                     </VStack>
+
                 </Flex>
 
                 <HStack w={"full"} justify={'space-between'} px={3} color={'whiteAlpha.600'} fontSize={15}>
@@ -69,7 +65,7 @@ export const FeaturedPlayList = () =>
                                                       onClick={() => setTrackID(TRACKS.track.id)}>
 
                                                     <Flex flex={1.1} justify={'space-around'} align={'center'}>
-                                                        <Text flex={.5} align={'center'} >{INDEX + 1}</Text>
+                                                        <Text display={{base : 'none' , md : 'block'}} flex={.5} align={'center'} >{INDEX + 1}</Text>
 
                                                         <Center flex={1.2} >
                                                             <Image src={TRACKS?.track?.album?.images?.[0]?.url} boxSize={14} rounded={'xl'}/>
@@ -82,9 +78,9 @@ export const FeaturedPlayList = () =>
                                                     </Flex>
 
                                                     <Text flex={1} w={1} whiteSpace={'nowrap'} textOverflow={"ellipsis"} overflow={'hidden'} fontSize={"sm"} textAlign={'center'}>{TRACKS?.track?.album?.name}</Text>
-                                                    <Text flex={1}  textAlign={'center'} fontSize={"sm"}>{TRACKS?.added_at.slice(0 , 10)}</Text>
-                                                    <Text flex={1}  textAlign={'center'} fontSize={"sm"}>  {prettyMilliseconds(TRACKS?.track?.duration_ms , {secondsDecimalDigits : 0 , colonNotation : true})}</Text>
-                                                    <Text flex={.2} >{trackID === TRACKS.track.id ? 'play' : ''}</Text>
+                                                    <Text display={{base : 'none' , md : 'block'}} flex={1}  textAlign={'center'} fontSize={"sm"}>{TRACKS?.added_at.slice(0 , 10)}</Text>
+                                                    <Text display={{base : 'none' , md : 'block'}} flex={1}  textAlign={'center'} fontSize={"sm"}>  {prettyMilliseconds(TRACKS?.track?.duration_ms , {secondsDecimalDigits : 0 , colonNotation : true})}</Text>
+                                                    <Text display={{base : 'none' , md : 'block'}} flex={.2} >{trackID === TRACKS.track.id ? 'play' : ''}</Text>
                                                 </Flex>
                                             </Tilt>
                                         </Box>

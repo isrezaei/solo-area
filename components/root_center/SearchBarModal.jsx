@@ -61,29 +61,21 @@ export const SearchBarModal = () =>
     return (
         <Box  flex={1}>
 
-            <Button w={"2xs"} rounded={"3xl"} leftIcon={<Icon as={RiSearchLine} />}  onClick={() => onOpen(prevState => !prevState)}>search your music</Button>
-
+            <Button w={{base : '6rem' , md : '2xs'}} rounded={"3xl"} leftIcon={<Icon as={RiSearchLine} />}  onClick={() => onOpen(prevState => !prevState)}>search </Button>
 
             <Modal size={"4xl"}  onClose={()=> onOpen(prevState => !prevState)} isOpen={isOpen} isCentered>
-
                 <ModalOverlay />
                 <ModalContent bg={"black"}>
                     <ModalHeader>
                         <InputGroup>
-
                             <InputLeftElement
                                 pointerEvents='none'
                                 children={<Icon as={RiSearchLine} />}
                             />
                             <Input type='text' w={"xl"} fontSize={12} bg={"whiteAlpha.200"} color={"white"} _placeholder={{ color: 'whiteAlpha.800' }} rounded={"full"} focusBorderColor={'transparent'} placeholder='What do you want to listen to ? ' onChange={e => setSearchInput(e.target.value)} />
                         </InputGroup>
-
-
                     </ModalHeader>
-
-
                     <ModalCloseButton />
-
                     <ModalBody>
 
                         {
@@ -117,9 +109,7 @@ export const SearchBarModal = () =>
                                                 })
                                             }
                                         </ScrollContainer>
-
                                     </VStack>
-
                                 </VStack>
 
 
@@ -148,17 +138,9 @@ export const SearchBarModal = () =>
                                 </Box>
                             </HStack>
                         }
-
                         {searchStatus === 'pending' && 'Loading'}
                         {searchStatus === 'idle' && 'please search'}
-
-
-
                     </ModalBody>
-
-
-
-
                 </ModalContent>
             </Modal>
         </Box>

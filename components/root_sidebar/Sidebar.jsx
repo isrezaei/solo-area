@@ -28,7 +28,7 @@ export const Sidebar = () =>
 
 
     return (
-        <Flex direction={"column"} justify={'flex-start'} gap={5} flex={1.5}  h={'100vh'} px={3} position={"sticky"} top={0} >
+        <Flex display={{base : 'none' , md : 'flex'}} direction={"column"} justify={'flex-start'} gap={5} flex={1.5}  h={'100vh'} px={3} position={"sticky"} top={0} >
 
             <Flex direction={'column'}>
                 <Text  color={'whiteAlpha.900'} my={1}>Browser Music</Text>
