@@ -4,7 +4,7 @@ import {Account} from "./Header/Account";
 import {NewReleasesAlbumsList} from "./New_Releases_Albums_List/NewReleasesAlbumsList";
 import {RecentlyPlayedList} from "./Recently_Played_List/RecentlyPlayedList";
 import {FeaturedPlayList} from "./Featured_playList/FeaturedPlayList";
-import {Box, Flex, Text, Fade, VStack, HStack, Image} from "@chakra-ui/react";
+import {Box, Flex, Text, Fade, VStack, HStack, Image, Button} from "@chakra-ui/react";
 import {useEffect, useMemo, useState} from "react";
 import {SearchBarModal} from "./SearchBarModal"
 
@@ -36,6 +36,16 @@ export const Main = () =>
                 {/*NEW RELEASES COMPONENTS*/}
                 <NewReleasesAlbumsList/>
                 {/*RECENTLY PLAYED LIST*/}
+                <HStack w={"full"} justify={"center"} p={3}>
+
+                    <Image width={660} height={200} src={'/popularArtist.png'} placeholder={"blur"} blurDataURL={'/popularArtist.png'} />
+                    <VStack>
+                        <Text>Tell us which artists you like</Text>
+                        <Text>We'll create an experience just for you</Text>
+                        <Button>Lets go</Button>
+                    </VStack>
+
+                </HStack>
 
                 <RecentlyPlayedList/>
             </Flex>
