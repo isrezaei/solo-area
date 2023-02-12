@@ -9,10 +9,7 @@ export default function artist({GET_ARTIST_INFO})
 
 export const getServerSideProps = async ({params : {artist : artistID}}) =>
 {
-
     const GET_ARTIST_INFO = await FETCH_ARTIST(artistID)
-
-
 
     return {
         props : {

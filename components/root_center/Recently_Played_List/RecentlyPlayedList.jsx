@@ -61,7 +61,7 @@ export const RecentlyPlayedList = () =>
 
 
     //? This render we don't have track uri
-    const RENDER = _.unionBy(RECENTLY_PLAYED , 'id')?.slice(0 , 10).map(TRACK => {
+    const RENDER = _.unionBy(RECENTLY_PLAYED , 'id')?.map(TRACK => {
 
         return (
 
@@ -98,7 +98,6 @@ export const RecentlyPlayedList = () =>
                         pointerEvents={TRACK.id === activePlaying ? 'visible' : 'none'}
                         transition={'.5s'}
                         _groupHover={{opacity : '100%' , pointerEvents : 'auto'}}>
-
                       <Icon boxSize={25} as={RiPlayFill} color={'whiteAlpha.600'}/>
                     </Center>
 
@@ -119,7 +118,6 @@ export const RecentlyPlayedList = () =>
                             </MenuList>
                         </Menu>
                     </Box>
-
                 </Flex>
 
         )
@@ -132,7 +130,7 @@ export const RecentlyPlayedList = () =>
 
             <Text my={2} fontSize={'2vw'} fontWeight={"bold"} color={'whiteAlpha.700'} >Let's listen again</Text>
 
-            <Grid templateColumns={{base : 'repeat(1, 1fr)' , md : 'repeat(3, 1fr)'}} gap={4}>
+            <Grid templateColumns={{base : 'repeat(1, 1fr)' , md : 'repeat(4, 1fr)'}} gap={4}>
                 {RENDER}
             </Grid>
 

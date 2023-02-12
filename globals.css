@@ -1,9 +1,8 @@
 
 .rhap_main ,  .rhap_stacked
 {
-    padding: .2rem 2rem;
-    justify-content: center!important;
-    align-items: center!important;
+
+
 }
 
 .rhap_progress-bar {
@@ -11,8 +10,7 @@
 }
 
 .rhap_container {
-    padding: 0!important;
-    margin: 0!important;
+
 }
 .rhap_loop--off {
 
@@ -22,10 +20,8 @@
 }
 
 .rhap_controls-section {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin: 0!important;
+
+
 }
 
 .rhap_volume-controls
@@ -45,17 +41,17 @@
     width: 10px !important;
     height: 14px!important;
     top : -4px!important;
-    background-color: #679b41 !important;
+    background-color: #ad1457 !important;
 }
 
 .rhap_progress-section
 {
-    width: 95%;
+
 }
 
 .rhap_progress-filled
 {
-    background-color: #679b41 !important;
+    background-color: #ad1457 !important;
 }
 
 .rhap_download-progress
@@ -65,20 +61,24 @@
 
 .rhap_progress-container
 {
-    margin: 0 19px !important
+
 }
 
 .rhap_progress-bar {
-    height: 3px;
-    background-color: darkgray!important;
+
 }
 
 .rhap_volume-container
 {
-    margin: 0 1rem;
+
 }
 
 .rhap_volume-bar
 {
-    background-color: #679b41 !important;
+    background-color: #ad1457 !important;
+}
+
+.rhap_additional-controls
+{
+
 }

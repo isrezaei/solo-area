@@ -8,11 +8,12 @@ import 'react-indiana-drag-scroll/dist/style.css';
 import {theme} from "@chakra-ui/react";
 import "@fontsource/karla"
 import NextNprogress from 'nextjs-progressbar';
-
+import {DraggableCore} from 'react-draggable'
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
     const router = useRouter()
+
 
 
 
@@ -21,13 +22,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
                 <main style={{fontFamily : 'Karla'}}>
                 <NextNprogress color={'#589846'} height={7}/>
                 <ChakraProvider theme={theme}>
-                    {
-                        router.pathname === '/login' ?
-                            <Component {...pageProps} /> :
                             <Layout>
-                                <Component {...pageProps} />
+                                    <Component {...pageProps} />
                             </Layout>
-                    }
                 </ChakraProvider>
                 </main>
         </RecoilRoot>

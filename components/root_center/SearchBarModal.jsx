@@ -9,7 +9,7 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-    Icon, InputGroup, InputLeftElement, Input, HStack, VStack , Img, Text, Tooltip
+    Icon, InputGroup, InputLeftElement, Input, HStack, VStack, Img, Text, Tooltip, Center, IconButton
 } from "@chakra-ui/react";
 import Image from "next/image";
 
@@ -59,9 +59,9 @@ export const SearchBarModal = () =>
 
 
     return (
-        <Box  flex={1}>
+        <Box >
 
-            <Button w={{base : '6rem' , md : '2xs'}} rounded={"3xl"} leftIcon={<Icon as={RiSearchLine} />}  onClick={() => onOpen(prevState => !prevState)}>search </Button>
+            <IconButton aria-label='search'  w={{base : '6rem' , md : 'auto'}} rounded={"full"} icon={<Icon boxSize={5} as={RiSearchLine} />}  onClick={() => onOpen(prevState => !prevState)}/>
 
             <Modal size={"4xl"}  onClose={()=> onOpen(prevState => !prevState)} isOpen={isOpen} isCentered>
                 <ModalOverlay />

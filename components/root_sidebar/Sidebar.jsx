@@ -15,7 +15,6 @@ const Animator = dynamic(
     { ssr: true }
 );
 
-import {ScrollContainer , ScrollPage, batch, Fade, FadeIn, FadeOut, Move, MoveIn, MoveOut , Zoom, ZoomIn, ZoomOut } from "react-scroll-motion";
 
 
 
@@ -30,26 +29,29 @@ export const Sidebar = () =>
     return (
         <Flex display={{base : 'none' , md : 'flex'}} direction={"column"} justify={'flex-start'} gap={5} flex={1.5}  h={'100vh'} px={3} position={"sticky"} top={0} >
 
-            <Flex direction={'column'}>
-                <Text  color={'whiteAlpha.900'} my={1}>Browser Music</Text>
+            <Flex direction={'column'} gap={3} py={2} >
 
-                <HStack spacing='.8vw' mb={2}>
+                <HStack background={"whiteAlpha.100"} spacing='.8vw' p={2}>
                     <RiHome6Line color={'#989898'}/>
                     <Text fontSize='sm' color={'whiteAlpha.700'}>Home</Text>
                 </HStack>
-                <HStack spacing='.8vw' my={2}>
+                <HStack background={"whiteAlpha.100"} spacing='.8vw' p={2}>
                     <BsMusicPlayerFill color={'#989898'}/>
                     <Text fontSize='sm' color={'whiteAlpha.700'}>Albums</Text>
                 </HStack>
-                <HStack spacing='.8vw' my={2}>
+                <HStack background={"whiteAlpha.100"} spacing='.8vw' p={2}>
                     <MdOutlineQueueMusic color={'#989898'}/>
                     <Text fontSize='sm' color={'whiteAlpha.700'}>Tracks</Text>
                 </HStack>
-                <HStack spacing='.8vw' my={2}>
+
+                <HStack background={"whiteAlpha.100"} spacing='.8vw' p={2}>
                     <RiMusicFill color={'#989898'}/>
-                    <Text fontSize='sm' color={'whiteAlpha.700'}>Genres</Text>
+                    <Text fontSize='sm' color={'whiteAlpha.700'}>Create playlist</Text>
                 </HStack>
-                <Spacer/>
+                <HStack background={"whiteAlpha.100"} spacing='.8vw' p={2}>
+                    <RiMusicFill color={'#989898'}/>
+                    <Text fontSize='sm' color={'whiteAlpha.700'}>Like song</Text>
+                </HStack>
             </Flex>
 
 

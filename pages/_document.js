@@ -7,6 +7,7 @@ export default function Document() {
         <Html lang="en">
             <Head>
                 <title>Home</title>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
             </Head>
             <body>
             <ColorModeScript initialColorMode={theme.config.initialColorMode} />

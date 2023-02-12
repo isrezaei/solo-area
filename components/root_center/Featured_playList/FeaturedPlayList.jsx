@@ -26,7 +26,7 @@ export const FeaturedPlayList = () =>
 
             <Flex  w={'full'} h={'100vh'} overflow={'hidden'}  direction={'column'}   >
 
-                <Flex w={"full"} justify={'start'} align={'center'} direction={{base : "column" , md : 'row'}} py={8} bgGradient={'linear(to-b , blackAlpha.100, whatsapp.800 , blackAlpha.100)'}>
+                <Flex w={"full"} justify={'start'} align={'center'} direction={{base : "column" , md : 'row'}} py={8} bgGradient={'linear(to-br , pink.900  , black , black )'}>
 
                     <Image src={PLAYLIST_DATA?.images[0]?.url} alt={PLAYLIST_DATA?.name} boxSize={230} mx={6} boxShadow={'2xl'}/>
                     <VStack spacing={0} py={{base : 3 , md : 0}} align={{base : 'center' , md :'start'}}>
