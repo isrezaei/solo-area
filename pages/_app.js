@@ -1,33 +1,49 @@
-
-import {ChakraProvider} from "@chakra-ui/react";
+import {ChakraProvider , extendTheme} from "@chakra-ui/react";
 import {RecoilRoot} from "recoil";
 import '/globals.css'
 import Layout from "../components/layout";
-import {useRouter} from "next/router";
 import 'react-indiana-drag-scroll/dist/style.css';
-import {theme} from "@chakra-ui/react";
 import "@fontsource/karla"
 import NextNprogress from 'nextjs-progressbar';
-import {DraggableCore} from 'react-draggable'
+import {createBrowserSupabaseClient, createServerSupabaseClient} from '@supabase/auth-helpers-nextjs'
+import { SessionContextProvider } from '@supabase/auth-helpers-react'
+import {useState} from "react";
+
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+    const customTheme = extendTheme({
+        styles: {
+            global: {
+                body: {
+                    backgroundColor: 'black',
+                }
+            }
+        }
+    })
 
-    const router = useRouter()
-
-
+    const [supabase] = useState(() => createBrowserSupabaseClient({
+                supabaseUrl : process.env.NEXT_PUBLIC_SUPABASE_URL,
+                supabaseKey : process.env.NEXT_PUBLIC_SUPABASE_KEY
+            }
+        )
+    )
 
 
     return (
-        <RecoilRoot>
+        <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
+            <RecoilRoot>
                 <main style={{fontFamily : 'Karla'}}>
-                <NextNprogress color={'#589846'} height={7}/>
-                <ChakraProvider theme={theme}>
-                            <Layout>
-                                    <Component {...pageProps} />
-                            </Layout>
-                </ChakraProvider>
+                    <NextNprogress color={'#589846'} height={7}/>
+                    <ChakraProvider theme={customTheme}>
+                        <Layout>
+                            <Component {...pageProps} />
+                        </Layout>
+                    </ChakraProvider>
                 </main>
-        </RecoilRoot>
+            </RecoilRoot>
+        </SessionContextProvider>
     )
 }
 export default MyApp
+
+

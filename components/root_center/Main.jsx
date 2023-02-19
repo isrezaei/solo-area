@@ -4,7 +4,7 @@ import {Account} from "./Header/Account";
 import {NewReleasesAlbumsList} from "./New_Releases_Albums_List/NewReleasesAlbumsList";
 import {RecentlyPlayedList} from "./Recently_Played_List/RecentlyPlayedList";
 import {FeaturedPlayList} from "./Featured_playList/FeaturedPlayList";
-import {Box, Flex, Text, Fade, VStack, HStack, Image, Button} from "@chakra-ui/react";
+import {Box, Flex, Text, Fade, VStack, HStack, Image, Button, Badge} from "@chakra-ui/react";
 import {useEffect, useMemo, useState} from "react";
 import {SearchBarModal} from "./SearchBarModal"
 
@@ -26,20 +26,34 @@ export const Main = () =>
                     <SearchBarModal/>
                     {/*<Controller/>*/}
                 </HStack>
-                    <Account/>
+                <HStack spacing={5}>
+                    <Badge fontSize={"sm"} variant='subtle' colorScheme='pink'>
+                        Relax
+                    </Badge>
+                    <Badge fontSize={"sm"} variant='subtle' colorScheme='pink'>
+                        Workout
+                    </Badge>
+                    <Badge fontSize={"sm"} variant='subtle' colorScheme='pink'>
+                        Focus
+                    </Badge>
+                    <Badge fontSize={"sm"} variant='subtle' colorScheme='pink'>
+                        Energize
+                    </Badge>
+                </HStack>
+                <Account/>
             </Flex>
 
 
 
 
-            <Flex  direction={'column'} justify={"start"} align={'start'}  >
+            <Flex  direction={'column'} justify={"start"} align={'center'} gap={5} px={5} >
                 {/*NEW RELEASES COMPONENTS*/}
                 <NewReleasesAlbumsList/>
                 {/*RECENTLY PLAYED LIST*/}
-                <HStack w={"full"} justify={"center"} p={3}>
+                <HStack w={"full"} justify={"center"} spacing={20} my={30}>
 
-                    <Image width={660} height={200} src={'/popularArtist.png'} placeholder={"blur"} blurDataURL={'/popularArtist.png'} />
-                    <VStack>
+                    <Image width={660} height={200} src={'/popularArtist.png'} placeholder={"blur"} blurdataurl={'/popularArtist.png'} />
+                    <VStack align={"start"} spacing={0}>
                         <Text>Tell us which artists you like</Text>
                         <Text>We'll create an experience just for you</Text>
                         <Button>Lets go</Button>
@@ -48,11 +62,9 @@ export const Main = () =>
                 </HStack>
 
                 <RecentlyPlayedList/>
+
+                <FeaturedPlayList/>
             </Flex>
-
-            <FeaturedPlayList/>
-
-
 
 
         </Box>

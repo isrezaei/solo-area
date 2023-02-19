@@ -49,12 +49,9 @@ export const RecentlyPlayedList = () =>
         //?She's going to take a song ID and bring
         const TRACK = await FETCH_TRACK(trackID)
 
-        console.log(TRACK.name)
-
         //? ID from get track
         setActivePlaying(TRACK.id)
         setTrackID(TRACK.id)
-
     }
 
 
@@ -66,7 +63,8 @@ export const RecentlyPlayedList = () =>
         return (
 
                 <Flex
-                    w={{base : 'full' , md : '20vw'}}
+                    key={TRACK.id}
+                    w={{base : 'full' , md : '1xs'}}
                     justify={'space-evenly'}
                     align={'center'}
                     bg={'whiteAlpha.200'}
@@ -126,14 +124,9 @@ export const RecentlyPlayedList = () =>
 
     return (
 
-        <Box w={"full"} h={'auto'}  my={4} px={5}>
-
-            <Text my={2} fontSize={'2vw'} fontWeight={"bold"} color={'whiteAlpha.700'} >Let's listen again</Text>
-
-            <Grid templateColumns={{base : 'repeat(1, 1fr)' , md : 'repeat(4, 1fr)'}} gap={4}>
+            <Grid w={"full"} templateColumns={{base : 'repeat(1, 1fr)' , md : 'repeat(4, 1fr)'}} gap={4}>
                 {RENDER}
             </Grid>
 
-        </Box>
     )
 }

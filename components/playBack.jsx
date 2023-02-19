@@ -25,17 +25,21 @@ import AudioPlayer , {RHAP_UI} from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import {useAsync} from "react-use";
 import {PropagateLoader} from "react-spinners";
-import Draggable from 'react-draggable';
 import 'animate.css';
 
-export const NewPlayBack =() =>
+
+
+
+
+export const PlayBack =() =>
 {
+
+
 
     const trackID = useRecoilValue(SPOTIFY_TRACKS_ID_ATOM)
 
     const [metaData , setMetaData] = useState()
     const [playBackStatus , setPlayBackStatus] = useState('idle')
-    const [openPlayback , setOpenPlayback] = useState(true)
 
     useAsync(async () => {
 
@@ -47,18 +51,13 @@ export const NewPlayBack =() =>
             setMetaData(getMetaData)
             setPlayBackStatus('success')
         }
-
     } , [trackID])
-
-
 
 
     return (
 
-
-
-            <Flex  w={"full"} h={85} p={3} bgGradient={`linear(to-tr, pink.900 , black , black)`}  justify={'space-around'}
-                  align={'center'} zIndex={1000} position={'fixed'} bottom={0} transition={'.1s'} >
+            <Flex  w={"full"} h={85} p={3} bgGradient={`linear(to-tl, pink.900 , black , black , black)`}  justify={'space-around'}
+                  align={'center'} zIndex={1000} position={'fixed'} bottom={0} left={0} transition={'.1s'} >
 
                 <Flex w={"full"} direction={'row'} gap={2} justify={"space-between"} align={"center"}>
 
@@ -85,6 +84,8 @@ export const NewPlayBack =() =>
                         </VStack>
 
                     </HStack>
+
+
 
                     <HStack flex={2.2}>
                         <AudioPlayer
@@ -131,6 +132,7 @@ export const NewPlayBack =() =>
                     </HStack>
 
                 </Flex>
+
             </Flex>
 
 

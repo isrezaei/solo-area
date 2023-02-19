@@ -1,9 +1,11 @@
-import {IconButton, Menu, MenuButton, MenuItem, MenuList , Avatar} from "@chakra-ui/react";
+import {IconButton, Menu, MenuButton, MenuItem, MenuList, Avatar, Button} from "@chakra-ui/react";
 import {FETCH_ME} from "../../../lib/FetcherFuncs/FETCH_ME";
 import useSWR from "swr";
 import {TriangleDownIcon} from "@chakra-ui/icons";
 import {useSetRecoilState} from "recoil";
 import {LOGIN_TOKEN_ATOM} from "../../../atoms/atoms";
+import {useSupabaseClient} from "@supabase/auth-helpers-react";
+import {useRouter} from "next/router";
 
 
 export const Account = () =>
@@ -11,11 +13,23 @@ export const Account = () =>
     const {data : ME} = useSWR('GET ME INFORMATION' , async () => (await FETCH_ME()))
     const removeToken = useSetRecoilState(LOGIN_TOKEN_ATOM)
 
+    const router = useRouter()
 
-    const singOut = () => {
+    const supabase = useSupabaseClient()
 
-        removeToken(undefined)
-        localStorage.removeItem('token')
+    const singOut = async () => {
+
+        const { error } = await supabase.auth.signOut()
+
+        if (error) {
+            console.log('Error signing out:', error.message)
+        } else {
+            console.log('Signed out successfully')
+            router.push('/login_signup')
+        }
+
+        // removeToken(undefined)
+        // localStorage.removeItem('token')
     }
 
 
@@ -37,8 +51,10 @@ export const Account = () =>
             </MenuButton>
 
             <MenuList>
-                <MenuItem onClick={singOut}>Sign Out</MenuItem>
+
             </MenuList>
+
+            <Button cursor={'pointer'} onClick={singOut}>Sign Out</Button>
         </Menu>
     )
 }
