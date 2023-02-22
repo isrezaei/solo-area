@@ -25,7 +25,7 @@ export default function Layout({ children }) {
         <Container maxW={'1990px'}>
                     <Flex  bg={'blackAlpha.800'} position={"relative"}>
                         {pathname === '/' && <Sidebar/>}
-                        {pathname === '/' && <PlayBack/>}
+                        {/*{pathname === '/' && <PlayBack/>}*/}
                         <Box flex={8} >
                             {children}
                         </Box>

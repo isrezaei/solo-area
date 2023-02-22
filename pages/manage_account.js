@@ -10,10 +10,13 @@ import {
     HStack,
     FormControl,
     FormLabel,
-    Image, Avatar, InputLeftElement, InputGroup
+    Avatar, InputLeftElement, InputGroup, Img, IconButton, FormHelperText, FormErrorMessage
 } from "@chakra-ui/react";
-
-import {FiUpload} from "react-icons/fi";
+import Image from "next/image";
+import {MdAdd} from 'react-icons/md'
+import _ from 'lodash'
+import { useToast } from '@chakra-ui/react'
+import {useRouter} from "next/router";
 
 
 export default function Manage_account() {
@@ -21,28 +24,28 @@ export default function Manage_account() {
     const session = useSession()
     const supabase = useSupabaseClient()
     const user = useUser()
+    const fileInputRef = useRef(null);
+    const toast = useToast()
+    const router = useRouter()
 
 
-    const [userInformation , setInformation] = useState({
-        username : 'Please set username',
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    const [SET_USER_INFO , SEND_USER_INFO] = useState({
+        username : '',
         firstname : '',
         lastname: '',
-        avatar_url: '',
+        avatar_url: null,
         loading : false
     })
 
 
-    useEffect(() => {
-        getProfile()
-    }, [session])
-
-
     async function getProfile() {
+
         try {
+            SEND_USER_INFO(prevState => ({...prevState , loading: true}))
 
-            setInformation(prevState => ({...prevState , loading: true}))
-
-            let { data : USERS_INFO , error , status } = await supabase
+            let { data : GET_USERS_INFO , error , status } = await supabase
                 .from('USERS')
                 .select('*')
                 .eq('id', user.id)
@@ -56,14 +59,14 @@ export default function Manage_account() {
             }
 
 
-            if (USERS_INFO) {
-                setInformation(prevState => (
+            if (GET_USERS_INFO) {
+                SEND_USER_INFO(prevState => (
                     {
                         ...prevState,
-                        firstname: USERS_INFO?.firstname,
-                        lastname: USERS_INFO?.lastname,
-                        username: USERS_INFO?.username,
-                        avatar_url: USERS_INFO?.avatar_url
+                        firstname: GET_USERS_INFO?.firstname,
+                        lastname: GET_USERS_INFO?.lastname,
+                        username: GET_USERS_INFO?.username,
+                        avatar_url: GET_USERS_INFO?.avatar_url
                     }
                 ))
             }
@@ -72,49 +75,54 @@ export default function Manage_account() {
             console.log(error)
         }
         finally {
-            setInformation(prevState => ({...prevState , loading: false}))
+            SEND_USER_INFO(prevState => ({...prevState , loading: false}))
         }
     }
+    useEffect(() => {
+        getProfile()
+    }, [session])
 
-    async function updateProfile() {
+
+
+    const setProfileInfo = async () => {
+
         try {
+            SEND_USER_INFO(prevState => ({...prevState , loading: true}))
 
-            setInformation(prevState => ({...prevState , loading: true}))
-
-            let { data , error , status } = await supabase.from('USERS').upsert({
+            let { data , error } = await supabase.from('USERS').upsert({
                 id : user.id,
-                firstname: userInformation?.firstname,
-                lastname: userInformation?.lastname,
-                username: userInformation?.username,
-                avatar_url: userInformation?.avatar_url
+                firstname: SET_USER_INFO?.firstname,
+                lastname: SET_USER_INFO?.lastname,
+                username: SET_USER_INFO?.username,
+                avatar_url: SET_USER_INFO?.avatar_url
             })
-
-
             if (error) throw error
 
+            toast({
+                title: 'Done',
+                description: "We've created your new information for you.",
+                status: 'success',
+                position : 'top',
+                duration: 9000,
+                isClosable: true,
+            })
 
-
-            alert('Profile updated!')
-
-
-        } catch (error) {
-            alert('Error updating the data!')
-            console.log(error)
-        } finally {
-            setInformation(prevState => ({...prevState , loading: false}))
         }
+        catch (error) {
+            alert('Error updating the data!')
+        }
+        finally
+        {
+            router.push('/pickFavouriteArtists')
+            SEND_USER_INFO(prevState => ({...prevState , loading: false}))
+        }
+
     }
 
-
-
-    const [selectedFile, setSelectedFile] = useState(null);
 
     function handleFileSelect(event) {
         setSelectedFile(event.target.files[0]);
     }
-
-
-    const fileInputRef = useRef(null);
 
 
     const handleButtonClick = () => {
@@ -123,25 +131,27 @@ export default function Manage_account() {
 
 
     useEffect(() => {
-
         if (selectedFile)
         {
             const reader = new FileReader();
             reader.readAsDataURL(selectedFile);
-            reader.onload = () => setInformation(prevState => ({...prevState , avatar_url: reader.result}))
+            reader.onload = () => SEND_USER_INFO(prevState => ({...prevState , avatar_url: reader.result}))
         }
-
     } , [selectedFile])
 
 
+    const checkForContinue = _.every(['username', 'firstname', 'lastname'] , KEY => !_.isEmpty(SET_USER_INFO[KEY]))
+
+    // console.log(checkForContinue)
+    //
+
+    console.log(SET_USER_INFO)
+
 
     return (
-        <VStack spacing={5} justify={"center"} maxW={'md'} h={'100vh'} m={"auto"} p={5} bg={"whiteAlpha.200"}>
+        <VStack spacing={5} justify={"center"} maxW={'md'} h={'100vh'} m={"auto"} p={5} >
 
             <VStack>
-
-                <Avatar size='2xl' bg={"pink.800"} name='' src={userInformation.avatar_url} />
-
                 <Input
                     variant="filled"
                     colorScheme="teal"
@@ -150,17 +160,24 @@ export default function Manage_account() {
                     ref={fileInputRef}
                     onChange={handleFileSelect}
                     accept="image/*" />
-
-                <Button onClick={handleButtonClick}>open</Button>
+                <Box  position={"relative"}>
+                    <Avatar src={SET_USER_INFO.avatar_url} size={'2xl'}  name={SET_USER_INFO.firstname}/>
+                    <IconButton position={"absolute"} bottom={1} right={1} size={"sm"} onClick={handleButtonClick} rounded={"full"} icon={<MdAdd size={20}/>} aria-label={'add-image'}/>
+                </Box>
             </VStack>
 
             <VStack w={"full"} >
-                <Input variant='filled' placeholder='First name' onChange={({target}) => setInformation(prevState => ({...prevState , firstname: target.value}))} />
-                <Input variant='filled' placeholder='Last name' onChange={({target}) => setInformation(prevState => ({...prevState , lastname: target.value}))} />
-                <Input variant='filled' placeholder='Username' onChange={({target}) => setInformation(prevState => ({...prevState , username: target.value}))} />
+                <Input defaultValue={SET_USER_INFO?.firstname} variant='filled' placeholder='First name' onChange={({target}) => SEND_USER_INFO(prevState => ({...prevState , firstname: target.value}))} />
+                <Input defaultValue={SET_USER_INFO?.lastname} variant='filled' placeholder='Last name' onChange={({target}) => SEND_USER_INFO(prevState => ({...prevState , lastname: target.value}))} />
+                <Input defaultValue={SET_USER_INFO?.username} variant='filled' placeholder='Username' onChange={({target}) => SEND_USER_INFO(prevState => ({...prevState , username: target.value}))} />
             </VStack>
 
-            <Button size={"sm"} onClick={updateProfile} colorScheme={'purple'}>Confirm and next</Button>
+
+            <Button disabled={!checkForContinue}
+                    isLoading={SET_USER_INFO.loading}
+                    spinnerPlacement='start'
+                    size={"sm"}
+                    onClick={setProfileInfo} colorScheme={'pink'}>Confirm and next</Button>
         </VStack>
     )
 }

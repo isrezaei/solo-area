@@ -32,8 +32,14 @@ export const NewReleasesAlbumsList = () =>
 
 
     return (
-        <Box w={"full"} zIndex={1000} >
-            <Text my={2} fontSize={'2vw'} fontWeight={"bold"} color={'whiteAlpha.800'} >Quick picks</Text>
+        <Box w={"full"} zIndex={1000}>
+
+            <HStack justify={'flex-end'}>
+                <Center bgGradient='linear(to-l, purple.900 , black )'  p={2} my={2}>
+                    <Text fontSize={25} fontWeight={"bold"} color={'whiteAlpha.800'} >Quick picks</Text>
+                </Center>
+            </HStack>
+
             <Grid templateColumns={{base : 'repeat(2, 1fr)' , md : 'repeat(6, 1fr)'}} gap={6} >
                 {Render}
             </Grid>

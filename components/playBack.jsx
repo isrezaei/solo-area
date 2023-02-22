@@ -57,7 +57,7 @@ export const PlayBack =() =>
     return (
 
             <Flex  w={"full"} h={85} p={3} bgGradient={`linear(to-tl, pink.900 , black , black , black)`}  justify={'space-around'}
-                  align={'center'} zIndex={1000} position={'fixed'} bottom={0} left={0} transition={'.1s'} >
+                  align={'center'} zIndex={'2000'} position={'fixed'} bottom={0} left={0} transition={'.1s'} >
 
                 <Flex w={"full"} direction={'row'} gap={2} justify={"space-between"} align={"center"}>
 
