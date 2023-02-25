@@ -16,20 +16,6 @@ export async function middleware(req , res) {
     const {data: { session } , error} = await supabase.auth.getSession()
 
 
-
-    const {data : USERS } = await supabase
-        .from("USERS")
-        .select('username , id , FAVOURITE_ARTISTS(*) ').eq('id' , session.user.id)
-
-
-    // console.log(USERS?.[0]?.FAVOURITE_ARTISTS.favourite_artists.length)
-    // if (USERS?.[0]?.FAVOURITE_ARTISTS?.favourite_artists.length)
-    // {
-    //     return NextResponse.redirect(new URL('/', req.url))
-    // }
-
-
-
     // Check auth condition
     if (session?.user.email) {
         // Authentication successful, forward request to protected route.

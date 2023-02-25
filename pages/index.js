@@ -3,6 +3,7 @@ import  {SWRConfig} from "swr";
 import {Fetch_New_Releases_Albums} from "../lib/FetcherFuncs/Fetch_New_Releases_Albums";
 import {FETCH_RECENTLY_PLAYED_TRACK} from "../lib/FetcherFuncs/Fetch_Recently_Played_Track";
 import {FETCH_ME} from "../lib/FetcherFuncs/FETCH_ME";
+import {FETCH_ARTIST} from "../lib/FetcherFuncs/FETCH_ARTIST";
 
 
 export default function Home({fallback}) {
@@ -27,12 +28,13 @@ export const getStaticProps = async (context) =>
     //?GET HOST USER INFO
     const GET_ME_INFORMATION = await FETCH_ME()
 
+
     return {
         props : {
             fallback : {
                 '/api/get_new_releases_albums_list': GET_NEW_RELEASES,
                 '/api/get_recently_played_list': GET_RECENTLY_PLAYED_TRACK,
-                'GET ME INFORMATION' : GET_ME_INFORMATION
+                'GET ME INFORMATION' : GET_ME_INFORMATION,
             },
         },
     }

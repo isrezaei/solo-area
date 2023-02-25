@@ -11,7 +11,7 @@ export const NewReleasesAlbumsList = () =>
 {
     const router = useRouter()
 
-    const {data} = useSWR('/api/get_new_releases_albums_list' , async () => (await Fetch_New_Releases_Albums()))
+    const {data} = useSWR('/api/get_new_releases_albums_list' , async () => (await Fetch_New_Releases_Albums()) , {refreshInterval : 60000})
 
     const [play , {stop}] = useSound('/beepSound.mp3');
 
@@ -32,17 +32,11 @@ export const NewReleasesAlbumsList = () =>
 
 
     return (
-        <Box w={"full"} zIndex={1000}>
-
-            <HStack justify={'flex-end'}>
-                <Center bgGradient='linear(to-l, purple.900 , black )'  p={2} my={2}>
-                    <Text fontSize={25} fontWeight={"bold"} color={'whiteAlpha.800'} >Quick picks</Text>
-                </Center>
-            </HStack>
-
+        <VStack align={'start'} w={"full"} zIndex={1000}>
+            <Text fontSize={50} fontWeight={"bold"} color={'whiteAlpha.800'} >The latest in the month</Text>
             <Grid templateColumns={{base : 'repeat(2, 1fr)' , md : 'repeat(6, 1fr)'}} gap={6} >
                 {Render}
             </Grid>
-        </Box>
+        </VStack>
     )
 }

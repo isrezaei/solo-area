@@ -82,3 +82,34 @@
 {
 
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.page {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.page-link {
+    cursor: pointer;
+    color: #333;
+    border-radius: 3px;
+    padding: 3px 6px;
+    border: 1px solid #ddd;
+}
+
+.active {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+}
+
+.previous,
+.next {
+    cursor: pointer;
+    color: #007bff;
+    margin: 0 5px;
+}

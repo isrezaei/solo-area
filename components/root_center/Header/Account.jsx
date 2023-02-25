@@ -32,8 +32,6 @@ export const Account = () =>
 
     } , [user])
 
-    console.log(ownerUser)
-
 
     const singOut = async () =>
     {
