@@ -1,50 +1,51 @@
-import {Search} from "./Header/Search";
-import {Controller} from "./Header/Controller";
 import {Account} from "./Header/Account";
 import {NewReleasesAlbumsList} from "./New_Releases_Albums_List/NewReleasesAlbumsList";
 import {RecentlyPlayedList} from "./Recently_Played_List/RecentlyPlayedList";
 import {FeaturedPlayList} from "./Featured_playList/FeaturedPlayList";
-import {Box, Flex, Text, Fade, VStack, HStack, Image} from "@chakra-ui/react";
-import {useEffect, useMemo, useState} from "react";
+import {Box, Flex, Text, Fade, VStack, HStack, Image, Button, Badge} from "@chakra-ui/react";
 import {SearchBarModal} from "./SearchBarModal"
+import {FavouriteArtists} from "../FavouriteArtists";
 
+import {SelectGenre} from "./SelectGenre";
 
-export const Main = () =>
+export const Main = ({user}) =>
 {
 
+
     return (
-        <Box position={"relative"}>
+        <>
+            <Box position={"relative"} zIndex={'1000'}>
+                {/*HEADER COMPONENTS*/}
 
-            <Box bgGradient={`linear(to-br, pink.900 , blackAlpha.500 , blackAlpha.500 ,blackAlpha.500)`} transition={'1s linear'} w={"full"} h={380} position={'absolute'} />
-
-
-            {/*HEADER COMPONENTS*/}
-
-            <Flex justify={"space-between"} align={"center"} w={"full"} p={5} >
-                <HStack spacing={10}>
-                    <Text fontSize={"4xl"} fontWeight={"bold"} color={"whiteAlpha.800"}  zIndex={1000}>Good Afternoon</Text>
-                    <SearchBarModal/>
-                    {/*<Controller/>*/}
-                </HStack>
+                <Flex w={"full"} h={150} justify={"space-between"} align={"start"} p={5}  >
+                        <HStack spacing={10}>
+                            <Text fontSize={"4xl"} fontWeight={"bold"} color={"whiteAlpha.800"}  zIndex={2}>Good Afternoon</Text>
+                            <SearchBarModal/>
+                        </HStack>
                     <Account/>
-            </Flex>
+
+                </Flex>
 
 
+                <Flex  direction={'column'} justify={"start"} align={'center'} gap={5} px={5} >
+
+                    <SelectGenre/>
+
+                    {/*NEW RELEASES COMPONENTS*/}
+                    <NewReleasesAlbumsList/>
+
+                    {/*Favourite Artists*/}
+                    <FavouriteArtists user={user}/>
 
 
-            <Flex  direction={'column'} justify={"start"} align={'start'}  >
-                {/*NEW RELEASES COMPONENTS*/}
-                <NewReleasesAlbumsList/>
-                {/*RECENTLY PLAYED LIST*/}
+                    {/*RECENTLY PLAYED LIST*/}
+                    <RecentlyPlayedList/>
 
-                <RecentlyPlayedList/>
-            </Flex>
-
-            <FeaturedPlayList/>
+                    <FeaturedPlayList/>
+                </Flex>
 
 
-
-
-        </Box>
+            </Box>
+        </>
     )
 }

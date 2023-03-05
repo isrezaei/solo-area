@@ -1,13 +1,18 @@
 import {Flex, useColorMode, useColorModeValue} from "@chakra-ui/react";
 
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
+import {useSupabaseClient} from "@supabase/auth-helpers-react";
 
 export const Controller = () =>
 {
 
+
     const { colorMode, toggleColorMode } = useColorMode()
 
     const bg = useColorModeValue('blackAlpha.200', 'whiteAlpha.200')
+
+
+
 
     return (
         <Flex

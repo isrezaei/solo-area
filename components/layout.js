@@ -1,31 +1,86 @@
-import {Sidebar} from "./root_sidebar/Sidebar";
-import {Flex, Box, useColorModeValue} from "@chakra-ui/react";
+import {Sidebar} from "./Sidebar";
+import {Flex, Box, Container, Button, Img} from "@chakra-ui/react";
+import {useRouter} from "next/router";
 import {useRecoilValue} from "recoil";
-import {LOGIN_TOKEN_ATOM} from "../atoms/atoms";
-import Login from "./login";
-import {NewPlayBack} from "./newPlayBack";
+import {selectGenre} from "../atoms/atoms";
+import Image from "next/image";
+import {useEffect, useState} from "react";
+import _ from 'lodash'
+import { motion } from "framer-motion";
+
+const genreWall = {
+
+    pop: {image : '/windows.jpeg' , variant : 'pop'},
+    soul: {image : '/relax.jpg' , variant : 'soul'},
+    chill: {image : '/chill.jpg' , variant : 'chill'},
+    techno: {image : '/energy.jpg' , variant : 'techno'},
+    'work-out': {image : '/work-out.jpg' , variant :'work-out'}
+
+    }
+
+
+    export default function Layout({ children }) {
+
+        const router = useRouter();
+
+        const { pathname } = router;
+
+        const getGenre = useRecoilValue(selectGenre)
+
+        return (
+
+            <Container maxW={'1990px'}>
+
+
+
+                <Flex zIndex={2} position={"relative"}>
+
+
+                    {
+                        pathname === '/' &&
+                        <Box w={"full"} h={400} position={"absolute"} zIndex={1}
+                             _after={{
+                                 content: `""`,
+                                 position: "absolute",
+                                 bottom: 0,
+                                 left: 0,
+                                 width: "100%",
+                                 height: "30%",
+                                 zIndex : 2,
+                                 backgroundImage:
+                                     "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1))"
+                             }}>
+
+                                        <Box w={"full"} h={400} zIndex={1} opacity={'30%'}>
+
+                                            <motion.div key={genreWall[getGenre]?.image} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{duration : .5}}>
+                                                    <Image
+                                                        objectFit="cover"
+                                                        layout={"fill"}
+                                                        placeholder={'blur'}
+                                                        src={genreWall[getGenre]?.image}
+                                                        blurDataURL={genreWall[getGenre]?.image}
+                                                        loading={'eager'}/>
+
+                                                </motion.div>
 
 
 
 
-export default function Layout({ children }) {
+                                        </Box>
 
-    const bg = useColorModeValue('blackAlpha.50', 'blackAlpha.800')
+                        </Box>
+                    }
 
+                    <Flex w={"full"} zIndex={2}>
+                        {pathname === '/' && <Sidebar/>}
+                        {/*{pathname === '/' && <PlayBack/>}*/}
+                        <Box flex={10} >
+                            {children}
+                        </Box>
+                    </Flex>
 
-    const LOGIN_TOKEN = useRecoilValue(LOGIN_TOKEN_ATOM)
-
-    if (LOGIN_TOKEN == null) return <Login/>
-
-    return (
-
-            <Flex  bg={bg}>
-                <Sidebar/>
-                <Box flex={8} >
-                    {children}
-                </Box>
-                <NewPlayBack/>
-            </Flex>
-
-    )
-}
+                </Flex>
+            </Container>
+        )
+    }
