@@ -4,7 +4,7 @@ import {useEffect} from "react";
 import {AlbumsInfo} from "../../components/pages/new_releases_albums_track/AlbumsInfo";
 import {Box} from "@chakra-ui/react";
 import {TracksInfo} from "../../components/pages/new_releases_albums_track/TracksInfo";
-import {Fetch_New_Releases_Albums} from "../../lib/FetcherFuncs/Fetch_New_Releases_Albums";
+import {FETCH_NEW_RELEASES_ALBUMS} from "../../lib/FetcherFuncs/FETCH_NEW_RELEASES_ALBUMS";
 import {FETCH_NEW_RELESES_TRACK} from "../../lib/FetcherFuncs/FETCH_NEW_RELESES_TRACK";
 
 function NewReleasesAlbumsTrack ({GET_NEW_RELEASES_ALL_DATA})
@@ -36,13 +36,15 @@ export default NewReleasesAlbumsTrack
 export const getStaticPaths  = async () =>
 {
     //?GET NEW RELEASES FROM SPOTIFY API AND SET ALL NEED PARAMS FOR FIRST BUILD
-    const GET_NEW_RELEASES = await Fetch_New_Releases_Albums()
+    const GET_NEW_RELEASES = await FETCH_NEW_RELEASES_ALBUMS()
 
     const PATH_URL = GET_NEW_RELEASES.map(value => {
+
         return {
             params : {new_releases : value.id}
         }
     })
+
     return {
         paths : PATH_URL,
         fallback : 'blocking'

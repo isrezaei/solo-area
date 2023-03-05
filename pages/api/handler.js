@@ -14,6 +14,5 @@ export default async (req , res) => {
 
 
 
-
-    res.status(200).json({ name: user?.email })
+    res.status(200).json(user)
 }

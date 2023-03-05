@@ -31,7 +31,7 @@ export const PickFavouriteArtists = ({getSeveralArtist}) =>
 
     const confirm =  async () =>
     {
-        if (selectFavourite.length >= 5)
+        if (selectFavourite.length >= 10)
         {
             try {
                 setLoading(true)
@@ -41,7 +41,7 @@ export const PickFavouriteArtists = ({getSeveralArtist}) =>
                     .upsert([{
                         'dependent-to' : user.email,
                         'id' : user.id,
-                        'favourite_artists' : selectFavourite
+                        'favourite' : selectFavourite
                     }])
 
                 toast({
@@ -63,11 +63,11 @@ export const PickFavouriteArtists = ({getSeveralArtist}) =>
         }
 
 
-        if (selectFavourite.length < 5)
+        if (selectFavourite.length < 10)
         {
             toast({
                 title: 'Oops ! ',
-                description: "You need pick up minimum 5 artists",
+                description: "You need pick up minimum 10 artists",
                 status: 'warning',
                 duration: 1500,
                 isClosable: true,

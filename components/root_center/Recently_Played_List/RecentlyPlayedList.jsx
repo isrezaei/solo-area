@@ -124,9 +124,15 @@ export const RecentlyPlayedList = () =>
 
     return (
 
-            <Grid w={"full"} templateColumns={{base : 'repeat(1, 1fr)' , md : 'repeat(4, 1fr)'}} gap={4}>
+        <>
+            <VStack w={"full"} align={'start'}>
+                <Text w={"full"} fontSize={40} fontWeight={"bold"} color={'whiteAlpha.600'}>Random Should be ok ?</Text>
+            </VStack>
+
+            <Grid w={"full"} py={3} templateColumns={{base : 'repeat(1, 1fr)' , md : 'repeat(4, 1fr)'}} gap={4}>
                 {RENDER}
             </Grid>
+        </>
 
     )
 }
