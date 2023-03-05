@@ -59,6 +59,7 @@ const genreWall = {
                                                         layout={"fill"}
                                                         placeholder={'blur'}
                                                         src={genreWall[getGenre]?.image}
+                                                        quality={20}
                                                         priority={true}
                                                         blurDataURL={genreWall[getGenre]?.image}/>
 
