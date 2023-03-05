@@ -59,8 +59,8 @@ const genreWall = {
                                                         layout={"fill"}
                                                         placeholder={'blur'}
                                                         src={genreWall[getGenre]?.image}
-                                                        blurDataURL={genreWall[getGenre]?.image}
-                                                        loading={'eager'}/>
+                                                        priority={true}
+                                                        blurDataURL={genreWall[getGenre]?.image}/>
 
                                                 </motion.div>
 
