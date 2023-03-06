@@ -1,13 +1,9 @@
 import {Box, Image, Img, VStack} from "@chakra-ui/react";
 import {Auth, ThemeSupa} from "@supabase/auth-ui-react";
 import {useSupabaseClient, useUser} from "@supabase/auth-helpers-react";
-
-import {Button} from "@supabase/ui";
 import {useRouter} from "next/router";
-import {useEffect, useLayoutEffect} from "react";
 import {useAsync} from "react-use";
 import _ from 'lodash'
-
 
 export default function Login_signup ()
 {
@@ -15,7 +11,6 @@ export default function Login_signup ()
     const user = useUser()
     const router = useRouter()
     const supabase = useSupabaseClient()
-
 
 
     useAsync(async () => {
@@ -33,7 +28,6 @@ export default function Login_signup ()
             if (!checkRouter) return router.push('/manage_account')
         }
 
-
     } , [user] )
 
 
@@ -43,8 +37,6 @@ export default function Login_signup ()
 
     return (
         <VStack justify={"center"} m={"auto"} maxW={'sm'} p={5}  h={'100vh'}   position={'relative'}>
-            <Img src={'/gif_1.gif'} objectFit={'cover'} position={"absolute"} w={'full'} h={'85vh'}  zIndex={1} opacity={'30%'}/>
-
             <Box w={"full"} zIndex={1000}>
                 <Auth
                     providers={['google', 'facebook', 'twitter']}
@@ -60,8 +52,6 @@ export default function Login_signup ()
                     theme="dark"
                 />
             </Box>
-
-
         </VStack>
     )
 }

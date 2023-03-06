@@ -10,11 +10,11 @@ import { motion } from "framer-motion";
 
 const genreWall = {
 
-    pop: {image : '/windows.jpeg' , variant : 'pop'},
-    soul: {image : '/relax.jpg' , variant : 'soul'},
-    chill: {image : '/chill.jpg' , variant : 'chill'},
-    techno: {image : '/energy.jpg' , variant : 'techno'},
-    'work-out': {image : '/work-out.jpg' , variant :'work-out'}
+    pop: {image : '/windows.webp' , variant : 'pop'},
+    soul: {image : '/relax.webp' , variant : 'soul'},
+    chill: {image : '/chill.webp' , variant : 'chill'},
+    techno: {image : '/energy.webp' , variant : 'techno'},
+    'work-out': {image : '/work-out.webp' , variant :'work-out'}
 
     }
 
