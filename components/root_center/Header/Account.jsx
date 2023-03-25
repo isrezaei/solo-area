@@ -57,7 +57,7 @@ export const Account = () =>
                 rounded={'3xl'}
                 pl={3}
                 as={IconButton}
-                rightIcon={<Avatar  src={ownerUser.value?.[0]?.avatar_url}/>}
+                rightIcon={<Avatar name={ownerUser.value?.[0]?.firstname}/>}
 
                 _expanded={{ bg: 'whiteAlpha.200' }}
                 _focus={{ bg : '#1c1c1c' , boxShadow : 'none'}}>

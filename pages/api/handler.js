@@ -1,4 +1,4 @@
-// Creating a new supabase server client object (e.g. in API route):
+// Creating a new supabase server useclient object (e.g. in API route):
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 
 

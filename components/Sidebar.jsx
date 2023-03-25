@@ -13,20 +13,18 @@ import {
     Tooltip,
     VStack, Spinner
 } from "@chakra-ui/react";
-import {RiHome6Line, RiMusicFill, RiUserFollowLine} from "react-icons/ri";
+import {RiHome6Line, RiMusicFill, RiUserFollowFill, RiUserFollowLine, RiUserUnfollowFill} from "react-icons/ri";
 import {useRouter} from "next/router";
-import {FETCH_RANDOM_ARTIST} from "../lib/FetcherFuncs/FETCH_RANDOM_ARTIST";
-import {useAsync} from "react-use";
 import Image from "next/image";
 import {useEffect, useState} from "react";
 import ReactPaginate from 'react-paginate';
 import {page , pageLink , next , previous , active , pagination , breakLinkClassName , breakClassName} from "./ExtraStyleSidebar";
 import {useSupabaseClient , useUser} from "@supabase/auth-helpers-react"
-import {RiUserUnfollowFill , RiUserFollowFill} from 'react-icons/ri'
 import useSWR from "swr";
 import {GetSubscribedList} from "../supabase/get/getSubscribedList";
 import _ from 'lodash';
-import {createClient} from "@supabase/supabase-js";
+import {getRandomArtists} from "../graphQl/query/getRandomArtists";
+import {getNewReleasesAlbums} from "../graphQl/query/getNewReleasesAlbums";
 
 
 
@@ -37,20 +35,27 @@ export const Sidebar = () =>
     const user = useUser()
 
     const [showMore , setShowMore] = useState({setHeight : false , setOverFlow : false})
+
     const [currentPage, setCurrentPage] = useState(0);
-    const [subscribeList , setSubscribeList] = useState([])
-    //? I PREVENT TO FIRST RUN IN FIRST MOUNT FOR SET SUBSCRIBE IN SUPABASE
-    const [shouldRunSetSubscribe, setShouldRunSetSubscribe] = useState(false);
-
-
-    const {data : getRandomArtistsList , isValidating} = useSWR(['GET RANDOM ARTISTS LIST' , currentPage] , async (key , value) => FETCH_RANDOM_ARTIST(value) , {refreshInterval : 0})
 
 
     const {
         data : getSubscribedList ,
         isValidating : subscribeStatus ,
         mutate : subscribeMutate
-    } = useSWR(['GET SUBSCRIBED LIST' , user , setSubscribeList] , async (key , user , setSubscribeList) => GetSubscribedList(user , setSubscribeList))
+    } = useSWR(['GET SUBSCRIBED LIST' , user] , async (key , user) => GetSubscribedList(user))
+
+
+    const {
+        data : {
+            randomArtists : {
+                artists : {
+                    items : randomArtists
+                } = []
+            } = {}
+        } = {}
+     , isValidating} = useSWR(['api' , 'GET_RANDOM_ARTISTS' , currentPage] , async (api , key , currentPage) => (await getRandomArtists(currentPage)) , {refreshInterval : 0})
+
 
 
 
@@ -62,14 +67,6 @@ export const Sidebar = () =>
 
     const handelSubscribe = async (randomArtist) =>
     {
-
-        const X =
-            _.find(getSubscribedList.subscribed , {id : randomArtist.id}) ?
-            _.reject(getSubscribedList.subscribed , {id : randomArtist.id}) :
-            _.uniq([...getSubscribedList.subscribed , randomArtist])
-
-
-
         const Y = _.xorWith(getSubscribedList.subscribed , [randomArtist] , _.isEqual)
 
         console.log(Y)
@@ -198,7 +195,7 @@ export const Sidebar = () =>
                                     return (
                                         <Tooltip key={value.id} bg={"black"} color={"whiteAlpha.800"} placement='bottom' label={value.name}>
                                             <Box w={45} h={45} onClick={() => router.push(`/artist/${value.id}`)} cursor={"pointer"} position={"relative"}>
-                                                <Image style={{position : "absolute" , borderRadius : '50%'}} layout={"fill"} placeholder={"blur"} blurDataURL={value.images[0].url} src={value.images[0].url} />
+                                                <Image style={{position : "absolute" , borderRadius : '50%'}} layout={"fill"} placeholder={"blur"} blurDataURL={value.images[2].url} src={value.images[2].url} loading={'lazy'} />
                                             </Box>
                                         </Tooltip>
 
@@ -253,29 +250,30 @@ export const Sidebar = () =>
                 </HStack>
 
 
-                {getRandomArtistsList?.map(randomArtist => {
-                        return (
-                            <HStack key={randomArtist.id} w={"full"} pr={2} bg={'whiteAlpha.200'} cursor={'pointer'} fontSize={'sm'} roundedRight={'xl'} roundedLeft={'3xl'}>
+                {randomArtists?.map(randomArtist => {
+                    return (
+                        <HStack key={randomArtist.id} w={"full"} pr={2} bg={'whiteAlpha.200'} cursor={'pointer'} fontSize={'sm'} roundedRight={'xl'} roundedLeft={'3xl'}>
 
-                                <Image style={{borderRadius : '5rem 0rem 5rem 5rem' , flex : 1}} src={randomArtist?.images[0]?.url} boxSize={45} width={50} height={50} placeholder={'blur'} blurDataURL={randomArtist?.images[0]?.url}/>
+                            <Box w={50} h={50} position={"relative"} overflow={"hidden"} rounded={'5rem 0rem 5rem 5rem'}>
+                                <Image style={{position : "absolute"}} src={randomArtist?.images[2]?.url} layout={"fill"} objectFit={'cover'} placeholder={'blur'} blurDataURL={randomArtist?.images[2]?.url}/>
+                            </Box>
 
-                                <Box flex={1} spacing={0}>
-                                    <Text w={79} noOfLines={1} fontSize={"xs"}>{randomArtist.name}</Text>
-                                    <Text w={79} noOfLines={1} fontSize={"2xs"}>{randomArtist.genres[0]}</Text>
-                                </Box>
+                            <Box flex={1} spacing={0}>
+                                <Text w={79} noOfLines={1} fontSize={"xs"}>{randomArtist.name}</Text>
+                                <Text w={79} noOfLines={1} fontSize={"2xs"}>{randomArtist.genres[0]}</Text>
+                            </Box>
 
-                                <IconButton isLoading={subscribeStatus}
-                                            aria-label={'subscribe-unSubscribe'}
-                                            onClick={() => handelSubscribe(randomArtist)}
-                                            rounded={"full"}
-                                            colorScheme={'orange'}
-                                            size={"sm"}
-                                            icon={!!_.find(getSubscribedList?.subscribed , {id : randomArtist.id}) ? <RiUserUnfollowFill size={18}/>  : <RiUserFollowFill size={18}/>}
-                                            variant={!!_.find(getSubscribedList?.subscribed , {id : randomArtist.id}) ? 'solid' :'outline'}/>
-                            </HStack>
-                        )
-                    }
-                )}
+                            <IconButton isLoading={subscribeStatus}
+                                        aria-label={'subscribe-unSubscribe'}
+                                        onClick={() => handelSubscribe(randomArtist)}
+                                        rounded={"full"}
+                                        colorScheme={'orange'}
+                                        size={"sm"}
+                                        icon={!!_.find(getSubscribedList?.subscribed , {id : randomArtist.id}) ? <RiUserUnfollowFill size={18}/>  : <RiUserFollowFill size={18}/>}
+                                        variant={!!_.find(getSubscribedList?.subscribed , {id : randomArtist.id}) ? 'solid' :'outline'}/>
+                        </HStack>
+                    )
+                })}
             </VStack>
 
 

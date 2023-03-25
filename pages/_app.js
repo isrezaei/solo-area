@@ -1,4 +1,4 @@
-import {ChakraProvider , extendTheme} from "@chakra-ui/react";
+import {ChakraProvider, extendTheme, HStack} from "@chakra-ui/react";
 import {RecoilRoot} from "recoil";
 import Layout from "../components/layout";
 import 'react-indiana-drag-scroll/dist/style.css';
@@ -6,9 +6,16 @@ import "@fontsource/karla"
 import NextNprogress from 'nextjs-progressbar';
 import {createBrowserSupabaseClient, createServerSupabaseClient} from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {Sidebar} from "../components/Sidebar";
+import {useRouter} from "next/router";
+
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+
+    const { pathname } = useRouter();
+
+
     const customTheme = extendTheme({
         styles: {
             global: {
@@ -42,15 +49,15 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     )
 
 
-    return (
 
+    return (
         <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
             <RecoilRoot>
                 <main style={{fontFamily : 'Karla'}}>
                     <NextNprogress color={'#589846'} height={5}/>
                     <ChakraProvider theme={customTheme}>
                         <Layout>
-                            <Component {...pageProps} />
+                                <Component {...pageProps} />
                         </Layout>
                     </ChakraProvider>
                 </main>

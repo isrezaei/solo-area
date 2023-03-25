@@ -4,7 +4,6 @@ import {useRecoilState, useRecoilValue} from "recoil";
 import {MY_PLAY_LIST_ID_ATOM, SPOTIFY_DEVICE_ID_ATOM, SPOTIFY_TRACKS_ID_ATOM} from "../../../atoms/atoms";
 import {FETCH_ONE_PLAYLIST} from "../../../lib/FetcherFuncs/FETCH_ONE_PLAYLIST";
 import prettyMilliseconds from "pretty-ms";
-import {PUT_SPOTIFY_PLAY_MUSIC} from "../../../lib/PuterFuncs/PUT_SPOTIFY_PLAY_MUSIC";
 import Tilt from 'react-parallax-tilt';
 
 export const FeaturedPlayList = () =>

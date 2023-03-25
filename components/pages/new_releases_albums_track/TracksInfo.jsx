@@ -3,7 +3,7 @@ import {NEW_RELEASES_ALBUMS_TRACK_ATOM} from "../../../atoms/atoms";
 import {Text, VStack, Flex, Center, Box} from "@chakra-ui/react";
 import prettyMilliseconds from "pretty-ms";
 import {SPOTIFY_DEVICE_ID_ATOM} from "../../../atoms/atoms";
-import {PUT_SPOTIFY_PLAY_MUSIC} from "../../../lib/PuterFuncs/PUT_SPOTIFY_PLAY_MUSIC";
+
 
 
 export const TracksInfo = () =>

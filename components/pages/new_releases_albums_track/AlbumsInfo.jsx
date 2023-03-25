@@ -1,8 +1,8 @@
 import {Box, Flex, Image, Text , HStack} from "@chakra-ui/react";
 import {useRecoilValue} from "recoil";
 import {NEW_RELEASES_ALBUMS_TRACK_ATOM} from "../../../atoms/atoms";
+import {useRouter} from "next/router";
 import useSWR from "swr";
-import {FETCH_ARTIST} from "../../../lib/FetcherFuncs/FETCH_ARTIST";
 import {FETCH_NEW_RELESES_TRACK} from "../../../lib/FetcherFuncs/FETCH_NEW_RELESES_TRACK";
 
 
@@ -11,6 +11,12 @@ export const AlbumsInfo = () =>
 
     const {images , type , name  , artists , release_date , total_tracks} = useRecoilValue(NEW_RELEASES_ALBUMS_TRACK_ATOM)
 
+    const {query : {new_releases}} = useRouter()
+
+    const {data} = useSWR(['api' , 'GET_TRACKS_OF_NEW_RELEASES' , new_releases] , async (api , key , new_releases) => (await FETCH_NEW_RELESES_TRACK(new_releases)) , {refreshInterval : false})
+
+
+    console.log(data)
 
     return (
 

@@ -73,7 +73,7 @@ const genreWall = {
                     }
 
                     <Flex w={"full"} zIndex={2}>
-                        {pathname === '/' && <Sidebar/>}
+                        {/*{pathname === '/' && <Sidebar/>}*/}
                         {/*{pathname === '/' && <PlayBack/>}*/}
                         <Box flex={10} >
                             {children}
@@ -81,6 +81,7 @@ const genreWall = {
                     </Flex>
 
                 </Flex>
+
             </Container>
         )
     }

@@ -18,7 +18,6 @@ import Image from "next/image";
 import ScrollContainer from 'react-indiana-drag-scroll'
 import 'react-indiana-drag-scroll/dist/style.css'
 import {useEffect, useRef, useState} from "react";
-import {FETCH_ARTIST} from "../lib/FetcherFuncs/FETCH_ARTIST";
 import useSWR from "swr";
 import _ from 'lodash'
 import {CgPlayButtonO} from 'react-icons/cg'
@@ -71,6 +70,7 @@ export const FavouriteArtists = ({user}) =>
                                 <ScrollContainer style={{width : '100%' , display : "flex" , justifyContent : 'flex-start' , alignItems : 'flex-start' , cursor : 'pointer'}}  >
                                     {
                                         favourite?.map( ({id , images , name}) => {
+
                                                 return (
                                                     <Box flex={'none'} p={2} position={'relative'} key={id} >
 
@@ -85,7 +85,8 @@ export const FavouriteArtists = ({user}) =>
                                                                width={200} height={200}
                                                                onClick={()=> handelSelect(id)}
                                                                placeholder={'blur'}
-                                                               blurDataURL={images[0].url}
+                                                               quality={100}
+                                                               blurDataURL={images[2].url}
                                                                src={images[0].url}/>
 
                                                         {
@@ -112,7 +113,9 @@ export const FavouriteArtists = ({user}) =>
                                                 <HStack px={2} rounded={50} key={id} bg={'whiteAlpha.200'}>
                                                     <Box flex={.3} role={'group'} position={"relative"}>
                                                         <Skeleton startColor={'whiteAlpha.300'} endColor={'whiteAlpha.400'} rounded={"full"} isLoaded={!isLoading}>
-                                                        <Img w={65} _groupHover={{opacity : '30%'}} transition={'.2s'} rounded={"full"} src={images[0].url}/>
+                                                            <Box w={55} h={55} rounded={"full"} overflow={'hidden'} position={"relative"} _groupHover={{opacity : '30%'}} transition={'.2s'}  >
+                                                                <Image placeholder={'blur'} blurDataURL={images[2].url} src={images[1].url} quality={'50'} layout={"fill"} sizes={'fill'} objectFit={"cover"} style={{position : "absolute" , borderRadius : '100%'}}/>
+                                                            </Box>
                                                         </Skeleton>
                                                         <AbsoluteCenter>
                                                             <Icon display={'none'}

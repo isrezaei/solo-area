@@ -1,31 +1,32 @@
-import {NEW_RELEASES_ALBUMS_TRACK_ATOM} from "../../atoms/atoms";
-import {useSetRecoilState} from "recoil";
-import {useEffect} from "react";
 import {AlbumsInfo} from "../../components/pages/new_releases_albums_track/AlbumsInfo";
 import {Box} from "@chakra-ui/react";
 import {TracksInfo} from "../../components/pages/new_releases_albums_track/TracksInfo";
-import {FETCH_NEW_RELEASES_ALBUMS} from "../../lib/FetcherFuncs/FETCH_NEW_RELEASES_ALBUMS";
 import {FETCH_NEW_RELESES_TRACK} from "../../lib/FetcherFuncs/FETCH_NEW_RELESES_TRACK";
+import useSWR , {unstable_serialize , SWRConfig} from "swr";
+import {useRouter} from "next/router";
 
-function NewReleasesAlbumsTrack ({GET_NEW_RELEASES_ALL_DATA})
+function NewReleasesAlbumsTrack ({fallback})
 {
 
-    const SET_NEW_RELEASES_ALBUM_TRACK = useSetRecoilState(NEW_RELEASES_ALBUMS_TRACK_ATOM)
-
-    useEffect(() => SET_NEW_RELEASES_ALBUM_TRACK(JSON.parse(GET_NEW_RELEASES_ALL_DATA)) , [])
-
-    console.log(JSON.parse(GET_NEW_RELEASES_ALL_DATA))
+    // const SET_NEW_RELEASES_ALBUM_TRACK = useSetRecoilState(NEW_RELEASES_ALBUMS_TRACK_ATOM)
+    //
+    // useEffect(() => SET_NEW_RELEASES_ALBUM_TRACK(JSON.parse(GET_NEW_RELEASES_ALL_DATA)) , [])
+    //
+    // console.log(JSON.parse(GET_NEW_RELEASES_ALL_DATA))
 
 
 
 
     return (
-        <Box w={"full"} h={'full'} bg={'gray.900'} >
-            {/*HEADER*/}
-            <AlbumsInfo/>
-            {/*BODY*/}
-            <TracksInfo/>
-        </Box>
+        <SWRConfig value={{fallback}}>
+            <Box w={"full"} h={'full'} bg={'gray.900'} >
+                {/*HEADER*/}
+                <AlbumsInfo/>
+                {/*/!*BODY*!/*/}
+                <TracksInfo/>
+            </Box>
+        </SWRConfig>
+
     )
 }
 
@@ -33,35 +34,18 @@ export default NewReleasesAlbumsTrack
 
 
 
-export const getStaticPaths  = async () =>
-{
-    //?GET NEW RELEASES FROM SPOTIFY API AND SET ALL NEED PARAMS FOR FIRST BUILD
-    const GET_NEW_RELEASES = await FETCH_NEW_RELEASES_ALBUMS()
+export const getServerSideProps = async ({params : {new_releases}}) => {
 
-    const PATH_URL = GET_NEW_RELEASES.map(value => {
+    console.log(new_releases)
 
-        return {
-            params : {new_releases : value.id}
+    const GET_TRACK_OF_NEW_RELEASES = await FETCH_NEW_RELESES_TRACK(new_releases)
+
+    return {
+        props :{
+            fallback : {
+                [unstable_serialize(['api' , 'GET_TRACKS_OF_NEW_RELEASES' , new_releases])] : GET_TRACK_OF_NEW_RELEASES
+            }
         }
-    })
-
-    return {
-        paths : PATH_URL,
-        fallback : 'blocking'
-    }
-}
-
-export const getStaticProps = async ({params : {new_releases : NEW_RELEASES_TRACK_ID}}) =>
-{
-    //?GET NEW RELEASES ALBUMS TRACKS
-    const GET_NEW_RELEASES_ALBUM_TRACKS = await FETCH_NEW_RELESES_TRACK(NEW_RELEASES_TRACK_ID)
-
-
-    return {
-        props : {
-            GET_NEW_RELEASES_ALL_DATA : JSON.stringify(GET_NEW_RELEASES_ALBUM_TRACKS)
-        },
-        revalidate : 1
     }
 }
 

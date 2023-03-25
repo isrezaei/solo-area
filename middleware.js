@@ -15,6 +15,8 @@ export async function middleware(req , res) {
     // Check if we have a session
     const {data: { session } , error} = await supabase.auth.getSession()
 
+    console.log(session)
+
 
     // Check auth condition
     if (session?.user.email) {

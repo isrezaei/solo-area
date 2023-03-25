@@ -11,7 +11,7 @@ export const GetSubscribedList = async (user , setSubscribeList) =>
                 .from('SUBSCRIBE_LIST')
                 .select("subscribed").eq('id' , user?.id)
 
-            setSubscribeList(data?.[0]?.subscribed)
+            // setSubscribeList(data?.[0]?.subscribed)
 
             return data?.[0]
 
