@@ -1,6 +1,4 @@
 import {IconButton, Menu, MenuButton, MenuItem, MenuList, Avatar, Button} from "@chakra-ui/react";
-import {FETCH_ME} from "../../../lib/FetcherFuncs/FETCH_ME";
-import useSWR from "swr";
 import {TriangleDownIcon} from "@chakra-ui/icons";
 import {useSupabaseClient , useUser} from "@supabase/auth-helpers-react";
 import {useRouter} from "next/router";
@@ -9,7 +7,6 @@ import {useAsync} from "react-use";
 
 export const Account = () =>
 {
-    const {data : ME} = useSWR('GET ME INFORMATION' , async () => (await FETCH_ME()))
 
 
     const router = useRouter()

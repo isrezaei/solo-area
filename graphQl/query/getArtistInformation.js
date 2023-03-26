@@ -33,6 +33,8 @@ export const getArtistInformation = async (artistId) =>
                         name
                         release_date
                     }
+                    id
+                    name
                     duration_ms
                     preview_url
                 }
@@ -52,9 +54,11 @@ export const getArtistInformation = async (artistId) =>
             }
 
             getRelatedArtist(artistId : $artistId) @rest(type : "artist-information" , path : "/artists/{args.artistId}/related-artists") {
-                id
-                images
-                name
+                artists {
+                    id
+                    images
+                    name
+                }
             }
         }
 

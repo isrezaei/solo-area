@@ -17,7 +17,7 @@ export default function Home({fallback , user}) {
 
     return (
             <SWRConfig value={{fallback}}>
-                <HStack align={'flex-start'}>
+                <HStack  align={'flex-start'}>
                     {pathname !== '/login_signup' && <Sidebar/>}
                     <Main user={user}/>
                 </HStack>

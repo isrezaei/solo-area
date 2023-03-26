@@ -90,42 +90,11 @@ export const Sidebar = () =>
                 console.log(e)
             }
         }
-
-
-        // setSubscribeList(prevState => {
-        //     if (!!_.find(prevState , {id : randomArtist.id})) return _.reject(prevState , {id : randomArtist.id})
-        //     return _.uniq([...prevState , randomArtist])
-        // })
-        // setShouldRunSetSubscribe(true)
     }
 
 
 
 
-
-    //  useAsync(async () => {
-    //
-    //     if (user && shouldRunSetSubscribe)
-    //     {
-    //         try {
-    //             const { data, error } = await supabase
-    //                 .from('SUBSCRIBE_LIST')
-    //                 .upsert([{
-    //                         'id' : user.id,
-    //                         'dependent-to' : user.email,
-    //                         'subscribed' : subscribeList
-    //                     }],
-    //                 )
-    //             console.log(error)
-    //             subscribeMutate()
-    //         }
-    //         catch (e)
-    //         {
-    //             console.log(e)
-    //         }
-    //     }
-    //
-    // }  , [subscribeList?.length , shouldRunSetSubscribe])
 
 
 
@@ -136,7 +105,7 @@ export const Sidebar = () =>
         <Flex
             display={{base : 'none' , md : 'flex'}}
             flex={{md : 1.5 , '3xl' : 1}}
-            w={250}
+            w={300}
             h={'100vh'}
             direction={"column"}
             justify={'flex-start'}

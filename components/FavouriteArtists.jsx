@@ -25,7 +25,7 @@ import prettyMilliseconds from "pretty-ms";
 import {getFavouriteArtists} from "../supabase/get/getFavouriteArtists";
 import {hostUser} from "../atoms/atoms";
 import {useRecoilValue} from "recoil";
-
+import {getArtistInformation} from "../graphQl/query/getArtistInformation";
 
 
 
@@ -38,7 +38,8 @@ export const FavouriteArtists = ({user}) =>
 
     const {data : [{FAVOURITE_ARTISTS : {favourite} = {}}] = [{}]} = useSWR(['api' , 'GET_FAVORITE_ARTISTS' , user.id] , async ()=> (await getFavouriteArtists(user.id)))
 
-    const {data : {top_track} = {} , isLoading} = useSWR(artistID ? ['GET ARTIST DATA' , artistID]  : null , async (key , value) => FETCH_ARTIST(value) , {refreshInterval : null})
+    const {data : {getArtistTopTracks} = {} , isLoading} = useSWR(artistID ? ['GET ARTIST DATA' , artistID]  : null , async (key , artistID) => getArtistInformation(artistID) , {refreshInterval : null})
+
 
 
     useEffect(() => {
@@ -46,14 +47,10 @@ export const FavouriteArtists = ({user}) =>
     } , [favourite])
 
 
-
     const handelSelect = (artisId) =>
     {
         setArtistID(artisId)
-
-        console.log(top_track)
     }
-
 
 
     return (
@@ -108,9 +105,12 @@ export const FavouriteArtists = ({user}) =>
                         <VStack w={"full"} >
                                 <Grid w={"full"} h={150} gap={2}  templateColumns={'repeat(5, 1fr)'}>
                                     {
-                                        top_track?.map(({id , name , previewUrl , duration_ms , artists , album : {images}} )=> {
+                                        getArtistTopTracks?.tracks?.map( ({duration_ms , name , id , album : {artists , images}})=> {
+
+
                                             return (
                                                 <HStack px={2} rounded={50} key={id} bg={'whiteAlpha.200'}>
+
                                                     <Box flex={.3} role={'group'} position={"relative"}>
                                                         <Skeleton startColor={'whiteAlpha.300'} endColor={'whiteAlpha.400'} rounded={"full"} isLoaded={!isLoading}>
                                                             <Box w={55} h={55} rounded={"full"} overflow={'hidden'} position={"relative"} _groupHover={{opacity : '30%'}} transition={'.2s'}  >

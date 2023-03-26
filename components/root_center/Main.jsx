@@ -18,7 +18,7 @@ export const Main = ({user}) =>
 
 
     return (
-            <Box position={"relative"} zIndex={'1000'}>
+            <Box w={"full"} position={"relative"} zIndex={'1000'} >
                 {/*HEADER COMPONENTS*/}
 
                 <Flex w={"full"} h={150} justify={"space-between"} align={"start"} p={5}  >
@@ -29,7 +29,7 @@ export const Main = ({user}) =>
                     <Account/>
 
                 </Flex>
-                    <Flex  direction={'column'} justify={"start"} align={'center'} gap={5} px={5} >
+                    <Flex  direction={'column'} justify={"start"} align={'center'} gap={5}  >
 
                         <SelectGenre/>
 
