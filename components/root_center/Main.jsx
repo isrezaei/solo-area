@@ -8,7 +8,7 @@ import {FavouriteArtists} from "../FavouriteArtists";
 
 import {SelectGenre} from "./SelectGenre";
 import {useQuery} from "@apollo/client";
-import {query} from "../../graphQl/query/getNewReleasesAlbums";
+import {query} from "../../graphQl/query/api/getNewReleasesAlbums";
 import {Sidebar} from "../Sidebar";
 
 export const Main = ({user}) =>
@@ -27,8 +27,9 @@ export const Main = ({user}) =>
                             <SearchBarModal/>
                         </HStack>
                     <Account/>
-
                 </Flex>
+
+
                     <Flex  direction={'column'} justify={"start"} align={'center'} gap={5}  >
 
                         <SelectGenre/>

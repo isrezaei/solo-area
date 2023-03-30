@@ -18,7 +18,7 @@ import {RiPlayFill} from 'react-icons/ri'
 import {useRouter} from "next/router";
 import {SPOTIFY_TRACKS_ID_ATOM} from "../atoms/atoms";
 import Image from "next/image";
-import {getRandomPlayed} from "../graphQl/query/getRandomPlayed";
+import {getRandomPlayed} from "../graphQl/query/api/getRandomPlayed";
 
 export const RandomPlayed = () =>
 {

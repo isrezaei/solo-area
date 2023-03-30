@@ -1,4 +1,4 @@
-import {Sidebar} from "./Sidebar";
+
 import {Flex, Box, Container, Button, Img} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {useRecoilValue} from "recoil";
@@ -63,18 +63,12 @@ const genreWall = {
                                                         blurDataURL={genreWall[getGenre]?.image}/>
 
                                                 </motion.div>
-
-
-
-
                                         </Box>
 
                         </Box>
                     }
 
                     <Flex w={"full"} zIndex={2}>
-                        {/*{pathname === '/' && <Sidebar/>}*/}
-                        {/*{pathname === '/' && <PlayBack/>}*/}
                         <Box flex={10} >
                             {children}
                         </Box>

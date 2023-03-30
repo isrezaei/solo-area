@@ -1,5 +1,5 @@
 import {gql} from "@apollo/client";
-import {client} from "../client/client";
+import {client} from "../../client/client";
 
 
 export const getRandomPlayed = async () =>

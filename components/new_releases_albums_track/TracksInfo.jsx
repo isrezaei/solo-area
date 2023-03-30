@@ -1,8 +1,8 @@
 import {useRecoilValue} from "recoil";
-import {NEW_RELEASES_ALBUMS_TRACK_ATOM} from "../../../atoms/atoms";
+import {NEW_RELEASES_ALBUMS_TRACK_ATOM} from "../../atoms/atoms";
 import {Text, VStack, Flex, Center, Box} from "@chakra-ui/react";
 import prettyMilliseconds from "pretty-ms";
-import {SPOTIFY_DEVICE_ID_ATOM} from "../../../atoms/atoms";
+import {SPOTIFY_DEVICE_ID_ATOM} from "../../atoms/atoms";
 
 
 

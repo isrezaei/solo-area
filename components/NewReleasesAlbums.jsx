@@ -20,7 +20,7 @@ import {
 } from "./ExtraStyleSidebar";
 import {useState} from "react";
 import {motion} from "framer-motion";
-import {getNewReleasesAlbums} from "../graphQl/query/getNewReleasesAlbums";
+import {getNewReleasesAlbums} from "../graphQl/query/api/getNewReleasesAlbums";
 
 export const NewReleasesAlbums = () =>
 {
@@ -118,7 +118,7 @@ export const NewReleasesAlbums = () =>
                 </HStack>
             </HStack>
 
-            <motion.div key={[currentPage , getGenre , isValidating ]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{duration : .5}}>
+            <motion.div key={[currentPage , getGenre , newReleaseLists ]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{duration : .5}}>
                 <Grid w={"full"} h={485} py={2} templateColumns={{base : 'repeat(2, 1fr)' , md : 'repeat(6, 1fr)'}} gap={4} >
                     {Render}
                 </Grid>

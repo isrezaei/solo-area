@@ -21,11 +21,13 @@ import ReactPaginate from 'react-paginate';
 import {page , pageLink , next , previous , active , pagination , breakLinkClassName , breakClassName} from "./ExtraStyleSidebar";
 import {useSupabaseClient , useUser} from "@supabase/auth-helpers-react"
 import useSWR from "swr";
-import {GetSubscribedList} from "../supabase/get/getSubscribedList";
+import {GetSubscribedList, getSubscribeQuery} from "../graphQl/query/database/getSubscribedList";
 import _ from 'lodash';
-import {getRandomArtists} from "../graphQl/query/getRandomArtists";
-import {getNewReleasesAlbums} from "../graphQl/query/getNewReleasesAlbums";
-
+import {getRandomArtists} from "../graphQl/query/api/getRandomArtists";
+import {getNewReleasesAlbums} from "../graphQl/query/api/getNewReleasesAlbums";
+import {setToSubscribedList} from "../graphQl/query/database/setToSubscribedList";
+import {removeFromSubscribeList} from "../graphQl/query/database/removeFromSubscribeList";
+import {useQuery} from "@apollo/client";
 
 
 export const Sidebar = () =>
@@ -38,14 +40,6 @@ export const Sidebar = () =>
 
     const [currentPage, setCurrentPage] = useState(0);
 
-
-    const {
-        data : getSubscribedList ,
-        isValidating : subscribeStatus ,
-        mutate : subscribeMutate
-    } = useSWR(['GET SUBSCRIBED LIST' , user] , async (key , user) => GetSubscribedList(user))
-
-
     const {
         data : {
             randomArtists : {
@@ -54,53 +48,50 @@ export const Sidebar = () =>
                 } = []
             } = {}
         } = {}
-     , isValidating} = useSWR(['api' , 'GET_RANDOM_ARTISTS' , currentPage] , async (api , key , currentPage) => (await getRandomArtists(currentPage)) , {refreshInterval : 0})
+        , isValidating} = useSWR(['api' , 'GET_RANDOM_ARTISTS' , currentPage] , async (api , key , currentPage) => (await getRandomArtists(currentPage)) , {refreshInterval : 0})
 
 
+    // const {
+    //     data : {GET_SUBSCRIBED_LIST} = {} ,
+    //     isValidating : subscribeStatus ,
+    //     mutate
+    // } = useSWR(user ? ['GET_SUBSCRIBED_LIST' , user] : null , async (key , user) => GetSubscribedList(user))
+    //
+    //
+    // console.log(GET_SUBSCRIBED_LIST)
 
+    const {loading : subscribeStatus , data : {GET_SUBSCRIBED_LIST} = {}} = useQuery(getSubscribeQuery , {
+        variables : {userId : user?.id} ,
+        notifyOnNetworkStatusChange: true,
+        fetchPolicy: 'network-only',
+    })
+
+    console.log(GET_SUBSCRIBED_LIST)
+    console.log(subscribeStatus)
+
+
+    const handelSubscribe = async (randomArtist) =>
+    {
+        const {id , images , name} = randomArtist
+
+
+        if (!!_.find(GET_SUBSCRIBED_LIST , {'id' : id}) )
+        {
+           return  await removeFromSubscribeList(id , user?.id)
+        }
+        else {
+           return  await setToSubscribedList(id ,name , images , user?.email , user?.id)
+        }
+
+
+    }
 
     const handlePageClick = ({ selected: selectedPage }) => {
         setCurrentPage(selectedPage);
     }
 
 
-
-    const handelSubscribe = async (randomArtist) =>
-    {
-        const Y = _.xorWith(getSubscribedList.subscribed , [randomArtist] , _.isEqual)
-
-        console.log(Y)
-
-        if (user)
-        {
-            try {
-                const { data, error } = await supabase
-                    .from('SUBSCRIBE_LIST')
-                    .upsert([{
-                            'id' : user.id,
-                            'dependent-to' : user.email,
-                            'subscribed' : Y
-                        }],
-                    )
-
-                subscribeMutate()
-            }
-            catch (e)
-            {
-                console.log(e)
-            }
-        }
-    }
-
-
-
-
-
-
-
-
     return (
-
 
         <Flex
             display={{base : 'none' , md : 'flex'}}
@@ -114,11 +105,13 @@ export const Sidebar = () =>
             position={"sticky"}
             top={0}
             overflowX={'hidden'}
-            overflowY={'scroll'}>
+            overflowY={'scroll'}
+            zIndex={1000}
+        >
 
             <Flex  direction={'column'} gap={1.5} py={2} >
 
-                <HStack background={router.pathname === '/' ? "pink.900" : "whiteAlpha.100"} spacing='.8vw' p={2} rounded={"md"} cursor={"pointer"}>
+                <HStack onClick={() => router.push('/')} background={router.pathname === '/' ? "pink.900" : "whiteAlpha.100"} spacing='.8vw' p={2} rounded={"md"} cursor={"pointer"}>
                     <RiHome6Line color={'#989898'}/>
                     <Text fontSize='sm' color={'whiteAlpha.700'}>Home</Text>
                 </HStack>
@@ -146,7 +139,7 @@ export const Sidebar = () =>
             <VStack justify={"center"}  p={1} >
 
                 {
-                    !getSubscribedList?.subscribed.length &&
+                    !GET_SUBSCRIBED_LIST?.length &&
                     <VStack justify={"center"} h={75} >
                         <Text textAlign={"center"} fontSize={"md"} w={"full"} >You don't have any Subscriptions</Text>
                         <Icon fontSize={"2xl"} as={RiUserFollowLine}/>
@@ -154,12 +147,12 @@ export const Sidebar = () =>
                 }
 
                 {
-                    getSubscribedList?.subscribed.length &&
+                    GET_SUBSCRIBED_LIST?.length &&
                     <>
                         <Text w={"full"}  fontSize={"lg"} fontWeight={'bold'}>Subscriptions</Text>
                         <Grid w={"full"} gap={2} templateColumns={'repeat(4 ,1fr)'}>
                             {
-                                getSubscribedList?.subscribed.map(value => {
+                                GET_SUBSCRIBED_LIST?.map(value => {
 
                                     return (
                                         <Tooltip key={value.id} bg={"black"} color={"whiteAlpha.800"} placement='bottom' label={value.name}>
@@ -238,8 +231,8 @@ export const Sidebar = () =>
                                         rounded={"full"}
                                         colorScheme={'orange'}
                                         size={"sm"}
-                                        icon={!!_.find(getSubscribedList?.subscribed , {id : randomArtist.id}) ? <RiUserUnfollowFill size={18}/>  : <RiUserFollowFill size={18}/>}
-                                        variant={!!_.find(getSubscribedList?.subscribed , {id : randomArtist.id}) ? 'solid' :'outline'}/>
+                                        icon={!!_.find(GET_SUBSCRIBED_LIST , {id : randomArtist.id}) ? <RiUserUnfollowFill size={18}/>  : <RiUserFollowFill size={18}/>}
+                                        variant={!!_.find(GET_SUBSCRIBED_LIST , {id : randomArtist.id}) ? 'solid' :'outline'}/>
                         </HStack>
                     )
                 })}
@@ -250,3 +243,27 @@ export const Sidebar = () =>
 
     )
 }
+
+// const Y = _.xorWith(GET_SUBSCRIBED_LIST?.[0].subscribed, [randomArtist] , _.isEqual)
+//
+// console.log(Y)
+//
+// if (user)
+// {
+//     try {
+//         const { data, error } = await supabase
+//             .from('SUBSCRIBE_LIST')
+//             .upsert([{
+//                     'id' : user.id,
+//                     'dependent-to' : user.email,
+//                     'subscribed' : Y
+//                 }],
+//             )
+//
+//
+//     }
+//     catch (e)
+//     {
+//         console.log(e)
+//     }
+// }

@@ -1,9 +1,9 @@
 import {Box, Flex, Image, Text , HStack} from "@chakra-ui/react";
 import {useRecoilValue} from "recoil";
-import {NEW_RELEASES_ALBUMS_TRACK_ATOM} from "../../../atoms/atoms";
+import {NEW_RELEASES_ALBUMS_TRACK_ATOM} from "../../atoms/atoms";
 import {useRouter} from "next/router";
 import useSWR from "swr";
-import {FETCH_NEW_RELESES_TRACK} from "../../../lib/FetcherFuncs/FETCH_NEW_RELESES_TRACK";
+import {FETCH_NEW_RELESES_TRACK} from "../../lib/FetcherFuncs/FETCH_NEW_RELESES_TRACK";
 
 
 export const AlbumsInfo = () =>

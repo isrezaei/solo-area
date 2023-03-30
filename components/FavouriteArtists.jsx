@@ -25,7 +25,7 @@ import prettyMilliseconds from "pretty-ms";
 import {getFavouriteArtists} from "../supabase/get/getFavouriteArtists";
 import {hostUser} from "../atoms/atoms";
 import {useRecoilValue} from "recoil";
-import {getArtistInformation} from "../graphQl/query/getArtistInformation";
+import {getArtistInformation} from "../graphQl/query/api/getArtistInformation";
 
 
 
@@ -36,15 +36,23 @@ export const FavouriteArtists = ({user}) =>
 
     const [artistID, setArtistID] = useState(null)
 
-    const {data : [{FAVOURITE_ARTISTS : {favourite} = {}}] = [{}]} = useSWR(['api' , 'GET_FAVORITE_ARTISTS' , user.id] , async ()=> (await getFavouriteArtists(user.id)))
+    const {data : favouriteArtists} = useSWR(['api' , 'GET_FAVORITE_ARTISTS' , user.id] , async ()=> (await getFavouriteArtists(user.id)))
 
-    const {data : {getArtistTopTracks} = {} , isLoading} = useSWR(artistID ? ['GET ARTIST DATA' , artistID]  : null , async (key , artistID) => getArtistInformation(artistID) , {refreshInterval : null})
+
+    console.log(favouriteArtists)
+
+
+
+    const {data : {getArtistTopTracks} = {}
+        , isLoading} = useSWR(artistID ? ['GET ARTIST DATA' , artistID]  :
+        null , async (key , artistID) => getArtistInformation(artistID) ,
+        {refreshInterval : null})
 
 
 
     useEffect(() => {
-        setArtistID(favourite?.[0].id)
-    } , [favourite])
+        setArtistID(favouriteArtists[0].list[0].id)
+    } , [favouriteArtists])
 
 
     const handelSelect = (artisId) =>
@@ -66,7 +74,7 @@ export const FavouriteArtists = ({user}) =>
 
                                 <ScrollContainer style={{width : '100%' , display : "flex" , justifyContent : 'flex-start' , alignItems : 'flex-start' , cursor : 'pointer'}}  >
                                     {
-                                        favourite?.map( ({id , images , name}) => {
+                                        favouriteArtists[0].list?.map( ({id , images , name}) => {
 
                                                 return (
                                                     <Box flex={'none'} p={2} position={'relative'} key={id} >

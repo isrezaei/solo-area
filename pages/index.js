@@ -2,23 +2,25 @@ import {Main} from "../components/root_center/Main";
 import  {SWRConfig , unstable_serialize} from "swr";
 import {createServerSupabaseClient} from "@supabase/auth-helpers-nextjs"
 import {getFavouriteArtists} from "../supabase/get/getFavouriteArtists";
-import {getNewReleasesAlbums} from "../graphQl/query/getNewReleasesAlbums";
-import {getRandomArtists} from "../graphQl/query/getRandomArtists";
+import {getNewReleasesAlbums} from "../graphQl/query/api/getNewReleasesAlbums";
+import {getRandomArtists} from "../graphQl/query/api/getRandomArtists";
 import {Sidebar} from "../components/Sidebar";
-import {HStack} from "@chakra-ui/react";
+import {Divider, HStack} from "@chakra-ui/react";
 import {useRouter} from "next/router";
-import {getRandomPlayed} from "../graphQl/query/getRandomPlayed";
+import {getRandomPlayed} from "../graphQl/query/api/getRandomPlayed";
+import {ApolloProvider} from "@apollo/client";
+import {DataBaseClient} from "../graphQl/client/client";
 
 
 
 export default function Home({fallback , user}) {
-
-    const { pathname } = useRouter();
-
     return (
             <SWRConfig value={{fallback}}>
-                <HStack  align={'flex-start'}>
-                    {pathname !== '/login_signup' && <Sidebar/>}
+                <HStack spacing={0} align={'flex-start'}>
+                    <ApolloProvider client={DataBaseClient}>
+                        <Sidebar/>
+                    </ApolloProvider>
+                    <Divider h={'80%'} borderColor={'whiteAlpha.900'} borderWidth={1} rounded={"full"} orientation={'vertical'}/>
                     <Main user={user}/>
                 </HStack>
             </SWRConfig>

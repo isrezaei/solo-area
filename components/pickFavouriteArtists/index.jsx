@@ -18,6 +18,9 @@ export const PickFavouriteArtists = ({getSeveralArtist}) =>
 
     console.log(selectFavourite)
 
+    console.log(user?.id)
+
+
     const handelSelect = (ARTIST_INFO) =>
     {
         setFavourite(prevState => {
@@ -27,6 +30,7 @@ export const PickFavouriteArtists = ({getSeveralArtist}) =>
             return  _.uniq([...prevState , ARTIST_INFO])
         } )
     }
+
 
 
     const confirm =  async () =>
@@ -39,10 +43,12 @@ export const PickFavouriteArtists = ({getSeveralArtist}) =>
                 const { data , error } = await supabase
                     .from('FAVOURITE_ARTISTS')
                     .upsert([{
-                        'dependent-to' : user.email,
-                        'id' : user.id,
-                        'favourite' : selectFavourite
+                        'dependent_to' : user?.email,
+                        'id' : user?.id,
+                        'list' : selectFavourite
                     }])
+
+                console.log(error)
 
                 toast({
                     title: 'nice ! ',

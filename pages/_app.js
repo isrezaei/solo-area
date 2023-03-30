@@ -57,7 +57,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
                     <NextNprogress color={'#589846'} height={5}/>
                     <ChakraProvider theme={customTheme}>
                         <Layout>
-                                <Component {...pageProps} />
+                            <Component {...pageProps} />
                         </Layout>
                     </ChakraProvider>
                 </main>

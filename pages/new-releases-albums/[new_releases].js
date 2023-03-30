@@ -1,6 +1,6 @@
-import {AlbumsInfo} from "../../components/pages/new_releases_albums_track/AlbumsInfo";
+import {AlbumsInfo} from "../../components/new_releases_albums_track/AlbumsInfo";
 import {Box} from "@chakra-ui/react";
-import {TracksInfo} from "../../components/pages/new_releases_albums_track/TracksInfo";
+import {TracksInfo} from "../../components/new_releases_albums_track/TracksInfo";
 import {FETCH_NEW_RELESES_TRACK} from "../../lib/FetcherFuncs/FETCH_NEW_RELESES_TRACK";
 import useSWR , {unstable_serialize , SWRConfig} from "swr";
 import {useRouter} from "next/router";
