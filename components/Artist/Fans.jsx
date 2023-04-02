@@ -75,7 +75,7 @@ const Fans = ({getRelatedArtist}) => {
                             <SwiperSlide  key={related.id} style={{height : 235}}>
                                 <VStack >
                                     <Box onClick={() => push(`/artist/${related.id}`)}  bg={"whiteAlpha.200"} boxShadow={'dark-lg'} position={"relative"} width={190} height={190} rounded={"full"} overflow={"hidden"}>
-                                        <Image src={related.images[0].url} loading={"lazy"} placeholder={"blur"} blurDataURL={related.images[2].url} layout={"fill"} objectFit={"cover"} style={{position : "absolute"}}/>
+                                        <Image src={related?.images[0]?.url} loading={"lazy"} placeholder={"blur"} blurDataURL={related?.images[2]?.url} layout={"fill"} objectFit={"cover"} style={{position : "absolute"}}/>
                                     </Box>
                                     <Text bg={"whiteAlpha.200"} rounded={5} p={1} fontSize={12} noOfLines={1} color={'whitesmoke'}>{related.name}</Text>
                                 </VStack>

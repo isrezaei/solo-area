@@ -1,12 +1,11 @@
 import {IconButton, Menu, MenuButton, MenuItem, MenuList, Avatar, Button} from "@chakra-ui/react";
 import {TriangleDownIcon} from "@chakra-ui/icons";
-import {useSupabaseClient , useUser} from "@supabase/auth-helpers-react";
+import {useSupabaseClient, useUser, useSession} from "@supabase/auth-helpers-react";
 import {useRouter} from "next/router";
 import {useAsync} from "react-use";
 
 
-export const Account = () =>
-{
+export const Account = () => {
 
 
     const router = useRouter()
@@ -16,24 +15,22 @@ export const Account = () =>
 
     const ownerUser = useAsync(async () => {
 
-        if (user)
-        {
-            const {data  , error} = await supabase
+        if (user) {
+            const {data, error} = await supabase
                 .from('USERS')
-                .select(`*`).eq('id' , user.id)
+                .select(`*`).eq('id', user.id)
 
             return data
         }
 
-    } , [user])
+    }, [user])
 
 
-    const singOut = async () =>
-    {
+    const singOut = async () => {
 
         router.push('/login_signup')
 
-        const { error } = await supabase.auth.signOut()
+        const {error} = await supabase.auth.signOut()
 
         if (error) {
             console.log('Error signing out:', error.message)
@@ -56,16 +53,16 @@ export const Account = () =>
                 as={IconButton}
                 rightIcon={<Avatar name={ownerUser.value?.[0]?.firstname}/>}
 
-                _expanded={{ bg: 'whiteAlpha.200' }}
-                _focus={{ bg : '#1c1c1c' , boxShadow : 'none'}}>
+                _expanded={{bg: 'whiteAlpha.200'}}
+                _focus={{bg: '#1c1c1c', boxShadow: 'none'}}>
 
-                <TriangleDownIcon w={3} h={3} mr={2} color={'whiteAlpha.600'} />
+                <TriangleDownIcon w={3} h={3} mr={2} color={'whiteAlpha.600'}/>
 
                 {ownerUser.value?.[0]?.firstname}
 
             </MenuButton>
 
-            <MenuList  bgColor={"whiteAlpha.200"}>
+            <MenuList bgColor={"whiteAlpha.200"}>
                 <MenuItem onClick={singOut}>
                     Sign Out
                 </MenuItem>

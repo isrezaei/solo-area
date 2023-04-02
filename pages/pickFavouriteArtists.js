@@ -1,5 +1,5 @@
 import {FETCH_SEVERAL_ARTIST} from "../lib/FetcherFuncs/FETCH_SEVERAL_ARTIST";
-import {PickFavouriteArtists} from "../components/pickFavouriteArtists";
+import {PickFavouriteArtists} from "../components/PickFavouriteArtists";
 
 export default function pickFavouriteArtists ({getSeveralArtist : {artists}})
 {

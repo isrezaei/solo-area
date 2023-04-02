@@ -1,10 +1,10 @@
-import {Main} from "../components/root_center/Main";
+import {Starter} from "../components/Starter";
 import  {SWRConfig , unstable_serialize} from "swr";
 import {createServerSupabaseClient} from "@supabase/auth-helpers-nextjs"
-import {getFavouriteArtists} from "../supabase/get/getFavouriteArtists";
+import {getFavouriteArtists} from "../graphQl/query/database/getFavouriteArtists";
 import {getNewReleasesAlbums} from "../graphQl/query/api/getNewReleasesAlbums";
 import {getRandomArtists} from "../graphQl/query/api/getRandomArtists";
-import {Sidebar} from "../components/Sidebar";
+import {Sidebar} from "../components/Sidebar/Sidebar";
 import {Divider, HStack} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {getRandomPlayed} from "../graphQl/query/api/getRandomPlayed";
@@ -21,7 +21,7 @@ export default function Home({fallback , user}) {
                         <Sidebar/>
                     </ApolloProvider>
                     <Divider h={'80%'} borderColor={'whiteAlpha.900'} borderWidth={1} rounded={"full"} orientation={'vertical'}/>
-                    <Main user={user}/>
+                    <Starter user={user}/>
                 </HStack>
             </SWRConfig>
     )

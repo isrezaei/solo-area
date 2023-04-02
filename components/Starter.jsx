@@ -1,17 +1,13 @@
-import {Account} from "./Header/Account";
-import {NewReleasesAlbums} from "../NewReleasesAlbums";
-import {RandomPlayed} from "../RandomPlayed";
-import {FeaturedPlayList} from "./Featured_playList/FeaturedPlayList";
+import {Account} from "./Account";
+import {NewReleasesAlbums} from "./NewReleasesAlbums";
+import {RandomPlayed} from "./RandomPlayed";
 import {Box, Flex, Text, Fade, VStack, HStack, Image, Button, Badge} from "@chakra-ui/react";
-import {SearchBarModal} from "./SearchBarModal"
-import {FavouriteArtists} from "../FavouriteArtists";
-
+import {SearchBar} from "./Search/SearchBar";
+import {FavouriteArtists} from "./FavouriteArtists";
 import {SelectGenre} from "./SelectGenre";
-import {useQuery} from "@apollo/client";
-import {query} from "../../graphQl/query/api/getNewReleasesAlbums";
-import {Sidebar} from "../Sidebar";
 
-export const Main = ({user}) =>
+
+export const Starter = ({user}) =>
 {
 
     // const { loading : Q , error : P, data : N } = useQuery(query);
@@ -24,7 +20,7 @@ export const Main = ({user}) =>
                 <Flex w={"full"} h={150} justify={"space-between"} align={"start"} p={5}  >
                         <HStack spacing={10}>
                             <Text fontSize={"4xl"} fontWeight={"bold"} color={"whiteAlpha.800"}  zIndex={2}>Good morning</Text>
-                            <SearchBarModal/>
+                            <SearchBar/>
                         </HStack>
                     <Account/>
                 </Flex>
@@ -37,7 +33,7 @@ export const Main = ({user}) =>
                         {/*NEW RELEASES COMPONENTS*/}
                         <NewReleasesAlbums/>
 
-                        {/*Favourite Artists*/}
+                        {/*Favourite ArtistsResult*/}
                         <FavouriteArtists user={user}/>
 
 

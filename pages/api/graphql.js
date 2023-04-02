@@ -11,6 +11,12 @@ const resolvers = {
             if (error) return error
             return data
         },
+        GET_FAVOURITE_ARTISTS : async (_ , args) => {
+            const {userId} = args
+            const { data , error } = await supabase.from('FAVOURITE_ARTISTS').select(`*`).eq('id' , userId)
+            if (error) return error
+            return data
+        }
     },
     Mutation : {
         SET_TO_SUBSCRIBE_LIST : async (_ ,args) => {
@@ -45,6 +51,18 @@ const typeDefs = gql`
         user_Id : String
     }
     
+    type favouriteList {
+        id : String
+        name : String
+        images : [imagesType]
+    }
+    
+    type favouriteArtistsType {
+        id : String
+        list : [favouriteList]
+        user_Id : String
+    }
+    
     input ImageInput {
         url : String
         width : Int
@@ -54,6 +72,7 @@ const typeDefs = gql`
 
     type Query {
         GET_SUBSCRIBED_LIST(userId : String): [subscribeListType]
+        GET_FAVOURITE_ARTISTS(userId : String) : [favouriteArtistsType]
     }
     
     type Mutation {

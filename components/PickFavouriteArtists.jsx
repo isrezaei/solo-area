@@ -31,6 +31,8 @@ export const PickFavouriteArtists = ({getSeveralArtist}) =>
         } )
     }
 
+    console.log(user)
+
 
 
     const confirm =  async () =>
@@ -45,7 +47,8 @@ export const PickFavouriteArtists = ({getSeveralArtist}) =>
                     .upsert([{
                         'dependent_to' : user?.email,
                         'id' : user?.id,
-                        'list' : selectFavourite
+                        'list' : selectFavourite,
+                        'user_Id' : user?.id
                     }])
 
                 console.log(error)

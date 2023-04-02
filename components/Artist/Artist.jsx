@@ -9,10 +9,8 @@ import Popular from "./Popular";
 import MoreAlbums from "./MoreAlbums";
 import Fans from "./Fans";
 import ShowAll from "./ShowAll";
-import {SearchBarModal} from "../root_center/SearchBarModal";
-import {Account} from "../root_center/Header/Account";
 
-export const Main = () =>
+export const Artist = () =>
 {
     const {query : {artist : artistId}} = useRouter()
 
@@ -36,10 +34,10 @@ export const Main = () =>
                     <Image layout={"fill"}
                            objectFit={"cover"}
                            priority={true}
-                           src={getArtistInfo.images[0].url}
+                           src={getArtistInfo?.images[0]?.url}
                            style={{position : "absolute" , opacity : '20%' , zIndex : 1}}
                            placeholder={"blur"}
-                           blurDataURL={getArtistInfo.images[2].url}/>
+                           blurDataURL={getArtistInfo?.images[2]?.url}/>
 
 
 

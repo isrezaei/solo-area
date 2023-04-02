@@ -1,6 +1,6 @@
 import {Button, HStack} from "@chakra-ui/react";
 import {useRecoilState} from "recoil";
-import {selectGenre} from "../../atoms/atoms";
+import {selectGenre} from "../atoms/atoms";
 import ReactPaginate from "react-paginate";
 import {
     active,
@@ -11,7 +11,7 @@ import {
     pageLink,
     pagination,
     previous
-} from "../ExtraStyleSidebar";
+} from "./Sidebar/PaginationStyle";
 
 const genresList = [
     {

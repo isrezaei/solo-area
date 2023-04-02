@@ -1,8 +1,8 @@
 import useSWR from "swr";
 import {Box, Image, Text, VStack, Flex, HStack, Divider, Center , Progress} from "@chakra-ui/react";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {MY_PLAY_LIST_ID_ATOM, SPOTIFY_DEVICE_ID_ATOM, SPOTIFY_TRACKS_ID_ATOM} from "../../../atoms/atoms";
-import {FETCH_ONE_PLAYLIST} from "../../../lib/FetcherFuncs/FETCH_ONE_PLAYLIST";
+import {MY_PLAY_LIST_ID_ATOM, SPOTIFY_DEVICE_ID_ATOM, SPOTIFY_TRACKS_ID_ATOM} from "../atoms/atoms";
+import {FETCH_ONE_PLAYLIST} from "../lib/FetcherFuncs/FETCH_ONE_PLAYLIST";
 import prettyMilliseconds from "pretty-ms";
 import Tilt from 'react-parallax-tilt';
 
