@@ -1,13 +1,12 @@
-import {ChakraProvider, extendTheme, HStack} from "@chakra-ui/react";
+import {ChakraProvider, extendTheme} from "@chakra-ui/react";
 import {RecoilRoot} from "recoil";
 import Layout from "../components/layout";
 import 'react-indiana-drag-scroll/dist/style.css';
 import "@fontsource/karla"
 import NextNprogress from 'nextjs-progressbar';
-import {createBrowserSupabaseClient, createServerSupabaseClient} from '@supabase/auth-helpers-nextjs'
+import {createBrowserSupabaseClient} from '@supabase/auth-helpers-nextjs'
 import {SessionContextProvider} from '@supabase/auth-helpers-react'
-import {useEffect, useState} from "react";
-import {Sidebar} from "../components/Sidebar/Sidebar";
+import {useState} from "react";
 import {useRouter} from "next/router";
 
 
@@ -38,6 +37,14 @@ function MyApp({Component, pageProps: {session, ...pageProps}}) {
                 },
             },
         },
+
+        colors: {
+            black : {
+                500: "rgba(0, 0, 0, 0.36)",
+                800: "rgba(0, 0, 0, 0.80)",
+            },
+        },
+
 
         breakpoints: {
             sm: "20em",

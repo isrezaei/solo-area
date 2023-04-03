@@ -11,7 +11,8 @@ import {
     Stack,
     Text,
     Tooltip,
-    VStack, Spinner
+    VStack,
+    Spinner,
 } from "@chakra-ui/react";
 import {
     page,
@@ -21,230 +22,134 @@ import {
     active,
     pagination,
     breakLinkClassName,
-    breakClassName
+    breakClassName,
 } from "./PaginationStyle";
-import {RiHome6Line, RiMusicFill, RiUserFollowFill, RiUserFollowLine, RiUserUnfollowFill} from "react-icons/ri";
+import {
+    RiHome6Line,
+    RiMusicFill,
+    RiUserFollowFill,
+    RiUserFollowLine,
+    RiUserUnfollowFill,
+} from "react-icons/ri";
 import {useRouter} from "next/router";
 import Image from "next/image";
 import {useEffect, useState} from "react";
-import ReactPaginate from 'react-paginate';
-import {useSupabaseClient, useUser} from "@supabase/auth-helpers-react"
+import ReactPaginate from "react-paginate";
+import {useSupabaseClient, useUser} from "@supabase/auth-helpers-react";
 import useSWR from "swr";
 import {getSubscribeQuery} from "../../graphQl/query/database/getSubscribedList";
 import {getRandomArtists} from "../../graphQl/query/api/getRandomArtists";
 import {setToSubscribedList} from "../../graphQl/query/database/setToSubscribedList";
 import {removeFromSubscribeList} from "../../graphQl/query/database/removeFromSubscribeList";
 import {useQuery} from "@apollo/client";
-import _ from 'lodash';
-
+import _ from "lodash";
+import Directions from "./Directions";
+import Subscription from './Subscriptions/Subscriptions'
+import Pagination from "./Pagination";
+import RandomArtists from "./RandomArtists";
 
 export const Sidebar = () => {
-    const router = useRouter()
-    const supabase = useSupabaseClient()
-    const user = useUser()
 
-    const [showMore, setShowMore] = useState({setHeight: false, setOverFlow: false})
+    const user = useUser();
+
+
+    const [showMore, setShowMore] = useState({
+        setHeight: false,
+        setOverFlow: false,
+    });
 
     const [currentPage, setCurrentPage] = useState(0);
 
-    const {
-        data: {
-            randomArtists: {
-                artists: {
-                    items: randomArtists
-                } = []
-            } = {}
-        } = {}
-        , isValidating
-    } = useSWR(['api', 'GET_RANDOM_ARTISTS', currentPage], async (api, key, currentPage) => (await getRandomArtists(currentPage)), {refreshInterval: 0})
-
 
     const {loading: subscribeStatus, data: {GET_SUBSCRIBED_LIST} = {}} = useQuery(getSubscribeQuery, {
-        variables: {userId: user?.id},
-        notifyOnNetworkStatusChange: true,
-        fetchPolicy: 'network-only',
-    })
-
+        variables: {userId: user?.id}
+    });
 
     const handelSubscribe = async (randomArtist) => {
-        const {id, images, name} = randomArtist
+        const {id, images, name} = randomArtist;
 
-        if (!!_.find(GET_SUBSCRIBED_LIST, {'id': id})) {
-            return await removeFromSubscribeList(id, user?.id)
+        if (!!_.find(GET_SUBSCRIBED_LIST, {id: id})) {
+            return await removeFromSubscribeList(id, user?.id);
         } else {
-            return await setToSubscribedList(id, name, images, user?.email, user?.id)
+            return await setToSubscribedList(id, name, images, user?.email, user?.id);
         }
-
-
-    }
+    };
 
     const handlePageClick = ({selected: selectedPage}) => {
         setCurrentPage(selectedPage);
+    };
+
+    const handelHeight = () => {
+        setShowMore((prevState) => ({
+            setHeight: !prevState.setHeight,
+            setOverFlow: !prevState.setOverFlow,
+        }))
     }
 
 
     return (
-
         <Flex
-            display={{base: 'none', md: 'flex'}}
-            flex={{md: 1.5, '3xl': 1}}
+            display={{base: "none", md: "flex"}}
+            flex={{md: 1.5, "3xl": 1}}
             w={300}
-            h={'100vh'}
+            h={"100vh"}
             direction={"column"}
-            justify={'flex-start'}
+            justify={"flex-start"}
             p={2}
             gap={5}
             position={"sticky"}
             top={0}
-            overflowX={'hidden'}
-            overflowY={'scroll'}
+            overflowX={"hidden"}
+            overflowY={"scroll"}
             zIndex={1000}
         >
 
-            <Flex direction={'column'} gap={1.5} py={2}>
-
-                <HStack onClick={() => router.push('/')}
-                        background={router.pathname === '/' ? "pink.900" : "whiteAlpha.100"} spacing='.8vw' p={2}
-                        rounded={"md"} cursor={"pointer"}>
-                    <RiHome6Line color={'#989898'}/>
-                    <Text fontSize='sm' color={'whiteAlpha.700'}>Home</Text>
-                </HStack>
-
-                <HStack background={"whiteAlpha.100"} spacing='.8vw' p={2} rounded={"md"} cursor={"pointer"}>
-                    <RiMusicFill color={'#989898'}/>
-                    <Text fontSize='sm' color={'whiteAlpha.700'}>Create playlist</Text>
-                </HStack>
-                <HStack background={"whiteAlpha.100"} spacing='.8vw' p={2} rounded={"md"} cursor={"pointer"}>
-                    <RiMusicFill color={'#989898'}/>
-                    <Text fontSize='sm' color={'whiteAlpha.700'}>Liked song</Text>
-                </HStack>
-                <HStack background={"whiteAlpha.100"} spacing='.8vw' p={2} rounded={"md"} cursor={"pointer"}>
-                    <RiMusicFill color={'#989898'}/>
-                    <Text fontSize='sm' color={'whiteAlpha.700'}>Listen later</Text>
-                </HStack>
-                <HStack background={"whiteAlpha.100"} spacing='.8vw' p={2} rounded={"md"} cursor={"pointer"}>
-                    <RiMusicFill color={'#989898'}/>
-                    <Text fontSize='sm' color={'whiteAlpha.700'}>History</Text>
-                </HStack>
-            </Flex>
+            <Directions/>
 
             <Divider borderColor="whiteAlpha.500" borderWidth={1} rounded={"full"}/>
 
-            <VStack justify={"center"} p={1}>
-
-                {
-                    !GET_SUBSCRIBED_LIST?.length &&
-                    <VStack justify={"center"} h={75}>
-                        <Text textAlign={"center"} fontSize={"md"} w={"full"}>You don't have any Subscriptions</Text>
-                        <Icon fontSize={"2xl"} as={RiUserFollowLine}/>
-                    </VStack>
-                }
-
-                {
-                    GET_SUBSCRIBED_LIST?.length &&
-                    <>
-                        <Text w={"full"} fontSize={"lg"} fontWeight={'bold'}>Subscriptions</Text>
-                        <Grid w={"full"} gap={2} templateColumns={'repeat(4 ,1fr)'}>
-                            {
-                                GET_SUBSCRIBED_LIST?.map(value => {
-
-                                    return (
-                                        <Tooltip key={value.id} bg={"black"} color={"whiteAlpha.800"} placement='bottom'
-                                                 label={value.name}>
-                                            <Box w={45} h={45} onClick={() => router.push(`/artist/${value.id}`)}
-                                                 cursor={"pointer"} position={"relative"}>
-                                                <Image style={{position: "absolute", borderRadius: '50%'}}
-                                                       layout={"fill"} placeholder={"blur"}
-                                                       blurDataURL={value.images[2].url} src={value.images[2].url}
-                                                       loading={'lazy'}/>
-                                            </Box>
-                                        </Tooltip>
-
-                                    )
-
-                                })
-                            }
-                        </Grid>
-                    </>
-                }
-
-
-            </VStack>
+            <Subscription
+                GET_SUBSCRIBED_LIST={GET_SUBSCRIBED_LIST}
+            />
 
             <Divider borderColor="whiteAlpha.500" borderWidth={1} rounded={"full"}/>
 
+            <VStack
+                h={showMore.setHeight ? "auto" : 280}
+                overflow={showMore.setOverFlow ? "visible" : "hidden"}
+            >
 
-            <VStack h={showMore.setHeight ? 'auto' : 290} overflow={showMore.setOverFlow ? 'visible' : 'hidden'}>
 
                 <HStack w={"full"} justify={"flex-start"} spacing={3}>
-                    <Text fontSize={"lg"} fontWeight={'bold'}>maybe you like it</Text>
-                    <Button size={"xs"} onClick={() => setShowMore(prevState => ({
-                        setHeight: !prevState.setHeight,
-                        setOverFlow: !prevState.setOverFlow
-                    }))}>
-                        {showMore.setHeight ? 'C' : 'O'}
+                    <Text fontSize={15} fontWeight={"bold"} color={"whiteAlpha.800"}>
+                        maybe you like it
+                    </Text>
+                    <Button
+                        size={"xs"}
+                        onClick={handelHeight}>
+                        {showMore.setHeight ? "C" : "O"}
                     </Button>
+
                 </HStack>
 
-                <HStack w={"full"} justify={'space-between'}>
-                    <ReactPaginate
-                        onPageChange={handlePageClick}
-                        marginPagesDisplayed={0}
-                        pageRangeDisplayed={4}
-                        pageCount={10}
-                        breakLabel="..."
-                        breakClassName={breakClassName}
-                        breakLinkClassName={breakLinkClassName}
-                        containerClassName={pagination}
-                        pageClassName={page}
-                        pageLinkClassName={pageLink}
-                        activeClassName={active}
-                        previousClassName={previous}
-                        nextClassName={next}
-                        previousLinkClassName=""
-                        nextLinkClassName=""
-                        previousLabel=""
-                        nextLabel=""
-                        renderOnZeroPageCount={null}
-                    />
-
-                    {isValidating && <Spinner thickness='3px' size={"sm"} color={'pink.800'}/>}
+                <HStack w={"full"} justify={"space-between"}>
+                    <Pagination handlePageClick={handlePageClick}/>
+                    {/*{isValidating && (*/}
+                    {/*  <Spinner thickness="3px" size={"sm"} color={"pink.800"} />*/}
+                    {/*)}*/}
                 </HStack>
 
 
-                {randomArtists?.map(randomArtist => {
-                    return (
-                        <HStack key={randomArtist.id} w={"full"} pr={2} bg={'whiteAlpha.200'} cursor={'pointer'}
-                                fontSize={'sm'} roundedRight={'xl'} roundedLeft={'3xl'}>
+                <RandomArtists
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    GET_SUBSCRIBED_LIST={GET_SUBSCRIBED_LIST}
+                    handelSubscribe={handelSubscribe}
+                    subscribeStatus={subscribeStatus}
+                />
 
-                            <Box w={50} h={50} position={"relative"} overflow={"hidden"}
-                                 rounded={'5rem 0rem 5rem 5rem'}>
-                                <Image style={{position: "absolute"}} src={randomArtist?.images[2]?.url} layout={"fill"}
-                                       objectFit={'cover'} placeholder={'blur'}
-                                       blurDataURL={randomArtist?.images[2]?.url}/>
-                            </Box>
 
-                            <Box flex={1} spacing={0}>
-                                <Text w={79} noOfLines={1} fontSize={"xs"}>{randomArtist.name}</Text>
-                                <Text w={79} noOfLines={1} fontSize={"2xs"}>{randomArtist.genres[0]}</Text>
-                            </Box>
-
-                            <IconButton isLoading={subscribeStatus}
-                                        aria-label={'subscribe-unSubscribe'}
-                                        onClick={() => handelSubscribe(randomArtist)}
-                                        rounded={"full"}
-                                        colorScheme={'orange'}
-                                        size={"sm"}
-                                        icon={!!_.find(GET_SUBSCRIBED_LIST, {id: randomArtist.id}) ?
-                                            <RiUserUnfollowFill size={18}/> : <RiUserFollowFill size={18}/>}
-                                        variant={!!_.find(GET_SUBSCRIBED_LIST, {id: randomArtist.id}) ? 'solid' : 'outline'}/>
-                        </HStack>
-                    )
-                })}
             </VStack>
-
-
         </Flex>
-
-    )
-}
+    );
+};
