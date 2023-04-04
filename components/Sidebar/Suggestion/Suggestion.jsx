@@ -41,21 +41,9 @@ const Suggestion = () => {
     //*
 
     //* handel grow height or shrink height
-    // const [showMore, setShowMore] = useState({
-    //     setHeight: false,
-    //     setOverFlow: false,
-    // });
-
     const [showMore, setShowMore] = useState(false);
 
-    const handelHeight = () => {
-        // setShowMore((prevState) => ({
-        //     setHeight: !prevState.setHeight,
-        //     setOverFlow: !prevState.setOverFlow,
-        // }))
-
-        setShowMore(prev => !prev)
-    }
+    const handelHeight = () => {setShowMore(prev => !prev)}
     //*
 
     return (

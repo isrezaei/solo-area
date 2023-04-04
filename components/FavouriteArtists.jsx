@@ -57,8 +57,8 @@ export const FavouriteArtists = ({ user }) => {
   let RenderTopTen;
 
   if (!getArtistTopTracks) {
-    RenderTopTen = Array.from({ length: 10 }).map((_) => (
-      <HStack>
+    RenderTopTen = Array.from({ length: 10 }).map(( _ , index) => (
+      <HStack key={index}>
         <SkeletonCircle size="10" />
         <VStack align={"flex-start"}>
           <SkeletonCircle size={3} w={180} />
