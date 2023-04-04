@@ -1,6 +1,6 @@
 import { Box, Divider, Flex, HStack, Text, VStack } from "@chakra-ui/react";
 import Image from "next/image";
-import { useState } from "react";
+import {useState} from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { getArtistInformation } from "../../graphQl/query/api/getArtistInformation";
@@ -27,6 +27,7 @@ export const Artist = () => {
     async (key, id, artistId) => await getArtistInformation(artistId)
   );
 
+
   const [open, setOpen] = useState(false);
 
   return (
@@ -41,7 +42,6 @@ export const Artist = () => {
         <Image
           layout={"fill"}
           objectFit={"cover"}
-          priority={true}
           src={getArtistInfo?.images[0]?.url}
           style={{ position: "absolute", opacity: "20%", zIndex: 1 }}
           placeholder={"blur"}

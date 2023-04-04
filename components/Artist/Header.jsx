@@ -50,23 +50,15 @@ const Header = ({ getArtistInfo }) => {
               boxShadow={"dark-lg"}
               rounded={"full"}
               position={"relative"}
+              overflow={"hidden"}
           >
             <Image
                 layout={"fill"}
                 objectFit={"cover"}
-                priority={true}
                 src={getArtistInfo?.images[0]?.url}
                 style={{ position: "absolute", borderRadius: "100%" }}
                 placeholder={"blur"}
                 blurDataURL={getArtistInfo?.images[2]?.url}
-            />
-            <Icon
-                boxSize={16}
-                color={"lightgreen"}
-                as={GoPlay}
-                position={"absolute"}
-                bottom={0}
-                right={0}
             />
           </Box>
           <Box spacing={0}>

@@ -21,16 +21,18 @@ export const Account = () => {
   const supabase = useSupabaseClient();
   const user = useUser();
 
-  const ownerUser = useAsync(async () => {
-    if (user) {
-      const { data, error } = await supabase
-        .from("USERS")
-        .select(`*`)
-        .eq("id", user.id);
+  // const ownerUser = useAsync(async () => {
+  //   if (user) {
+  //     const { data, error } = await supabase
+  //       .from("USERS")
+  //       .select(`*`)
+  //       .eq("id", user.id);
+  //
+  //     return data;
+  //   }
+  // }, [user]);
 
-      return data;
-    }
-  }, [user]);
+  console.log(user)
 
   const singOut = async () => {
     router.push("/login_signup");
@@ -53,13 +55,13 @@ export const Account = () => {
         rounded={"3xl"}
         pl={3}
         as={IconButton}
-        rightIcon={<Avatar name={ownerUser.value?.[0]?.firstname} />}
+        rightIcon={<Avatar name={user?.email} />}
         _expanded={{ bg: "whiteAlpha.200" }}
         _focus={{ bg: "#1c1c1c", boxShadow: "none" }}
       >
         <TriangleDownIcon w={3} h={3} mr={2} color={"whiteAlpha.600"} />
 
-        {ownerUser.value?.[0]?.firstname}
+        {user?.email}
       </MenuButton>
 
       <MenuList bgColor={"whiteAlpha.200"}>
