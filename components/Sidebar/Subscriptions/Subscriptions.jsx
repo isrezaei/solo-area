@@ -38,7 +38,7 @@ const Subscriptions = () => {
                   handelHeight={handelHeight}
                   showMore={showMore}/>
 
-              {GET_SUBSCRIBED_LIST?.slice(showMore ? undefined : 5 ).reverse().map((value) => <SubscribeList value={value}/>)}
+              {GET_SUBSCRIBED_LIST?.slice(showMore ? undefined : -5 ).reverse().map((value) => <SubscribeList value={value}/>)}
             </Stack>
         )
       case  GET_SUBSCRIBED_LIST?.length < 0 :

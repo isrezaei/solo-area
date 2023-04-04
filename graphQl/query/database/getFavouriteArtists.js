@@ -20,7 +20,7 @@ export const getFavouriteArtists = async (userId) =>
     `
 
     try {
-        const {data, error} = await DataBaseClient.query({query : GET_FAVOURITE_ARTISTS , variables : {userId : '47525eb3-8627-49de-831b-ab7626f97967'}})
+        const {data, error} = await DataBaseClient.query({query : GET_FAVOURITE_ARTISTS , variables : {userId}})
         if (error) return error
         return data
     }
