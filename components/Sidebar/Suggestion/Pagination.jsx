@@ -9,12 +9,12 @@ import {
     pageLink,
     pagination,
     previous
-} from "./PaginationStyle";
+} from "../PaginationStyle";
 
-const Pagination = ({handlePageClick}) => {
+const Pagination = ({handlePagination}) => {
     return (
         <ReactPaginate
-            onPageChange={handlePageClick}
+            onPageChange={handlePagination}
             marginPagesDisplayed={0}
             pageRangeDisplayed={4}
             pageCount={10}

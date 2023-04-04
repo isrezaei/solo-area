@@ -1,92 +1,51 @@
-import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Grid,
-  HStack,
-  Icon,
-  Stack,
-  Text,
-  Tooltip,
-  VStack,
-} from "@chakra-ui/react";
-import { RiUserFollowLine } from "react-icons/ri";
-import Image from "next/image";
-import { useRouter } from "next/router";
+import React, {useState} from "react";
+import {Stack, Text,} from "@chakra-ui/react";
+import {useQuery} from "@apollo/client";
+import {getSubscribeQuery} from "../../../graphQl/query/database/getSubscribedList";
+import {useUser} from "@supabase/auth-helpers-react";
+import SubscribeList from "./SubscribeList";
+import Header from "./Header";
 import Empty from "./Empty";
 
-const Subscriptions = ({ GET_SUBSCRIBED_LIST }) => {
-  const router = useRouter();
+const Subscriptions = () => {
 
-  const [showMore, setShowMore] = useState({
-    setHeight: false,
-    setOverFlow: false,
+  const user = useUser();
+
+  const {loading, data: {GET_SUBSCRIBED_LIST} = {}} = useQuery(getSubscribeQuery, {
+    variables: {userId: user?.id}
   });
 
-  return (
-    <Stack>
-      {!GET_SUBSCRIBED_LIST?.length && <Empty />}
 
-      {GET_SUBSCRIBED_LIST?.length && (
-        <Stack
-          h={showMore.setHeight ? "auto" : 290}
-          overflow={showMore.setOverFlow ? "visible" : "hidden"}
-        >
-          <HStack>
-            <Text fontSize={15} fontWeight={"bold"} color={"whiteAlpha.800"}>
-              Subscriptions
-            </Text>
-            <Button
-              size={"xs"}
-              onClick={() =>
-                setShowMore((prevState) => ({
-                  setHeight: !prevState.setHeight,
-                  setOverFlow: !prevState.setOverFlow,
-                }))
-              }
-            >
-              {showMore.setHeight ? "C" : "O"}
-            </Button>
-          </HStack>
+  const [showMore, setShowMore] = useState(false)
 
-          <Stack w={"full"} spacing={0}>
-            {GET_SUBSCRIBED_LIST?.map((value) => {
-              return (
-                <HStack
-                  key={value.id}
-                  _hover={{ bg: "whiteAlpha.200" }}
-                  p={2}
-                  rounded={"xl"}
-                  cursor={"pointer"}
-                  onClick={() => router.push(`/artist/${value.id}`)}
-                >
-                  <Box
-                    w={35}
-                    h={35}
-                    cursor={"pointer"}
-                    rounded={"full"}
-                    overflow={"hidden"}
-                    position={"relative"}
-                  >
-                    <Image
-                      style={{ position: "absolute" }}
-                      layout={"fill"}
-                      placeholder={"blur"}
-                      blurDataURL={value.images[2].url}
-                      src={value.images[2].url || ""}
-                      loading={"lazy"}
-                    />
-                  </Box>
+  console.log(showMore)
 
-                  <Text fontSize={13}>{value.name}</Text>
-                </HStack>
-              );
-            })}
-          </Stack>
-        </Stack>
-      )}
-    </Stack>
-  );
+  const handelHeight = () => setShowMore(prev => !prev)
+
+
+  if (loading)
+  {
+    return  <Text fontSize={25}>Loading ...</Text>
+  }
+
+  if (!loading)
+  {
+    switch (true) {
+      case GET_SUBSCRIBED_LIST?.length > 0 :
+        return (
+            <Stack >
+              <Header
+                  handelHeight={handelHeight}
+                  showMore={showMore}/>
+
+              {GET_SUBSCRIBED_LIST?.slice(showMore ? undefined : 5 ).reverse().map((value) => <SubscribeList value={value}/>)}
+            </Stack>
+        )
+      case  GET_SUBSCRIBED_LIST?.length < 0 :
+      default :
+        return <Empty/>
+    }
+  }
 };
 
 export default Subscriptions;

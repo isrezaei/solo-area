@@ -29,7 +29,6 @@ import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { useAsync } from "react-use";
 import { PropagateLoader } from "react-spinners";
-import "animate.css";
 
 export const PlayBack = () => {
   const trackID = useRecoilValue(SPOTIFY_TRACKS_ID_ATOM);

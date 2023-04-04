@@ -8,6 +8,7 @@ import {createBrowserSupabaseClient} from '@supabase/auth-helpers-nextjs'
 import {SessionContextProvider} from '@supabase/auth-helpers-react'
 import {useState} from "react";
 import {useRouter} from "next/router";
+import {PlayBack} from "../components/playBack";
 
 
 function MyApp({Component, pageProps: {session, ...pageProps}}) {
@@ -73,6 +74,7 @@ function MyApp({Component, pageProps: {session, ...pageProps}}) {
                     <ChakraProvider theme={customTheme}>
                         <Layout>
                             <Component {...pageProps} />
+                            {/*<PlayBack/>*/}
                         </Layout>
                     </ChakraProvider>
                 </main>

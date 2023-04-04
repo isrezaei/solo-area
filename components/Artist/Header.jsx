@@ -26,69 +26,70 @@ const Header = ({ getArtistInfo }) => {
     variables: {userId: user?.id}
   });
 
-
-  const handelSubscribe = async (id) => {
+  const handelSubscribe = async (id , name , images) => {
     if (!!_.find(GET_SUBSCRIBED_LIST, {"id": id})) {
       return await removeFromSubscribeList(id, user?.id);
     }
+    else {
+      return await setToSubscribedList(id, name, images, user?.email, user?.id);
+    }
   };
 
-
   return (
-    <HStack
-      w={"full"}
-      py={5}
-      justifyContent={"space-between"}
-      align={"flex-start"}
-      zIndex={1000}
-    >
-      <HStack spacing={5}>
-        <Box
-          w={250}
-          h={250}
-          boxShadow={"dark-lg"}
-          rounded={"full"}
-          position={"relative"}
-        >
-          <Image
-            layout={"fill"}
-            objectFit={"cover"}
-            priority={true}
-            src={getArtistInfo?.images[0]?.url}
-            style={{ position: "absolute", borderRadius: "100%" }}
-            placeholder={"blur"}
-            blurDataURL={getArtistInfo?.images[2]?.url}
-          />
-          <Icon
-            boxSize={16}
-            color={"lightgreen"}
-            as={GoPlay}
-            position={"absolute"}
-            bottom={0}
-            right={0}
-          />
-        </Box>
-        <Box spacing={0}>
-          <Text fontSize={50} fontWeight={"bold"} color={"whiteAlpha.700"}>
-            {getArtistInfo.name}
-          </Text>
-          <Button
-            size={"sm"}
-            rounded={"full"}
-            variant={!!_.find(GET_SUBSCRIBED_LIST, {"id": getArtistInfo.id}) ? "solid" : "outline"}
-            colorScheme={"green"}
-            onClick={() => handelSubscribe( getArtistInfo.id)}
+      <HStack
+          w={"full"}
+          py={5}
+          justifyContent={"space-between"}
+          align={"flex-start"}
+          zIndex={1000}
+      >
+        <HStack spacing={5}>
+          <Box
+              w={250}
+              h={250}
+              boxShadow={"dark-lg"}
+              rounded={"full"}
+              position={"relative"}
           >
-            {!!_.find(GET_SUBSCRIBED_LIST, {"id": getArtistInfo.id}) ? " Subscribed" : " Subscribe"}
-          </Button>
-        </Box>
-      </HStack>
+            <Image
+                layout={"fill"}
+                objectFit={"cover"}
+                priority={true}
+                src={getArtistInfo?.images[0]?.url}
+                style={{ position: "absolute", borderRadius: "100%" }}
+                placeholder={"blur"}
+                blurDataURL={getArtistInfo?.images[2]?.url}
+            />
+            <Icon
+                boxSize={16}
+                color={"lightgreen"}
+                as={GoPlay}
+                position={"absolute"}
+                bottom={0}
+                right={0}
+            />
+          </Box>
+          <Box spacing={0}>
+            <Text fontSize={50} fontWeight={"bold"} color={"whiteAlpha.700"}>
+              {getArtistInfo.name}
+            </Text>
+            <Button
+                size={"sm"}
+                rounded={"full"}
+                variant={!!_.find(GET_SUBSCRIBED_LIST, {"id": getArtistInfo.id}) ? "solid" : "outline"}
+                colorScheme={"green"}
+                onClick={() => handelSubscribe(getArtistInfo.id , getArtistInfo.name , getArtistInfo?.images)}
+            >
+              {!!_.find(GET_SUBSCRIBED_LIST, {"id": getArtistInfo.id}) ? " Subscribed" : " Subscribe"}
+            </Button>
+          </Box>
+        </HStack>
 
-      <HStack justify={"flex-end"} align={"center"} p={5}>
-        <SearchBar />
-        <Account />
+        <HStack justify={"flex-end"} align={"center"} p={5}>
+          <SearchBar />
+          <Account />
+        </HStack>
       </HStack>
-    </HStack>
   );
 };
 

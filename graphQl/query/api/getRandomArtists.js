@@ -4,10 +4,8 @@ import {client} from "../../client/client";
 import _ from 'lodash'
 
 
-export const getRandomArtists = async (currentPage) =>
+export const getRandomArtists = async (currentPage , alphabet = "a") =>
 {
-    const alphabet =  _.sampleSize('abcdefghijklmnopqrstuvwxyz', 1).join('');
-
     const apolloClient = await client;
     const offset = currentPage * 50;
     const query = gql`
