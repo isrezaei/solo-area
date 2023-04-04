@@ -18,7 +18,6 @@ async function initializeClient() {
     return  new ApolloClient({
         cache: new InMemoryCache(),
         link: ApolloLink.from([restLink]),
-        uri : `${process.env.NEXT_PUBLIC_BASE_URL}/api/graphql`
     });
 
 }
@@ -29,5 +28,5 @@ export const client = initializeClient();
 
 export const DataBaseClient = new ApolloClient({
     cache: new InMemoryCache(),
-    uri : 'http://localhost:3000/api/graphql'
+    uri : `${process.env.NEXT_PUBLIC_BASE_URL}/api/graphql`
 });
