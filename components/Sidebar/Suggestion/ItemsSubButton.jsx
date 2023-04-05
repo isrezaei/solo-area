@@ -12,10 +12,10 @@ const ItemsSubButton = ({artists}) => {
 
     const user = useUser()
 
+
     const {loading: subscribeStatus, data: {GET_SUBSCRIBED_LIST} = {}} = useQuery(getSubscribeQuery, {
         variables: {userId: user?.id}
     });
-
 
 
     const handelSubscribe = async (randomArtist) => {

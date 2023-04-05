@@ -21,19 +21,6 @@ export const Account = () => {
   const supabase = useSupabaseClient();
   const user = useUser();
 
-  // const ownerUser = useAsync(async () => {
-  //   if (user) {
-  //     const { data, error } = await supabase
-  //       .from("USERS")
-  //       .select(`*`)
-  //       .eq("id", user.id);
-  //
-  //     return data;
-  //   }
-  // }, [user]);
-
-  console.log(user)
-
   const singOut = async () => {
     router.push("/login_signup");
 

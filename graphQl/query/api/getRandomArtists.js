@@ -4,7 +4,7 @@ import {client} from "../../client/client";
 import _ from 'lodash'
 
 
-export const getRandomArtists = async (currentPage , alphabet = "a") =>
+export const getRandomArtists = async (currentPage , alphabet ) =>
 {
     const apolloClient = await client;
     const offset = currentPage * 50;

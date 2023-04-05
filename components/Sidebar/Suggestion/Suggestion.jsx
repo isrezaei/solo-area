@@ -11,7 +11,7 @@ import Items from "./Items";
 const Suggestion = () => {
 
     //* set random word for get random artists from spotify api
-    const [randomWord, setRandomWord] = useState("")
+    const [randomWord, setRandomWord] = useState("a")
     useEffect(() => {
         const alphabet = _.sampleSize("abcdefghijklmnopqrstuvwxyz", 1).join('');
         setRandomWord(alphabet)
@@ -33,9 +33,7 @@ const Suggestion = () => {
             } = {}
         } = {},
         isValidating
-    } = useSWR(
-        ["api", "GET_RANDOM_ARTISTS", currentPage, randomWord],
-        async (api, key, currentPage, randomWord) =>
+    } = useSWR(["api", "GET_RANDOM_ARTISTS", currentPage, randomWord], async (api, key, currentPage, randomWord) =>
             await getRandomArtists(currentPage, randomWord),
         {refreshInterval: 0});
     //*
@@ -60,12 +58,10 @@ const Suggestion = () => {
                 isValidating && <Loading/>
             }
             {
-                !isValidating && artists?.items?.slice(0 , showMore ? undefined : -45 ).map((artists) => <Items artists={artists}/>)
+                !isValidating && artists?.items?.slice(0 , showMore ? undefined : -45 ).map((artists) => <Items key={artists.id} artists={artists}/>)
             }
         </VStack>
     );
 };
 
 export default Suggestion;
-
-//["a" , "b" , "c" , "d" , "e" , "f" , "j"]

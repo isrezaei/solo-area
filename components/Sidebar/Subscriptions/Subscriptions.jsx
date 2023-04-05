@@ -1,11 +1,12 @@
 import React, {useState} from "react";
-import {Stack, Text,} from "@chakra-ui/react";
+import {Stack, Text, VStack,} from "@chakra-ui/react";
 import {useQuery} from "@apollo/client";
-import {getSubscribeQuery} from "../../../graphQl/query/database/getSubscribedList";
+import {getSubscribedList, getSubscribeQuery} from "../../../graphQl/query/database/getSubscribedList";
 import {useUser} from "@supabase/auth-helpers-react";
 import SubscribeList from "./SubscribeList";
 import Header from "./Header";
 import Empty from "./Empty";
+import useSWR from "swr";
 
 const Subscriptions = () => {
 
@@ -15,17 +16,22 @@ const Subscriptions = () => {
     variables: {userId: user?.id}
   });
 
+  const {data} = useSWR(["GET_SUBSCRIBED_LIST" , user?.id] , () => getSubscribedList(user?.id))
+
+  console.log(data)
 
   const [showMore, setShowMore] = useState(false)
-
-  console.log(showMore)
 
   const handelHeight = () => setShowMore(prev => !prev)
 
 
   if (loading)
   {
-    return  <Text fontSize={25}>Loading ...</Text>
+    return (
+        <VStack minH={250}>
+          <Text fontSize={25}>Loading ...</Text>
+        </VStack>
+    )
   }
 
   if (!loading)
@@ -33,12 +39,12 @@ const Subscriptions = () => {
     switch (true) {
       case GET_SUBSCRIBED_LIST?.length > 0 :
         return (
-            <Stack >
+            <Stack>
               <Header
                   handelHeight={handelHeight}
                   showMore={showMore}/>
 
-              {GET_SUBSCRIBED_LIST?.slice(showMore ? undefined : -5 ).reverse().map((value) => <SubscribeList value={value}/>)}
+              {GET_SUBSCRIBED_LIST?.slice(showMore ? undefined : -5 ).reverse().map((value) => <SubscribeList key={value.id} value={value}/>)}
             </Stack>
         )
       case  GET_SUBSCRIBED_LIST?.length < 0 :

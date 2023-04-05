@@ -76,11 +76,6 @@ const Header = ({ getArtistInfo }) => {
             </Button>
           </Box>
         </HStack>
-
-        <HStack justify={"flex-end"} align={"center"} p={5}>
-          <SearchBar />
-          <Account />
-        </HStack>
       </HStack>
   );
 };

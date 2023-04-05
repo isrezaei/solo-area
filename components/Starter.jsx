@@ -5,40 +5,18 @@ import {
   Box,
   Flex,
   Text,
-  HStack,
+  HStack, VStack,
 } from "@chakra-ui/react";
-import { SearchBar } from "./Search/SearchBar";
-import { FavouriteArtists } from "./FavouriteArtists";
+import { FavouriteArtists } from "./FavouriteArtists/FavouriteArtists";
 import { SelectGenre } from "./SelectGenre";
 
+
 export const Starter = ({ user }) => {
-  // const { loading : Q , error : P, data : N } = useQuery(query);
 
   return (
-    <Box w={"full"} position={"relative"} zIndex={"1000"}>
-      {/*HEADER COMPONENTS*/}
+    <Box w={"full"}  position={"relative"} zIndex={"1000"} >
 
-      <Flex w={"full"} h={150} justify={"space-between"} align={"start"} p={5}>
-
-        <HStack spacing={10}>
-          <Text
-            fontSize={"4xl"}
-            fontWeight={"bold"}
-            color={"whiteAlpha.800"}
-            zIndex={2}
-          >
-            Good morning
-          </Text>
-          <SearchBar />
-        </HStack>
-        <Account />
-      </Flex>
-
-      <Flex
-          direction={"column"}
-          justify={"start"}
-          align={"center"}
-          gap={5}>
+      <VStack spacing={5}>
 
         <SelectGenre />
 
@@ -52,7 +30,9 @@ export const Starter = ({ user }) => {
         <RandomPlayed />
 
         {/*<FeaturedPlayList/>*/}
-      </Flex>
+
+      </VStack>
+
     </Box>
   );
 };

@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import "react-indiana-drag-scroll/dist/style.css";
+
 import useSWR from "swr";
 import Tilt from "react-parallax-tilt";
 import useSound from "use-sound";
@@ -84,6 +84,7 @@ export const NewReleasesAlbums = () => {
 
   if (newReleaseLists) {
     Render = newReleaseLists?.map((ALBUMS_DATA) => {
+
       const { images, name, artists, id } = ALBUMS_DATA;
 
       return (
@@ -95,50 +96,45 @@ export const NewReleasesAlbums = () => {
         >
           <VStack
             cursor={"pointer"}
-            spacing={0}
-            bg={"whiteAlpha.200"}
-            p={1}
-            rounded={".8vw"}
-            _hover={{ bg: "whiteAlpha.300" }}
+            overflow={"hidden"}
           >
             <Box
-              w={{ sm: 175, xxxl: 240 }}
-              h={{ sm: 180, xxxl: 240 }}
-              p={1}
+              w={180}
+              h={180}
               position={"relative"}
               overflow={"hidden"}
-              rounded={15}
+              bg={"whiteAlpha.200"}
             >
               <Image
                 onClick={() => router.push(`/new-releases-albums/${id}`)}
-                style={{ position: "absolute" }}
                 objectFit={"cover"}
                 layout={"fill"}
-                sizes={"fill"}
                 placeholder={"blur"}
                 blurDataURL={images[2].url}
-                src={images[1].url}
+                src={images[0].url}
                 alt={name}
                 priority
               />
             </Box>
 
-            <Text
-              px={5}
-              w={150}
-              textAlign={"center"}
-              whiteSpace={"nowrap"}
-              textOverflow={"ellipsis"}
-              overflow={"hidden"}
-              fontWeight={"bold"}
-              fontSize={"sm"}
-              color={"whitesmoke"}
-            >
-              {name}
-            </Text>
-            <Text fontSize={"xs"} color={"#9e9e9e"}>
-              {artists[0]?.name}
-            </Text>
+
+            <VStack spacing={0}>
+              <Text
+                  px={5}
+                  w={150}
+                  noOfLines={1}
+                  fontWeight={"bold"}
+                  fontSize={"sm"}
+                  color={"whitesmoke"}
+              >
+                {name}
+              </Text>
+              <Text fontSize={"xs"} color={"#9e9e9e"}>
+                {artists[0]?.name}
+              </Text>
+            </VStack>
+
+
           </VStack>
         </Tilt>
       );
@@ -191,11 +187,8 @@ export const NewReleasesAlbums = () => {
         transition={{ duration: 0.5 }}
       >
         <Grid
-          w={"full"}
-          h={{ xxl: 485, xxxl: 570 }}
-          py={2}
           templateColumns={{ base: "repeat(2, 1fr)", md: "repeat(6, 1fr)" }}
-          gap={{ xxl: 4, xxxl: 4 }}
+          gap={6}
         >
           {Render}
         </Grid>

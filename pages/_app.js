@@ -1,62 +1,35 @@
-import {ChakraProvider, extendTheme} from "@chakra-ui/react";
+import {
+    Box,
+    ChakraProvider,
+    ColorModeProvider,
+    ColorModeScript,
+    Divider,
+    extendTheme,
+    HStack,
+    Stack
+} from "@chakra-ui/react";
 import {RecoilRoot} from "recoil";
 import Layout from "../components/layout";
-import 'react-indiana-drag-scroll/dist/style.css';
 import "@fontsource/karla"
 import NextNprogress from 'nextjs-progressbar';
-import {createBrowserSupabaseClient} from '@supabase/auth-helpers-nextjs'
+import {createBrowserSupabaseClient, createServerSupabaseClient} from '@supabase/auth-helpers-nextjs'
 import {SessionContextProvider} from '@supabase/auth-helpers-react'
 import {useState} from "react";
 import {useRouter} from "next/router";
 import {PlayBack} from "../components/playBack";
+import App from 'next/app';
+import Header from "../components/Header";
+import {supabase} from "../supabase/createClient";
+import {ApolloProvider} from "@apollo/client";
+import {DataBaseClient} from "../graphQl/client/client";
+import {Sidebar} from "../components/Sidebar/Sidebar";
+import theme, {customTheme} from "../theme";
+import {getSeveralCategories} from "../graphQl/query/api/getSeveralCategories";
+import {SWRConfig} from "swr";
 
 
-function MyApp({Component, pageProps: {session, ...pageProps}}) {
+function MyApp({Component, pageProps: {session, ...pageProps} , fallback }) {
 
-    const {pathname} = useRouter();
-
-
-    const customTheme = extendTheme({
-        styles: {
-            global: {
-                body: {
-                    background: 'black'
-                },
-                "::-webkit-scrollbar": {
-                    width: "6px",
-                    height: "6px",
-                },
-                "::-webkit-scrollbar-track": {
-                    bg: "transparent",
-                },
-                "::-webkit-scrollbar-thumb": {
-                    bg: "whiteAlpha.500",
-                    borderRadius: "full",
-                },
-                "::-webkit-scrollbar-thumb:hover": {
-                    bg: "gray.600",
-                },
-            },
-        },
-
-        colors: {
-            black : {
-                500: "rgba(0, 0, 0, 0.36)",
-                800: "rgba(0, 0, 0, 0.80)",
-            },
-        },
-
-
-        breakpoints: {
-            sm: "20em",
-            md: "30em",
-            lg: "48em",
-            xl: "62em",
-            xxl : "80em",
-            xxxl: "118em", // add your custom breakpoint here
-        },
-
-    })
 
     const [supabase] = useState(() => createBrowserSupabaseClient({
                 supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -65,17 +38,27 @@ function MyApp({Component, pageProps: {session, ...pageProps}}) {
         )
     )
 
-
     return (
         <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
             <RecoilRoot>
                 <main style={{fontFamily: 'Karla'}}>
-                    <NextNprogress color={'#589846'} height={5}/>
+                    <NextNprogress color={'#46986f'} height={3}/>
                     <ChakraProvider theme={customTheme}>
-                        <Layout>
-                            <Component {...pageProps} />
-                            {/*<PlayBack/>*/}
-                        </Layout>
+                        <ColorModeProvider options={{initialColorMode: "dark", useSystemColorMode: false}}>
+                            <Layout>
+                                <HStack  align={'flex-start'} >
+                                    <SWRConfig value={{fallback}}>
+                                        <ApolloProvider client={DataBaseClient}>
+                                            <Sidebar/>
+                                        </ApolloProvider>
+                                        <Stack w={"full"}>
+                                            <Header/>
+                                            <Component {...pageProps} />
+                                        </Stack>
+                                    </SWRConfig>
+                                </HStack>
+                            </Layout>
+                        </ColorModeProvider>
                     </ChakraProvider>
                 </main>
             </RecoilRoot>
@@ -84,6 +67,22 @@ function MyApp({Component, pageProps: {session, ...pageProps}}) {
     )
 }
 
+MyApp.getInitialProps = async (ctx) => {
+    const users = "Hello"
+
+    const GET_SEARCH_CATEGORIES = await getSeveralCategories()
+
+    return {
+        fallback : {
+            "GET_SEARCH_CATEGORIES": GET_SEARCH_CATEGORIES,
+        }
+    }
+}
+
+
+
 export default MyApp
+
+
 
 

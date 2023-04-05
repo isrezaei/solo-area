@@ -1,41 +1,36 @@
 import {
   AbsoluteCenter,
   Box,
-  Button,
   Icon,
   Grid,
-  GridItem,
   HStack,
   Text,
   VStack,
-  Img,
   Skeleton,
   SkeletonText,
-  Divider,
-  Stack,
-  SkeletonCircle,
-  Flex,
+  SkeletonCircle, Stack,
 } from "@chakra-ui/react";
-import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useAsync } from "react-use";
 import Image from "next/image";
-import ScrollContainer from "react-indiana-drag-scroll";
-import "react-indiana-drag-scroll/dist/style.css";
 import { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
-import _ from "lodash";
 import { CgPlayButtonO } from "react-icons/cg";
 import prettyMilliseconds from "pretty-ms";
-import { getFavouriteArtists } from "../graphQl/query/database/getFavouriteArtists";
-import { hostUser } from "../atoms/atoms";
-import { useRecoilValue } from "recoil";
-import { getArtistInformation } from "../graphQl/query/api/getArtistInformation";
+import { getFavouriteArtists } from "../../graphQl/query/database/getFavouriteArtists";
+import { getArtistInformation } from "../../graphQl/query/api/getArtistInformation";
+import Artists from "./Artists";
+import { motion } from "framer-motion";
+
+import {ScrollContainer} from "react-indiana-drag-scroll";
+
+import 'react-indiana-drag-scroll/dist/style.css'
+
 
 export const FavouriteArtists = ({ user }) => {
+
   const [artistID, setArtistID] = useState(null);
 
   const {
-    data: { GET_FAVOURITE_ARTISTS: favouriteArtists } = {},
+    data: { GET_FAVOURITE_ARTISTS: favouriteArtists },
   } = useSWR(["api", "GET_FAVORITE_ARTISTS", user?.id], () =>
     getFavouriteArtists(user?.id)
   );
@@ -47,6 +42,7 @@ export const FavouriteArtists = ({ user }) => {
     { refreshInterval: null }
   );
 
+
   useEffect(() => {
     setArtistID(favouriteArtists[0].list[0].id);
   }, [favouriteArtists]);
@@ -54,6 +50,8 @@ export const FavouriteArtists = ({ user }) => {
   const handelSelect = (artisId) => {
     setArtistID(artisId);
   };
+
+
 
   let RenderTopTen;
 
@@ -68,11 +66,15 @@ export const FavouriteArtists = ({ user }) => {
       </HStack>
     ));
   }
+
+
   if (getArtistTopTracks) {
+
+
     RenderTopTen = getArtistTopTracks?.tracks?.map(
       ({ duration_ms, name, id, album: { artists, images } }) => {
         return (
-          <HStack px={2} rounded={50} key={id} bg={"whiteAlpha.200"}>
+          <HStack p={2} rounded={50} key={id} bg={"whiteAlpha.200"}>
             <Box flex={0.3} role={"group"} position={"relative"}>
               <Skeleton
                 startColor={"whiteAlpha.300"}
@@ -81,8 +83,8 @@ export const FavouriteArtists = ({ user }) => {
                 isLoaded={!isLoading}
               >
                 <Box
-                  w={55}
-                  h={55}
+                  w={50}
+                  h={50}
                   rounded={"full"}
                   overflow={"hidden"}
                   position={"relative"}
@@ -93,12 +95,11 @@ export const FavouriteArtists = ({ user }) => {
                     placeholder={"blur"}
                     blurDataURL={images[2].url}
                     src={images[1].url}
-                    quality={"50"}
                     layout={"fill"}
-                    sizes={"fill"}
                     objectFit={"cover"}
                     style={{ position: "absolute", borderRadius: "100%" }}
                   />
+
                 </Box>
               </Skeleton>
               <AbsoluteCenter>
@@ -140,82 +141,40 @@ export const FavouriteArtists = ({ user }) => {
     );
   }
 
+
+
+
+
   return (
-    <HStack w={"full"} h={"auto"} justify={"center"} my={18} rounded={"2xl"}>
-      {
-        <VStack w={"full"}>
-          <VStack w={"full"} align={"start"}>
-            <Text
-              w={"full"}
-              fontSize={40}
+
+      <Stack spacing={3}>
+
+          <Text
+              fontSize={35}
               fontWeight={"bold"}
-              color={"whiteAlpha.600"}
-            >
-              Top 10 your favourite artist
-            </Text>
-          </VStack>
+              color={"whiteAlpha.600"}>
+            Top 10 your favourite artist
+          </Text>
 
-          <HStack w={"full"}>
-            <ScrollContainer
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
-                cursor: "pointer",
-              }}
-            >
-              {favouriteArtists?.[0]?.list?.map(({ id, images, name }) => {
-                return (
-                  <Box key={id}
-                    flex={"none"}
-                    p={2}
-                    position={"relative"}
-                    overflow={"hidden"}
-                    rounded={"full"}
-                  >
-                    <Image
-                      style={{
-                        borderRadius: "100%",
-                        transition: ".1s",
-                        opacity: id === artistID ? "50%" : "100%",
-                        transform: id === artistID ? "scale(.95)" : "scale(1)",
-                        position: "absolute",
-                        zIndex: 1,
-                      }}
-                      width={200}
-                      height={200}
-                      onClick={() => handelSelect(id)}
-                      placeholder={"blur"}
-                      quality={100}
-                      blurDataURL={images[2].url}
-                      src={images[0].url}
-                    />
 
-                    {id === artistID && (
-                      <AbsoluteCenter w={"full"} zIndex={2}>
-                        <Text
-                          textAlign={"center"}
-                          fontWeight={"bold"}
-                          fontSize={22}
-                        >
-                          {name}
-                        </Text>
-                      </AbsoluteCenter>
-                    )}
-                  </Box>
-                );
-              })}
+            <ScrollContainer style={{display : "flex" , justifyContent : "flex-start"}}>
+                {favouriteArtists?.[0]?.list?.map(artist => (
+                    <Artists key={artist.id} artist={artist} artistID={artistID} handelSelect={handelSelect} />
+                ))}
             </ScrollContainer>
-          </HStack>
 
-          <VStack w={"full"}>
-            <Grid w={"full"} h={150} gap={2} templateColumns={"repeat(5, 1fr)"}>
-              {RenderTopTen}
-            </Grid>
-          </VStack>
-        </VStack>
-      }
-    </HStack>
-  );
+
+        <motion.div
+            key={[artistID]}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+        >
+        <Grid  gap={2} templateColumns={"repeat(5, 1fr)"}>
+          {RenderTopTen}
+        </Grid>
+        </motion.div>
+
+      </Stack>
+);
 };

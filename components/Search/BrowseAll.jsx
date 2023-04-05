@@ -5,10 +5,8 @@ import useSWR from "swr";
 import { getSeveralCategories } from "../../graphQl/query/api/getSeveralCategories";
 
 const BrowseAll = () => {
-  const { data: { GET_SEVERAL_CATEGORIES : {categories} } } = useSWR(
-    "GET_SEARCH_CATEGORIES",
-    () => getSeveralCategories()
-  );
+  const { data: { GET_SEVERAL_CATEGORIES : {categories}}} = useSWR("GET_SEARCH_CATEGORIES", () => getSeveralCategories());
+
   return (
     <VStack>
       <Text
@@ -26,7 +24,7 @@ const BrowseAll = () => {
       >
         {categories?.items.map((data) => {
           return (
-            <VStack>
+            <VStack key={data.id}>
               <VStack
                 w={150}
                 h={95}

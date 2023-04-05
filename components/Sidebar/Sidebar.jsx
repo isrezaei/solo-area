@@ -3,7 +3,10 @@ import Directions from "./Directions";
 import Subscription from './Subscriptions/Subscriptions'
 import Suggestion from "./Suggestion/Suggestion";
 
-export const Sidebar = () => {
+export const Sidebar = ({users}) => {
+
+    console.log(users)
+
     return (
         <Flex
             display={{base: "none", md: "flex"}}

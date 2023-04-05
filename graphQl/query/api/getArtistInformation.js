@@ -21,7 +21,7 @@ export const getArtistInformation = async (artistId) =>
                     total
                 }
             }
-            getArtistTopTracks(artistId : $artistId) @rest(type : "artist-information" , path : "/artists/{args.artistId}/top-tracks?market=US"){
+            getArtistTopTracks(artistId : $artistId) @rest(type : "artist-information" , path : "/artists/{args.artistId}/top-tracks?market=ES"){
                 tracks {
                     album {
                         artists {
