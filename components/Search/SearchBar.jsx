@@ -78,9 +78,7 @@ export const SearchBar = () => {
                 <ModalOverlay bg="blackAlpha.800"/>
                 <ModalContent bg="black" minH={550}>
                     <ModalHeader>
-                        <Header
-                            setInputSearch={setInputSearch}
-                        />
+                        <Header setInputSearch={setInputSearch}/>
                     </ModalHeader>
                     <ModalCloseButton/>
                     <ModalBody>
