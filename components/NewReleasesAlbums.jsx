@@ -63,8 +63,8 @@ export const NewReleasesAlbums = () => {
           rounded={0}
           startColor={"whiteAlpha.300"}
           endColor={"whiteAlpha.400"}
-          height={{sm : 115 , md : 180}}
-          width={{sm : 115 , md : 175}}
+          height={{sm : 150 , md : 180}}
+          width={{sm : 150 , md : 175}}
         />
         <Skeleton
             rounded={0}
@@ -102,8 +102,8 @@ export const NewReleasesAlbums = () => {
             spacing={{sm : 0 , md : 1}}
           >
             <Stack
-              w={{sm : 115 , md : 180}}
-              h={{sm : 115 , md : 180}}
+              w={{sm : 150 , md : 180}}
+              h={{sm : 150 , md : 180}}
               position={"relative"}
               bg={"whiteAlpha.200"}
               m={{sm : 1 , md : 0}}
@@ -146,7 +146,7 @@ export const NewReleasesAlbums = () => {
   };
 
   return (
-    <VStack w={"full"} h={{sm : 180 , md : "auto"}} position={"relative"} zIndex={1000}>
+    <VStack w={"full"} h={{sm : 210 , md : "auto"}} position={"relative"} zIndex={1000}>
 
       <HStack  w={"full"} align={"center"}>
         <Text
@@ -203,7 +203,7 @@ export const NewReleasesAlbums = () => {
         <Grid
           display={{sm : "none" , md : "grid"}}
           templateColumns={"repeat(6, 1fr)"}
-          gap={6}
+          gap={2}
         >
           {Render}
         </Grid>

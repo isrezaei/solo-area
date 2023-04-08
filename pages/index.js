@@ -24,7 +24,7 @@ export default function Home({fallback, user , SSR_GET_SUBSCRIBED_LIST}) {
     return (
         <SWRConfig value={{fallback}}>
 
-            <HStack   align={'flex-start'} position={"relative"}>
+            <HStack  align={'flex-start'} position={"relative"}>
 
                 <ApolloProvider client={DataBaseClient}>
                     <Stack w={{sm : 0 , md : 265}} position={"sticky"} top={0}>

@@ -8,8 +8,8 @@ const Artists = ({artist : {id , name , images} , artistID , handelSelect}) => {
 
         <HStack mr={2} overflow={"hidden"} rounded={"full"} position={"relative"} flex={"none"}>
 
-            <Box w={{sm : 100 , md : 180}}
-                 h={{sm : 100 , md : 180}}
+            <Box w={{sm : 150 , md : 180}}
+                 h={{sm : 150 , md : 180}}
                  transition={".3s"}
                  transform={id === artistID ? "scale(.95)" : "scale(1)"}
                  opacity={id === artistID ? "50%" : "100%"}
@@ -28,7 +28,7 @@ const Artists = ({artist : {id , name , images} , artistID , handelSelect}) => {
 
             {id === artistID && (
                 <AbsoluteCenter w={"full"}  zIndex={2}>
-                    <Text p={{sm : 0 , md : 2}} fontWeight={"bold"} fontSize={{sm : 8 , md : 15}} >{name}</Text>
+                    <Text p={{sm : 1 , md : 2}} fontWeight={"bold"} fontSize={{sm : 12 , md : 15}} >{name}</Text>
                 </AbsoluteCenter>
             )}
         </HStack>

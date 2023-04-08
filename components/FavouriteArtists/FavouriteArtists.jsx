@@ -157,7 +157,7 @@ export const FavouriteArtists = ({ user }) => {
           </Text>
 
 
-          <Stack w={"full"} h={{sm : 110 , md : 190}} position={"relative"}>
+          <Stack w={"full"} h={{sm : 160 , md : 190}} position={"relative"}>
               <Flex w={"full"} position={"absolute"} overflow={"hidden"}>
                   <ScrollContainer style={{display : "flex" }}>
                       {favouriteArtists?.[0]?.list?.map(artist => (
