@@ -1,5 +1,5 @@
 import {css} from "@emotion/css";
-import {push as Menu} from "react-burger-menu";
+import {slide as Menu} from "react-burger-menu";
 import {useState} from "react";
 import {Sidebar} from "../Sidebar/Sidebar";
 
