@@ -58,26 +58,26 @@ export const NewReleasesAlbums = () => {
     const loadingElement = Array.from({ length: 12 });
 
     Render = loadingElement.map((_, index) => (
-      <Stack key={index}>
+      <Stack key={index} mx={{sm : 1 , md : 0}}>
         <Skeleton
-          rounded={6}
+          rounded={0}
           startColor={"whiteAlpha.300"}
           endColor={"whiteAlpha.400"}
-          height="180px"
-          width="175px"
+          height={{sm : 115 , md : 180}}
+          width={{sm : 115 , md : 175}}
         />
         <Skeleton
-          rounded={6}
+            rounded={0}
           startColor={"whiteAlpha.300"}
           endColor={"whiteAlpha.400"}
-          height="16px"
+          height={{sm : 2 , md : 3}}
           mt="2"
         />
         <Skeleton
-          rounded={6}
+            rounded={0}
           startColor={"whiteAlpha.300"}
           endColor={"whiteAlpha.400"}
-          height="12px"
+          height={{sm : 2 , md : 2}}
           mt="1"
         />
       </Stack>
@@ -125,12 +125,12 @@ export const NewReleasesAlbums = () => {
               <Text
                   noOfLines={1}
                   fontWeight={"bold"}
-                  fontSize={{sm : "xs " , md : "sm"}}
+                  fontSize={{sm : 10 , md : "sm"}}
                   color={"whitesmoke"}
               >
                 {name}
               </Text>
-              <Text fontSize={"xs"} color={"#9e9e9e"}>
+              <Text  fontSize={{sm : 9 , md : "xs"}} color={"#9e9e9e"}>
                 {artists[0]?.name}
               </Text>
             </VStack>
@@ -146,7 +146,7 @@ export const NewReleasesAlbums = () => {
   };
 
   return (
-    <VStack w={"full"} h={{sm : 190 , md : "auto"}} position={"relative"} zIndex={1000}>
+    <VStack w={"full"} h={{sm : 180 , md : "auto"}} position={"relative"} zIndex={1000}>
 
       <HStack  w={"full"} align={"center"}>
         <Text
@@ -180,6 +180,7 @@ export const NewReleasesAlbums = () => {
           />
         </HStack>
       </HStack>
+
 
 
 

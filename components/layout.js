@@ -1,4 +1,4 @@
-import {Flex, Box, Container, Button, Img} from "@chakra-ui/react";
+import {Flex, Box, Container, Button, Img, Stack} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {useRecoilValue} from "recoil";
 import {selectGenre} from "../atoms/atoms";
@@ -43,7 +43,7 @@ export default function Layout({children}) {
 
     return (
 
-        <Container maxW={'1950px'}>
+        <Stack maxW={'1950px'} m={"auto"}>
             <Flex zIndex={2} position={"relative"}>
                 {
                     pathname === '/' &&
@@ -85,6 +85,6 @@ export default function Layout({children}) {
 
             </Flex>
 
-        </Container>
+        </Stack>
     )
 }

@@ -57,11 +57,11 @@ export const FavouriteArtists = ({ user }) => {
 
   if (!getArtistTopTracks) {
     RenderTopTen = Array.from({ length: 10 }).map(( _ , index) => (
-      <HStack key={index}>
-        <SkeletonCircle size="10" />
+      <HStack p={{sm : 1 , md :2}} key={index}>
+        <SkeletonCircle size={{sm : 30 , md : 50}} />
         <VStack align={"flex-start"}>
-          <SkeletonCircle size={3} w={180} />
-          <SkeletonCircle size={3} w={150} />
+          <SkeletonCircle size={{sm : 2 , md : 3}} w={{sm : 110 , md : 160}} />
+          <SkeletonCircle size={{sm : 2 , md : 3}} w={{sm : 75 , md : 140}} />
         </VStack>
       </HStack>
     ));
@@ -157,7 +157,7 @@ export const FavouriteArtists = ({ user }) => {
           </Text>
 
 
-          <Stack w={"full"} h={{sm : 130 , md : 190}} position={"relative"}>
+          <Stack w={"full"} h={{sm : 110 , md : 190}} position={"relative"}>
               <Flex w={"full"} position={"absolute"} overflow={"hidden"}>
                   <ScrollContainer style={{display : "flex" }}>
                       {favouriteArtists?.[0]?.list?.map(artist => (

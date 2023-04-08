@@ -28,7 +28,7 @@ const Artists = ({artist : {id , name , images} , artistID , handelSelect}) => {
 
             {id === artistID && (
                 <AbsoluteCenter w={"full"}  zIndex={2}>
-                    <Text p={2} fontWeight={"bold"} fontSize={{sm : 12 , md : 15}} >{name}</Text>
+                    <Text p={{sm : 0 , md : 2}} fontWeight={"bold"} fontSize={{sm : 8 , md : 15}} >{name}</Text>
                 </AbsoluteCenter>
             )}
         </HStack>
