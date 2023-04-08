@@ -29,7 +29,7 @@ const style = css`
   .bm-cross-button {
     height: 24px;
     width: 24px;
-    
+
   }
 
   /* Color/shape of close button cross */
@@ -66,16 +66,13 @@ const style = css`
     padding: 0;
   }
 
- 
 
-  
   /* Styling of overlay */
 
   .bm-overlay {
     background: rgba(0, 0, 0, 0.3);
   }
-  
-  
+
 
 ,
 `
@@ -98,7 +95,7 @@ const Hamburger = ({SSR_GET_SUBSCRIBED_LIST , setIsOpen , isOpen}) => {
             onStateChange={handleMenuStateChange}
             className = {style}
             height={"100vhs"}
-            width={"100%"}>
+            width={"265px"}>
 
             <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
 
