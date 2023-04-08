@@ -1,14 +1,14 @@
 import {
-  AbsoluteCenter,
-  Box,
-  Icon,
-  Grid,
-  HStack,
-  Text,
-  VStack,
-  Skeleton,
-  SkeletonText,
-  SkeletonCircle, Stack,
+    AbsoluteCenter,
+    Box,
+    Icon,
+    Grid,
+    HStack,
+    Text,
+    VStack,
+    Skeleton,
+    SkeletonText,
+    SkeletonCircle, Stack, Flex,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -74,8 +74,8 @@ export const FavouriteArtists = ({ user }) => {
     RenderTopTen = getArtistTopTracks?.tracks?.map(
       ({ duration_ms, name, id, album: { artists, images } }) => {
         return (
-          <HStack p={2} rounded={50} key={id} bg={"whiteAlpha.200"}>
-            <Box flex={0.3} role={"group"} position={"relative"}>
+          <HStack p={{sm : 1 , md :2}} rounded={50} key={id} bg={"whiteAlpha.200"}>
+            <Box role={"group"} position={"relative"}>
               <Skeleton
                 startColor={"whiteAlpha.300"}
                 endColor={"whiteAlpha.400"}
@@ -83,8 +83,8 @@ export const FavouriteArtists = ({ user }) => {
                 isLoaded={!isLoading}
               >
                 <Box
-                  w={50}
-                  h={50}
+                  w={{sm : 30 , md : 50}}
+                  h={{sm : 30 , md : 50}}
                   rounded={"full"}
                   overflow={"hidden"}
                   position={"relative"}
@@ -113,7 +113,7 @@ export const FavouriteArtists = ({ user }) => {
               </AbsoluteCenter>
             </Box>
 
-            <VStack flex={1} spacing={0} align={"flex-start"}>
+            <VStack  spacing={0} align={"flex-start"}>
               <SkeletonText
                 startColor={"whiteAlpha.300"}
                 endColor={"whiteAlpha.400"}
@@ -121,13 +121,13 @@ export const FavouriteArtists = ({ user }) => {
                 spacing="1"
                 isLoaded={!isLoading}
               >
-                <Text w={150} noOfLines={1} fontWeight={"bold"} fontSize={"md"}>
+                <Text  noOfLines={1} fontWeight={"bold"} fontSize={{sm : 12 , md : "md"}}>
                   {name}
                 </Text>
-                <Text w={150} noOfLines={2} fontSize={"xs"}>
+                <Text noOfLines={2}  fontSize={{sm : 8 , md : "xs"}}>
                   {artists?.[0]?.name} {artists?.[1]?.name}
                 </Text>
-                <Text w={150} noOfLines={2} fontSize={"2xs"}>
+                <Text  noOfLines={2}  fontSize={{sm : 8 , md : "xs"}}>
                   {prettyMilliseconds(duration_ms, {
                     secondsDecimalDigits: 0,
                     colonNotation: true,
@@ -147,21 +147,25 @@ export const FavouriteArtists = ({ user }) => {
 
   return (
 
-      <Stack spacing={3}>
+      <Stack w={"full"} h={{sm : "auto" , md : "auto"}} spacing={3} >
 
           <Text
-              fontSize={35}
+              fontSize={{sm : 15 , md : 35}}
               fontWeight={"bold"}
               color={"whiteAlpha.600"}>
             Top 10 your favourite artist
           </Text>
 
 
-            <ScrollContainer style={{display : "flex" , justifyContent : "flex-start"}}>
-                {favouriteArtists?.[0]?.list?.map(artist => (
-                    <Artists key={artist.id} artist={artist} artistID={artistID} handelSelect={handelSelect} />
-                ))}
-            </ScrollContainer>
+          <Stack w={"full"} h={{sm : 130 , md : 190}} position={"relative"}>
+              <Flex w={"full"} position={"absolute"} overflow={"hidden"}>
+                  <ScrollContainer style={{display : "flex" }}>
+                      {favouriteArtists?.[0]?.list?.map(artist => (
+                          <Artists key={artist.id} artist={artist} artistID={artistID} handelSelect={handelSelect} />
+                      ))}
+                  </ScrollContainer>
+              </Flex>
+          </Stack>
 
 
         <motion.div
@@ -170,7 +174,7 @@ export const FavouriteArtists = ({ user }) => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
         >
-        <Grid  gap={2} templateColumns={"repeat(5, 1fr)"}>
+        <Grid  gap={2} templateColumns={{sm : "repeat(2, 1fr)" , md : "repeat(5, 1fr)"}}>
           {RenderTopTen}
         </Grid>
         </motion.div>

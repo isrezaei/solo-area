@@ -68,11 +68,12 @@ export const SearchBar = () => {
         <Box>
             <IconButton
                 aria-label="search"
-                w={{base: '6rem', md: 'auto'}}
                 rounded="full"
-                icon={<Icon as={RiSearchLine} boxSize={5}/>}
+                boxSize={{sm : 5 , md : 10}}
+                icon={<Icon as={RiSearchLine} boxSize={{sm : 3 , md : 5}}/>}
                 onClick={handleSearch}
             />
+
             <Modal size="6xl" onClose={handleSearch} isOpen={isOpen} isCentered>
                 <ModalOverlay bg="blackAlpha.800"/>
                 <ModalContent bg="black" minH={550}>

@@ -18,16 +18,3 @@ export const getSubscribeQuery = gql`
     }
 `
 
-
-export const getSubscribedList = async (userId) =>
-{
-    try {
-        const {data , error} = await DataBaseClient.query({query : getSubscribeQuery , variables : {userId}})
-        if (error) return error
-        return data
-    }
-    catch (error)
-    {
-        console.log(error)
-    }
-}

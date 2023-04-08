@@ -7,15 +7,14 @@ const Header = () => {
 
 
     return (
-        <Flex w={"full"} h={110} justify={"space-between"} align={"start"} p={5}>
+        <Flex w={"full"} h={{sm : 75 , md : 110}} justify={"space-between"} align={"start"} p={5}>
 
-            <HStack spacing={10}>
+            <HStack spacing={{sm : 3 , md : 10}}>
                 <Text
-                    fontSize={"4xl"}
+                    fontSize={{sm : "sm" , md : "4xl"}}
                     fontWeight={"bold"}
                     color={"whiteAlpha.800"}
-                    zIndex={2}
-                >
+                    zIndex={2}>
                     Good morning
                 </Text>
                 <SearchBar />

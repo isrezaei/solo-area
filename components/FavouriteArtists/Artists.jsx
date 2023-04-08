@@ -6,31 +6,31 @@ import Image from "next/image";
 const Artists = ({artist : {id , name , images} , artistID , handelSelect}) => {
     return (
 
-        <HStack mx={2} overflow={"hidden"} rounded={"full"} position={"relative"} flex={"none"}>
+        <HStack mr={2} overflow={"hidden"} rounded={"full"} position={"relative"} flex={"none"}>
 
+            <Box w={{sm : 100 , md : 180}}
+                 h={{sm : 100 , md : 180}}
+                 transition={".3s"}
+                 transform={id === artistID ? "scale(.95)" : "scale(1)"}
+                 opacity={id === artistID ? "50%" : "100%"}
+                 zIndex={1}
+                 rounded={"full"}
+                 overflow={"hidden"}>
+                <Image
+                    layout={"fill"}
+                    onClick={() => handelSelect(id)}
+                    placeholder={"blur"}
+                    blurDataURL={images[2].url}
+                    src={images[0].url}
+                />
 
-            <Image
-                style={{
-                    borderRadius: "100%",
-                    transition: ".3s",
-                    opacity: id === artistID ? "50%" : "100%",
-                    transform: id === artistID ? "scale(.95)" : "scale(1)",
-                    zIndex: 1,
-                }}
-                width={180}
-                height={180}
-                onClick={() => handelSelect(id)}
-                placeholder={"blur"}
-                blurDataURL={images[2].url}
-                src={images[0].url}
-            />
+            </Box>
 
             {id === artistID && (
                 <AbsoluteCenter w={"full"}  zIndex={2}>
-                    <Text p={2} fontWeight={"bold"} fontSize={15} >{name}</Text>
+                    <Text p={2} fontWeight={"bold"} fontSize={{sm : 12 , md : 15}} >{name}</Text>
                 </AbsoluteCenter>
             )}
-
         </HStack>
 
 

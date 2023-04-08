@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-
 import useSWR from "swr";
 import Tilt from "react-parallax-tilt";
 import useSound from "use-sound";
@@ -32,6 +31,9 @@ import {
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { getNewReleasesAlbums } from "../graphQl/query/api/getNewReleasesAlbums";
+import {ScrollContainer} from "react-indiana-drag-scroll";
+
+
 
 export const NewReleasesAlbums = () => {
   const router = useRouter();
@@ -97,13 +99,14 @@ export const NewReleasesAlbums = () => {
           <VStack
             cursor={"pointer"}
             overflow={"hidden"}
+            spacing={{sm : 0 , md : 1}}
           >
-            <Box
-              w={180}
-              h={180}
+            <Stack
+              w={{sm : 115 , md : 180}}
+              h={{sm : 115 , md : 180}}
               position={"relative"}
-              overflow={"hidden"}
               bg={"whiteAlpha.200"}
+              m={{sm : 1 , md : 0}}
             >
               <Image
                 onClick={() => router.push(`/new-releases-albums/${id}`)}
@@ -115,16 +118,14 @@ export const NewReleasesAlbums = () => {
                 alt={name}
                 priority
               />
-            </Box>
+            </Stack>
 
 
             <VStack spacing={0}>
               <Text
-                  px={5}
-                  w={150}
                   noOfLines={1}
                   fontWeight={"bold"}
-                  fontSize={"sm"}
+                  fontSize={{sm : "xs " , md : "sm"}}
                   color={"whitesmoke"}
               >
                 {name}
@@ -133,9 +134,8 @@ export const NewReleasesAlbums = () => {
                 {artists[0]?.name}
               </Text>
             </VStack>
-
-
           </VStack>
+
         </Tilt>
       );
     });
@@ -146,11 +146,12 @@ export const NewReleasesAlbums = () => {
   };
 
   return (
-    <VStack w={"full"} zIndex={1000}>
-      <HStack w={"full"} align={"center"}>
+    <VStack w={"full"} h={{sm : 190 , md : "auto"}} position={"relative"} zIndex={1000}>
+
+      <HStack  w={"full"} align={"center"}>
         <Text
           w={"full"}
-          fontSize={40}
+          fontSize={{sm : 15 , md : 40}}
           fontWeight={"bold"}
           color={"whiteAlpha.600"}
         >
@@ -180,6 +181,18 @@ export const NewReleasesAlbums = () => {
         </HStack>
       </HStack>
 
+
+
+      <Stack w={"full"} position={"relative"}>
+        <Stack position={"absolute"} overflow={"hidden"}  w={"full"}  display={{sm : "flex" , md : "none"}}>
+          <ScrollContainer style={{display : "flex"}}>
+            {Render}
+          </ScrollContainer>
+        </Stack>
+      </Stack>
+
+
+
       <motion.div
         key={[currentPage, getGenre, newReleaseLists]}
         initial={{ opacity: 0 }}
@@ -187,7 +200,8 @@ export const NewReleasesAlbums = () => {
         transition={{ duration: 0.5 }}
       >
         <Grid
-          templateColumns={{ base: "repeat(2, 1fr)", md: "repeat(6, 1fr)" }}
+          display={{sm : "none" , md : "grid"}}
+          templateColumns={"repeat(6, 1fr)"}
           gap={6}
         >
           {Render}

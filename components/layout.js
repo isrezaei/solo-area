@@ -60,7 +60,7 @@ export default function Layout({children}) {
                                  "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1))"
                          }}>
 
-                        <Box w={"full"} h={400} zIndex={1} opacity={'30%'}>
+                        <Box w={{base : "full"}} h={400} zIndex={1} opacity={'30%'}>
 
                             <motion.div key={genreWall[getGenre]?.image} initial={{opacity: 0}} animate={{opacity: 1}}
                                         transition={{duration: .5}}>

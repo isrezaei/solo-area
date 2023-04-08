@@ -36,7 +36,7 @@ export default function Login_signup ()
     if (user) return null
 
     return (
-        <VStack justify={"center"} m={"auto"} maxW={'sm'} p={5}  h={'100vh'}   position={'relative'}>
+        <VStack w={"full"} justify={"center"} m={"auto"} maxW={'sm'} p={5}  h={'100vh'}   position={'relative'}>
             <Box w={"full"} zIndex={1000}>
                 <Auth
                     providers={['google', 'facebook', 'twitter']}

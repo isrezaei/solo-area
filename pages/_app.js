@@ -19,17 +19,20 @@ import {useRouter} from "next/router";
 import {PlayBack} from "../components/playBack";
 import App from 'next/app';
 import Header from "../components/Header";
-import {supabase} from "../supabase/createClient";
 import {ApolloProvider} from "@apollo/client";
 import {DataBaseClient} from "../graphQl/client/client";
 import {Sidebar} from "../components/Sidebar/Sidebar";
 import theme, {customTheme} from "../theme";
 import {getSeveralCategories} from "../graphQl/query/api/getSeveralCategories";
 import {SWRConfig} from "swr";
+import {getSubscribeQuery} from "../graphQl/query/database/getSubscribedList";
+import {NextResponse , NextRequest} from "next/server";
+import {supabase} from "../supabase/createClient";
 
 
-function MyApp({Component, pageProps: {session, ...pageProps} , fallback }) {
+function MyApp({Component, pageProps: {session , ...pageProps}}) {
 
+    const router = useRouter()
 
     const [supabase] = useState(() => createBrowserSupabaseClient({
                 supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -46,17 +49,7 @@ function MyApp({Component, pageProps: {session, ...pageProps} , fallback }) {
                     <ChakraProvider theme={customTheme}>
                         <ColorModeProvider options={{initialColorMode: "dark", useSystemColorMode: false}}>
                             <Layout>
-                                <HStack  align={'flex-start'} >
-                                    <SWRConfig value={{fallback}}>
-                                        <ApolloProvider client={DataBaseClient}>
-                                            <Sidebar/>
-                                        </ApolloProvider>
-                                        <Stack w={"full"}>
-                                            <Header/>
-                                            <Component {...pageProps} />
-                                        </Stack>
-                                    </SWRConfig>
-                                </HStack>
+                                <Component {...pageProps} />
                             </Layout>
                         </ColorModeProvider>
                     </ChakraProvider>
@@ -66,19 +59,6 @@ function MyApp({Component, pageProps: {session, ...pageProps} , fallback }) {
 
     )
 }
-
-MyApp.getInitialProps = async (ctx) => {
-    const users = "Hello"
-
-    const GET_SEARCH_CATEGORIES = await getSeveralCategories()
-
-    return {
-        fallback : {
-            "GET_SEARCH_CATEGORIES": GET_SEARCH_CATEGORIES,
-        }
-    }
-}
-
 
 
 export default MyApp
