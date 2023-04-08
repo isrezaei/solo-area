@@ -10,6 +10,10 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    optimizeFonts: true,
+    optimizeCss: true
+  },
 
 }
 

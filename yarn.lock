@@ -2283,6 +2283,11 @@
     "regenerator-runtime" "^0.13.7"
     "resolve-url" "^0.2.1"
 
+"@fontsource/acme@^4.5.10":
+  "integrity" "sha512-yGt8yeaUGgjbuRei+dRE4hO7E1nxXxXk9cBJv6wFMzIqCxUhfkidS+WNRpd40HUROtLbX1t7KJp5SCfcMjfKRA=="
+  "resolved" "https://registry.npmjs.org/@fontsource/acme/-/acme-4.5.10.tgz"
+  "version" "4.5.10"
+
 "@fontsource/alumni-sans-pinstripe@^4.5.1":
   "integrity" "sha512-HjRp6vnkP7gWHdfUJ0xd+rbzsPTXCnO8xZwlnrziFp04RS7tBm/IA/sSJfpuDlnF/Z5FA/JKOl71okPBe3Ww9A=="
   "resolved" "https://registry.npmjs.org/@fontsource/alumni-sans-pinstripe/-/alumni-sans-pinstripe-4.5.1.tgz"
@@ -6917,7 +6922,7 @@
     "path-is-absolute" "^1.0.0"
 
 "glob@^8.0.1":
-  "version" "8.0.3"
+  "version" "8.1.0"
   dependencies:
     "fs.realpath" "^1.0.0"
     "inflight" "^1.0.4"
@@ -8892,15 +8897,10 @@
   dependencies:
     "brace-expansion" "^1.1.7"
 
-"minimatch@^5.0.1":
+"minimatch@^5.0.1", "minimatch@^5.1.0":
   "integrity" "sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g=="
   "resolved" "https://registry.npmjs.org/minimatch/-/minimatch-5.1.6.tgz"
   "version" "5.1.6"
-  dependencies:
-    "brace-expansion" "^2.0.1"
-
-"minimatch@^5.1.0":
-  "version" "5.1.0"
   dependencies:
     "brace-expansion" "^2.0.1"
 
