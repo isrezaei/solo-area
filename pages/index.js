@@ -29,25 +29,23 @@ export default function Home({fallback, user , SSR_GET_SUBSCRIBED_LIST}) {
 
 
     return (
+        <ApolloProvider client={DataBaseClient}>
         <SWRConfig value={{fallback}}>
-
+            <Button size={"sm"} position={"absolute"} onClick={() => setIsOpen(prev => !prev)}>O</Button>
+            <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST} setIsOpen={setIsOpen} isOpen={isOpen}/>
 
 
 
             <HStack  align={'flex-start'} position={"relative"}>
 
 
-                <ApolloProvider client={DataBaseClient}>
 
-                    <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST} setIsOpen={setIsOpen} isOpen={isOpen}/>
-
-                    <Button size={"sm"} position={"absolute"} onClick={() => setIsOpen(prev => !prev)}>O</Button>
 
                     <Stack display={{base: "none", md: "flex"}} w={{sm : 0 , md : 265}} position={"sticky"} top={0}>
                         {router.pathname !== "/login_signup" && <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>}
                     </Stack>
 
-                </ApolloProvider>
+
 
 
                 <Stack flex={1}>
@@ -59,6 +57,7 @@ export default function Home({fallback, user , SSR_GET_SUBSCRIBED_LIST}) {
 
 
         </SWRConfig>
+        </ApolloProvider>
     )
 }
 
