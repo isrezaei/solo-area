@@ -42,6 +42,7 @@
     "npm": "^8.19.4",
     "pretty-ms": "^8.0.0",
     "react": "18.2.0",
+    "react-burger-menu": "^3.0.9",
     "react-dom": "18.2.0",
     "react-h5-audio-player": "^3.8.6",
     "react-icons": "^4.6.0",

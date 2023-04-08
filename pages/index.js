@@ -5,7 +5,7 @@ import {getFavouriteArtists} from "../graphQl/query/database/getFavouriteArtists
 import {getNewReleasesAlbums} from "../graphQl/query/api/getNewReleasesAlbums";
 import {getRandomArtists} from "../graphQl/query/api/getRandomArtists";
 import {Sidebar} from "../components/Sidebar/Sidebar";
-import {Divider, HStack, Stack} from "@chakra-ui/react";
+import {Button, Divider, HStack, Stack} from "@chakra-ui/react";
 import {getRandomPlayed} from "../graphQl/query/api/getRandomPlayed";
 import {ApolloProvider} from "@apollo/client";
 import {DataBaseClient} from "../graphQl/client/client";
@@ -13,6 +13,9 @@ import {useRouter} from "next/router";
 import Header from "../components/Header";
 import {getSubscribeQuery} from "../graphQl/query/database/getSubscribedList";
 import {getSeveralCategories} from "../graphQl/query/api/getSeveralCategories";
+import { slide as Menu } from "react-burger-menu";
+import {useState} from "react";
+import Hamburger from "../components/HamburgerMenu/Hamburger";
 
 
 
@@ -21,15 +24,29 @@ export default function Home({fallback, user , SSR_GET_SUBSCRIBED_LIST}) {
 
     const router = useRouter()
 
+    const [isOpen, setIsOpen] = useState(false);
+
+
+
     return (
         <SWRConfig value={{fallback}}>
 
+
+
+
             <HStack  align={'flex-start'} position={"relative"}>
 
+
                 <ApolloProvider client={DataBaseClient}>
-                    <Stack w={{sm : 0 , md : 265}} position={"sticky"} top={0}>
+
+                    <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST} setIsOpen={setIsOpen} isOpen={isOpen}/>
+
+                    <Button size={"sm"} position={"absolute"} onClick={() => setIsOpen(prev => !prev)}>O</Button>
+
+                    <Stack display={{base: "none", md: "flex"}} w={{sm : 0 , md : 265}} position={"sticky"} top={0}>
                         {router.pathname !== "/login_signup" && <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>}
                     </Stack>
+
                 </ApolloProvider>
 
 
