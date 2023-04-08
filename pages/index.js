@@ -31,6 +31,7 @@ export default function Home({fallback, user , SSR_GET_SUBSCRIBED_LIST}) {
     return (
         <ApolloProvider client={DataBaseClient}>
         <SWRConfig value={{fallback}}>
+
             <Button size={"sm"} position={"absolute"} onClick={() => setIsOpen(prev => !prev)}>O</Button>
             <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST} setIsOpen={setIsOpen} isOpen={isOpen}/>
 

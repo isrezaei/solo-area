@@ -97,7 +97,7 @@ const Hamburger = ({SSR_GET_SUBSCRIBED_LIST , setIsOpen , isOpen}) => {
             height={"100vhs"}
             width={"100%"}>
 
-            <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
+            {/*<Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>*/}
 
         </Menu>
     );
