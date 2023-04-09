@@ -10,9 +10,9 @@ import {
     MenuList,
     MenuItem,
     MenuDivider,
-    Center, Stack, Grid,
+    Center, Stack, Grid, AbsoluteCenter,
 } from "@chakra-ui/react";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useSetRecoilState} from "recoil";
 import {useState} from "react";
 import {Icon} from "@chakra-ui/react";
 import {HiDotsHorizontal} from "react-icons/hi";
@@ -29,6 +29,7 @@ import "swiper/css/grid";
 import "swiper/css/pagination";
 import {ScrollContainer} from "react-indiana-drag-scroll";
 import Artists from "./FavouriteArtists/Artists";
+import {CgPlayButtonO} from "react-icons/cg";
 
 
 export const RandomPlayed = () => {
@@ -41,44 +42,61 @@ export const RandomPlayed = () => {
 
     const [trackID, setTrackID] = useRecoilState(SPOTIFY_TRACKS_ID_ATOM);
 
-    const PLAY_TRACK = async (trackID) => {
-        //?She's going to take a song ID and bring
-        const TRACK = await FETCH_TRACK(trackID);
+    const setTrackForPlay = useSetRecoilState(SPOTIFY_TRACKS_ID_ATOM)
 
-        //? ID from get track
-        setActivePlaying(TRACK.id);
-        setTrackID(TRACK.id);
-    };
+    const handelPlay = (name , preview_url , id , artists , images , duration_ms) => {
+
+        setTrackForPlay({name , preview_url , id , artists , images , duration_ms})
+    }
+
+
+
 
     //? This render we don't have track uri
     const RENDER = randomPlayedList.map(({track}) => {
+
+        console.log(track)
+
         return (
                 <Flex
                     w={{base: "full", md: "1xs"}}
                     justify={"space-evenly"}
                     align={"center"}
                     bg={"whiteAlpha.200"}
-                    _hover={{bg: "whiteAlpha.300", transition: ".3s"}}
                     cursor={"pointer"}
                     role={"group"}
                     mr={{sm : 3 , md : 0}}
                 >
-                    <Box
-                        position={"relative"}
-                        w={{sm : 81 , md : 59}}
-                        h={{sm : 81 , md : 59}}
-                        roundedLeft={5}
-                        overflow={"hidden"}
-                    >
-                        <Image
-                            layout={"fill"}
-                            sizes={"fill"}
-                            placeholder={"blur"}
-                            blurDataURL={track?.album?.images?.[2].url}
-                            src={track?.album?.images?.[1].url}
-                            loading={"lazy"}
-                            alt={track.name}
-                        />
+                    <Box  position={"relative"}>
+                        <Box
+                            position={"relative"}
+                            w={{sm : 81 , md : 59}}
+                            h={{sm : 81 , md : 59}}
+                            rounded={5}
+                            overflow={"hidden"}
+                            _groupHover={{ opacity: "30%" }}
+                            transition={".2s"}
+                        >
+                            <Image
+                                layout={"fill"}
+                                sizes={"fill"}
+                                placeholder={"blur"}
+                                blurDataURL={track?.album?.images?.[2].url}
+                                src={track?.album?.images?.[1].url}
+                                loading={"lazy"}
+                                alt={track.name}
+                            />
+                    </Box>
+                        <AbsoluteCenter>
+                            <Icon
+                                onClick={() => handelPlay(track.name , track.preview_url , track.id , track.artists ,track.album.images ,track.duration_ms)}
+                                display={"none"}
+                                cursor={"pointer"}
+                                _groupHover={{ display: "block" }}
+                                fontSize={{sm : 45 , md : 25}}
+                                as={CgPlayButtonO}
+                            />
+                        </AbsoluteCenter>
                     </Box>
 
                     <Flex flex={2} mx={3} direction={"column"}>
@@ -97,16 +115,6 @@ export const RandomPlayed = () => {
                         </Text>
                     </Flex>
 
-                    <Center
-                        flex={3}
-                        onClick={() => PLAY_TRACK(track.id)}
-                        opacity={track.id === activePlaying ? "100%" : "0%"}
-                        pointerEvents={track.id === activePlaying ? "visible" : "none"}
-                        transition={".5s"}
-                        _groupHover={{opacity: "100%", pointerEvents: "auto"}}
-                    >
-                        <Icon boxSize={25} as={RiPlayFill} color={"whiteAlpha.600"}/>
-                    </Center>
 
                     <Box flex={2}>
                         <Menu>
@@ -134,14 +142,14 @@ export const RandomPlayed = () => {
 
     return (
         <>
-            <VStack w={"full"} h={{sm : 230 , md : 380}} align={"start"}>
+            <VStack w={"full"} h={{sm : 210 , md : 380}} align={"start"}>
                 <Text
                     w={"full"}
                     fontSize={{sm: 20, md: 40}}
                     fontWeight={"bold"}
                     color={"whiteAlpha.600"}
                 >
-                    Random Should be ok ?
+                    It is suggested to you
                 </Text>
 
                 <Stack display={{sm : "flex" , md : "none"}} w={"full"}  position={"relative"}>

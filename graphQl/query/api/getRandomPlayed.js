@@ -15,6 +15,7 @@ export const getRandomPlayed = async () =>
                         id,
                         name,
                         preview_url,
+                        duration_ms,
                         artists {
                             id
                             name

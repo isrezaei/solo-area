@@ -7,7 +7,6 @@ import {
     Grid,
     HStack,
     Icon,
-    Image,
     Link,
     Skeleton,
     SkeletonCircle,
@@ -16,6 +15,7 @@ import {
     Text,
     VStack,
 } from "@chakra-ui/react";
+import Image from "next/image";
 import {IoPlay, IoPause} from "react-icons/io5";
 import {HiRewind, HiFastForward} from "react-icons/hi";
 import {TbRepeat, TbRepeatOff} from "react-icons/tb";
@@ -34,17 +34,11 @@ const style = css`
 
 
   .rhap_main, .rhap_stacked {
-
-
   }
 
   .rhap_progress-bar {
-    background-color: aquamarine;
   }
-
-  .rhap_container {
-
-  }
+  
 
   .rhap_loop--off {
 
@@ -53,21 +47,34 @@ const style = css`
   .rhap_play-status--paused {
 
   }
-
-  .rhap_controls-section {
-
-
-  }
+  
 
 
 
   @media (min-width: 20em) {
+
     .rhap_progress-section {
       display: none;
     }
     .rhap_volume-controls {
       display: none;
     }
+    .rhap_additional-controls {
+      display: none;
+    }
+    
+    .rhap_main-controls{
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      line-height: 0;
+    }
+    
+    .rhap_controls-section {
+      margin: 0
+    }
+
   }
   @media (min-width: 30em) {
     .rhap_progress-section {
@@ -75,6 +82,18 @@ const style = css`
     }
     .rhap_volume-controls {
       display: flex;
+    }
+
+    .rhap_additional-controls {
+      display: flex;
+    }
+
+    .rhap_main-controls{
+      width: auto;
+      height: auto;
+      justify-content: center;
+      align-items: center;
+      line-height: 0;
     }
   }
 
@@ -165,9 +184,9 @@ export const PlayBack = () => {
     return (
         <HStack
             w={{sm : "90%" , md : "100%"}}
-            h={85}
+            h={{sm : 65 , md : 85}}
             p={3}
-            bg={"gray.900"}
+            bg={"#1a1a1a"}
             justify={"space-around"}
             align={"center"}
             zIndex={2000}
@@ -177,6 +196,7 @@ export const PlayBack = () => {
             left={0}
             right={0}
             m={"auto"}
+
         >
 
             <Flex
@@ -187,23 +207,27 @@ export const PlayBack = () => {
                 align={"center"}
             >
 
+
+
                 <HStack flex={0.3}>
+
+
                     {!trackInfo && (
                         <Skeleton
                             rounded={"md"}
-                            boxSize={65}
+                            boxSize={35}
                             startColor="#212121"
                             endColor="#424242"
                         />
                     )}
                     {trackInfo && (
-                        <Image
-                            src={trackInfo?.images[0].url}
-                            alt=""
-                            boxSize={65}
-                            rounded={"md"}
-                            boxShadow={"2xl"}
-                        />
+                        <Stack w={{sm : 45 , md : 65}} h={{sm : 45 , md : 65}} rounded={20} overflow={"hidden"} position={"relative"}>
+                            <Image
+                                layout={"fill"}
+                                objectFit={"cover"}
+                                src={trackInfo?.images[1].url}
+                            />
+                        </Stack>
                     )}
 
 
@@ -236,6 +260,7 @@ export const PlayBack = () => {
                             </VStack>
                         )}
                     </VStack>
+
                 </HStack>
 
 
