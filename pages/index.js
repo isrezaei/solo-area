@@ -13,52 +13,45 @@ import {useRouter} from "next/router";
 import Header from "../components/Header";
 import {getSubscribeQuery} from "../graphQl/query/database/getSubscribedList";
 import {getSeveralCategories} from "../graphQl/query/api/getSeveralCategories";
-import { slide as Menu } from "react-burger-menu";
+import {slide as Menu} from "react-burger-menu";
 import {useState} from "react";
 import Hamburger from "../components/HamburgerMenu/Hamburger";
 
 
-
-
-export default function Home({fallback, user , SSR_GET_SUBSCRIBED_LIST}) {
+export default function Home({fallback, user, SSR_GET_SUBSCRIBED_LIST}) {
 
     const router = useRouter()
 
     const [isOpen, setIsOpen] = useState(false);
 
 
-
     return (
         <ApolloProvider client={DataBaseClient}>
-        <SWRConfig value={{fallback}}>
+            <SWRConfig value={{fallback}}>
 
-            <Box position={"relative"} zIndex={2000}>
-                <Button size={"sm"} position={"absolute"} onClick={() => setIsOpen(prev => !prev)}>O</Button>
-                <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST} setIsOpen={setIsOpen} isOpen={isOpen}/>
-            </Box>
-
-
+                <Box display={{sm : "block" , md : "none"}} position={"relative"} zIndex={2000}>
+                    <Button size={"sm"} position={"absolute"} onClick={() => setIsOpen(prev => !prev)}>O</Button>
+                    <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST} setIsOpen={setIsOpen} isOpen={isOpen}/>
+                </Box>
 
 
-            <HStack  align={'flex-start'} position={"relative"}>
+                <HStack overflowY={"scroll"}  h={"100svh"}  align={'flex-start'}  position={"relative"}>
 
 
-                <Stack display={{base: "none", md: "flex"}} w={{sm : 0 , md : 265}} position={"sticky"} top={0}>
-                        {router.pathname !== "/login_signup" && <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>}
+                    <Stack display={{base: "none", md: "flex"}} w={{sm: 0, md: 265}}  position={"sticky"} top={0}>
+                        {router.pathname !== "/login_signup" &&
+                            <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>}
                     </Stack>
 
+                    <Stack flex={1} >
+                        {router.pathname !== "/login_signup" && <Header/>}
+                        <Starter user={user}/>
+                    </Stack>
+
+                </HStack>
 
 
-
-                <Stack flex={1}>
-                    {router.pathname !== "/login_signup" && <Header/>}
-                    <Starter user={user}/>
-                </Stack>
-
-            </HStack>
-
-
-        </SWRConfig>
+            </SWRConfig>
         </ApolloProvider>
     )
 }
@@ -85,7 +78,10 @@ export const getServerSideProps = async ({req, res}) => {
 
     const GET_SEARCH_CATEGORIES = await getSeveralCategories()
 
-    const {data : {GET_SUBSCRIBED_LIST}} = await DataBaseClient.query({query : getSubscribeQuery , variables : {userId : user.id}})
+    const {data: {GET_SUBSCRIBED_LIST}} = await DataBaseClient.query({
+        query: getSubscribeQuery,
+        variables: {userId: user.id}
+    })
 
     console.log(GET_SUBSCRIBED_LIST)
 
@@ -99,7 +95,7 @@ export const getServerSideProps = async ({req, res}) => {
                 [unstable_serialize(['api', 'GET_FAVORITE_ARTISTS', user.id])]: GET_FAVORITE_ARTISTS,
             },
             user,
-            SSR_GET_SUBSCRIBED_LIST : GET_SUBSCRIBED_LIST
+            SSR_GET_SUBSCRIBED_LIST: GET_SUBSCRIBED_LIST
         },
     }
 }

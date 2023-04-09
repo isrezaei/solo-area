@@ -14,7 +14,7 @@ import { SelectGenre } from "./SelectGenre";
 export const Starter = ({ user }) => {
 
   return (
-    <Box w={"full"} h={"100svh"} position={"relative"} zIndex={"1000"} >
+    <Box w={"full"} position={"relative"} zIndex={"1000"} >
 
       <VStack spacing={5}>
 
