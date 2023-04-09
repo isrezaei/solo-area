@@ -26,6 +26,7 @@ function MyApp({Component, pageProps: {session , ...pageProps}}) {
             <RecoilRoot>
                 <main style={{fontFamily: 'Karla'}}>
                     <NextNprogress color={'#46986f'} height={3}/>
+
                     <ChakraProvider theme={customTheme}>
                         <ColorModeProvider options={{initialColorMode: "dark", useSystemColorMode: false}}>
                             <Layout>

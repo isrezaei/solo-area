@@ -49,6 +49,7 @@
     "react-h5-audio-player": "^3.8.6",
     "react-icons": "^4.6.0",
     "react-indiana-drag-scroll": "^3.0.3-alpha",
+    "react-ios-pwa-prompt": "^1.8.4",
     "react-paginate": "^8.1.4",
     "react-parallax-tilt": "^1.7.70",
     "react-ripples-hover": "^0.2.1",
