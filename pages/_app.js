@@ -24,7 +24,7 @@ function MyApp({Component, pageProps: {session , ...pageProps}}) {
     return (
         <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
             <RecoilRoot>
-                <main style={{fontFamily: 'Karla'}}>
+                <main>
                     <NextNprogress color={'#46986f'} height={3}/>
 
                     <ChakraProvider theme={customTheme}>
