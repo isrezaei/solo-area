@@ -9,6 +9,7 @@ import {customTheme} from "../theme";
 import NextNprogress from 'nextjs-progressbar';
 import "@fontsource/karla"
 import "@fontsource/acme"
+import {PlayBack} from "../components/playBack";
 
 function MyApp({Component, pageProps: {session , ...pageProps}}) {
 
@@ -31,6 +32,7 @@ function MyApp({Component, pageProps: {session , ...pageProps}}) {
                         <ColorModeProvider options={{initialColorMode: "dark", useSystemColorMode: false}}>
                             <Layout>
                                 <Component {...pageProps} />
+                                <PlayBack/>
                             </Layout>
                         </ColorModeProvider>
                     </ChakraProvider>

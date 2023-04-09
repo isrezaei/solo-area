@@ -134,7 +134,7 @@ export const RandomPlayed = () => {
 
     return (
         <>
-            <VStack w={"full"} align={"start"}>
+            <VStack w={"full"} h={{sm : 230 , md : 380}} align={"start"}>
                 <Text
                     w={"full"}
                     fontSize={{sm: 20, md: 40}}
@@ -144,7 +144,7 @@ export const RandomPlayed = () => {
                     Random Should be ok ?
                 </Text>
 
-                <Stack    display={{sm : "flex" , md : "none"}} w={"full"} h={{sm : 175 , md : 190}} position={"relative"}>
+                <Stack display={{sm : "flex" , md : "none"}} w={"full"}  position={"relative"}>
                     <Flex w={"full"} position={"absolute"} overflow={"hidden"}>
                         <ScrollContainer style={{display : "flex" }}>
                             {RENDER}

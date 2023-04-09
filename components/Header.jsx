@@ -11,7 +11,7 @@ const Header = () => {
 
             <HStack spacing={{sm : 3 , md : 10}}>
                 <Text
-                    fontSize={{sm : "sm" , md : "4xl"}}
+                    fontSize={{sm : 20 , md : "4xl"}}
                     fontWeight={"bold"}
                     color={"whiteAlpha.800"}
                     zIndex={2}>

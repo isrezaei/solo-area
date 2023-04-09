@@ -2,13 +2,26 @@ import {AbsoluteCenter, Box, HStack, Icon, Skeleton, SkeletonText, Stack, Text, 
 import Image from "next/image";
 import {CgPlayButtonO} from "react-icons/cg";
 import prettyMilliseconds from "pretty-ms";
+import {useSetRecoilState} from "recoil";
+import {SPOTIFY_TRACKS_ID_ATOM} from "../../atoms/atoms";
 
-const TopTen = ({trackInfo : {duration_ms, name, id, album: { artists, images }}}) => {
+
+const TopTen = ({trackInfo : {duration_ms, name, id , preview_url , album: { artists, images }}}) => {
+
+    const setTrackForPlay = useSetRecoilState(SPOTIFY_TRACKS_ID_ATOM)
+
+    const handelPlay = () => {
+        setTrackForPlay({name , preview_url , id , artists , images , duration_ms})
+    }
+
+
 
     return (
         <Stack
             key={id}
             direction={{sm : "column" , md : "row"}}
+            justify={"center"}
+            align={"center"}
             p={{sm : 2 , md :2}}
             mx={{sm : 1 , md : 0}}
             rounded={{sm : 30 , md : 50}}
@@ -39,6 +52,7 @@ const TopTen = ({trackInfo : {duration_ms, name, id, album: { artists, images }}
                         _groupHover={{ display: "block" }}
                         fontSize={{sm : 45 , md : 25}}
                         as={CgPlayButtonO}
+                        onClick={handelPlay}
                     />
                 </AbsoluteCenter>
             </Box>

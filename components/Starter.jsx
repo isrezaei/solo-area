@@ -16,7 +16,7 @@ export const Starter = ({ user }) => {
   return (
     <Box w={"full"} position={"relative"} zIndex={"1000"} px={{sm : 0 , md : 5}}>
 
-      <VStack spacing={5}>
+      <VStack spacing={{sm : 10 , md : 5}}>
 
         <SelectGenre />
 
@@ -28,8 +28,6 @@ export const Starter = ({ user }) => {
 
         {/*RECENTLY PLAYED LIST*/}
         <RandomPlayed />
-
-        {/*<FeaturedPlayList/>*/}
 
       </VStack>
 
