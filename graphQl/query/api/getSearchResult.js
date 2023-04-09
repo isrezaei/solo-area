@@ -1,5 +1,3 @@
-import axios from "axios";
-import {FETCH_ACCESS_TOKEN} from "../../../lib/FetcherFuncs/FETCH_ACCESS_TOKEN";
 import {gql} from "@apollo/client";
 import {client} from "../../client/client";
 

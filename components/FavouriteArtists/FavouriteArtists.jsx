@@ -19,10 +19,12 @@ import { getFavouriteArtists } from "../../graphQl/query/database/getFavouriteAr
 import { getArtistInformation } from "../../graphQl/query/api/getArtistInformation";
 import Artists from "./Artists";
 import { motion } from "framer-motion";
+import Loading from "./Loading";
 
 import {ScrollContainer} from "react-indiana-drag-scroll";
 
 import 'react-indiana-drag-scroll/dist/style.css'
+import TopTen from "./TopTen";
 
 
 export const FavouriteArtists = ({ user }) => {
@@ -56,89 +58,12 @@ export const FavouriteArtists = ({ user }) => {
   let RenderTopTen;
 
   if (!getArtistTopTracks) {
-    RenderTopTen = Array.from({ length: 10 }).map(( _ , index) => (
-      <HStack p={{sm : 1 , md :2}} key={index}>
-        <SkeletonCircle size={{sm : 30 , md : 50}} />
-        <VStack align={"flex-start"}>
-          <SkeletonCircle size={{sm : 2 , md : 3}} w={{sm : 110 , md : 160}} />
-          <SkeletonCircle size={{sm : 2 , md : 3}} w={{sm : 75 , md : 140}} />
-        </VStack>
-      </HStack>
-    ));
+    RenderTopTen = <Loading/>
   }
 
 
   if (getArtistTopTracks) {
-
-
-    RenderTopTen = getArtistTopTracks?.tracks?.map(
-      ({ duration_ms, name, id, album: { artists, images } }) => {
-        return (
-          <HStack p={{sm : 1 , md :2}} rounded={50} key={id} bg={"whiteAlpha.200"}>
-            <Box role={"group"} position={"relative"}>
-              <Skeleton
-                startColor={"whiteAlpha.300"}
-                endColor={"whiteAlpha.400"}
-                rounded={"full"}
-                isLoaded={!isLoading}
-              >
-                <Box
-                  w={{sm : 30 , md : 50}}
-                  h={{sm : 30 , md : 50}}
-                  rounded={"full"}
-                  overflow={"hidden"}
-                  position={"relative"}
-                  _groupHover={{ opacity: "30%" }}
-                  transition={".2s"}
-                >
-                  <Image
-                    placeholder={"blur"}
-                    blurDataURL={images[2].url}
-                    src={images[1].url}
-                    layout={"fill"}
-                    objectFit={"cover"}
-                    style={{ position: "absolute", borderRadius: "100%" }}
-                  />
-
-                </Box>
-              </Skeleton>
-              <AbsoluteCenter>
-                <Icon
-                  display={"none"}
-                  cursor={"pointer"}
-                  _groupHover={{ display: "block" }}
-                  fontSize={25}
-                  as={CgPlayButtonO}
-                />
-              </AbsoluteCenter>
-            </Box>
-
-            <VStack  spacing={0} align={"flex-start"}>
-              <SkeletonText
-                startColor={"whiteAlpha.300"}
-                endColor={"whiteAlpha.400"}
-                noOfLines={3}
-                spacing="1"
-                isLoaded={!isLoading}
-              >
-                <Text  noOfLines={1} fontWeight={"bold"} fontSize={{sm : 12 , md : "md"}}>
-                  {name}
-                </Text>
-                <Text noOfLines={2}  fontSize={{sm : 8 , md : "xs"}}>
-                  {artists?.[0]?.name} {artists?.[1]?.name}
-                </Text>
-                <Text  noOfLines={2}  fontSize={{sm : 8 , md : "xs"}}>
-                  {prettyMilliseconds(duration_ms, {
-                    secondsDecimalDigits: 0,
-                    colonNotation: true,
-                  })}
-                </Text>
-              </SkeletonText>
-            </VStack>
-          </HStack>
-        );
-      }
-    );
+    RenderTopTen = getArtistTopTracks?.tracks?.map(trackInfo => <TopTen trackInfo={trackInfo}/>)
   }
 
 
@@ -150,14 +75,14 @@ export const FavouriteArtists = ({ user }) => {
       <Stack w={"full"} h={{sm : "auto" , md : "auto"}} spacing={3} >
 
           <Text
-              fontSize={{sm : 15 , md : 35}}
+              fontSize={{sm : 20 , md : 35}}
               fontWeight={"bold"}
               color={"whiteAlpha.600"}>
             Top 10 your favourite artist
           </Text>
 
 
-          <Stack w={"full"} h={{sm : 160 , md : 190}} position={"relative"}>
+          <Stack w={"full"} h={{sm : 175 , md : 190}} position={"relative"}>
               <Flex w={"full"} position={"absolute"} overflow={"hidden"}>
                   <ScrollContainer style={{display : "flex" }}>
                       {favouriteArtists?.[0]?.list?.map(artist => (
@@ -168,15 +93,30 @@ export const FavouriteArtists = ({ user }) => {
           </Stack>
 
 
-        <motion.div
+
+
+          <Stack display={{sm : "flex" , md : "none"}} w={"full"} h={{sm : 130 , md : 190}} position={"relative"}>
+              <Flex w={"full"} position={"absolute"} overflow={"hidden"}>
+                  <ScrollContainer style={{display : "flex" }}>
+                      {RenderTopTen}
+                  </ScrollContainer>
+              </Flex>
+          </Stack>
+
+
+
+
+
+          <motion.div
             key={[artistID]}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
         >
-        <Grid  gap={2} templateColumns={{sm : "repeat(2, 1fr)" , md : "repeat(5, 1fr)"}}>
+        <Grid display={{sm : "none" , md : "grid"}} gap={2} templateColumns={{sm : "repeat(2, 1fr)" , md : "repeat(5, 1fr)"}}>
           {RenderTopTen}
         </Grid>
+
         </motion.div>
 
       </Stack>

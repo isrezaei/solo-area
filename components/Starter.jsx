@@ -1,5 +1,5 @@
 import { Account } from "./Account";
-import { NewReleasesAlbums } from "./NewReleasesAlbums";
+import { NewReleasesAlbums } from "./NewReleases/NewReleasesAlbums";
 import { RandomPlayed } from "./RandomPlayed";
 import {
   Box,
@@ -14,7 +14,7 @@ import { SelectGenre } from "./SelectGenre";
 export const Starter = ({ user }) => {
 
   return (
-    <Box w={"full"} position={"relative"} zIndex={"1000"} >
+    <Box w={"full"} position={"relative"} zIndex={"1000"} px={{sm : 0 , md : 5}}>
 
       <VStack spacing={5}>
 
@@ -27,7 +27,7 @@ export const Starter = ({ user }) => {
         <FavouriteArtists user={user} />
 
         {/*RECENTLY PLAYED LIST*/}
-        {/*<RandomPlayed />*/}
+        <RandomPlayed />
 
         {/*<FeaturedPlayList/>*/}
 

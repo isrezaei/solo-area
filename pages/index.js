@@ -16,6 +16,7 @@ import {getSeveralCategories} from "../graphQl/query/api/getSeveralCategories";
 import {slide as Menu} from "react-burger-menu";
 import {useState} from "react";
 import Hamburger from "../components/HamburgerMenu/Hamburger";
+import Head from "next/head";
 
 
 export default function Home({fallback, user, SSR_GET_SUBSCRIBED_LIST}) {
@@ -26,33 +27,38 @@ export default function Home({fallback, user, SSR_GET_SUBSCRIBED_LIST}) {
 
 
     return (
-        <ApolloProvider client={DataBaseClient}>
-            <SWRConfig value={{fallback}}>
+        <>
+            <Head>
+                <title>Home</title>
+            </Head>
 
-                <Box display={{sm : "block" , md : "none"}} position={"relative"} zIndex={2000}>
-                    <Button size={"sm"} position={"absolute"} onClick={() => setIsOpen(prev => !prev)}>O</Button>
-                    <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST} setIsOpen={setIsOpen} isOpen={isOpen}/>
-                </Box>
-
-
-                <HStack overflowY={"scroll"}  h={"100svh"}  align={'flex-start'}  position={"relative"}>
-
-
-                    <Stack display={{base: "none", md: "flex"}} w={{sm: 0, md: 265}}  position={"sticky"} top={0}>
-                        {router.pathname !== "/login_signup" &&
-                            <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>}
-                    </Stack>
-
-                    <Stack flex={1} >
-                        {router.pathname !== "/login_signup" && <Header/>}
-                        <Starter user={user}/>
-                    </Stack>
-
-                </HStack>
+            <ApolloProvider client={DataBaseClient}>
+                <SWRConfig value={{fallback}}>
+                    <Box display={{sm : "block" , md : "none"}} position={"relative"} zIndex={2000}>
+                        <Button size={"sm"} position={"absolute"} onClick={() => setIsOpen(prev => !prev)}>O</Button>
+                        <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST} setIsOpen={setIsOpen} isOpen={isOpen}/>
+                    </Box>
 
 
-            </SWRConfig>
-        </ApolloProvider>
+                    <HStack overflowY={"scroll"}  h={"100svh"}  align={'flex-start'}  position={"relative"}>
+
+
+                        <Stack display={{base: "none", md: "flex"}} w={{sm: 0, md: 265}}  position={"sticky"} top={0}>
+                            {router.pathname !== "/login_signup" &&
+                                <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>}
+                        </Stack>
+
+                        <Stack flex={1} >
+                            {router.pathname !== "/login_signup" && <Header/>}
+                            <Starter user={user}/>
+                        </Stack>
+
+                    </HStack>
+
+
+                </SWRConfig>
+            </ApolloProvider>
+        </>
     )
 }
 

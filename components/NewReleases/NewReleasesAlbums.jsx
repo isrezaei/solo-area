@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import Tilt from "react-parallax-tilt";
 import useSound from "use-sound";
-import { selectGenre } from "../atoms/atoms";
+import { selectGenre } from "../../atoms/atoms";
 import { useRecoilValue } from "recoil";
 import ReactPaginate from "react-paginate";
 import {
@@ -27,11 +27,13 @@ import {
   pageLink,
   pagination,
   previous,
-} from "./Sidebar/PaginationStyle";
+} from "../Sidebar/PaginationStyle";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { getNewReleasesAlbums } from "../graphQl/query/api/getNewReleasesAlbums";
+import { getNewReleasesAlbums } from "../../graphQl/query/api/getNewReleasesAlbums";
 import {ScrollContainer} from "react-indiana-drag-scroll";
+import Pagination from "./pagination";
+import Title from "./Title";
 
 
 
@@ -99,14 +101,15 @@ export const NewReleasesAlbums = () => {
           <VStack
             cursor={"pointer"}
             overflow={"hidden"}
-            spacing={{sm : 0 , md : 1}}
           >
             <Stack
-              w={{sm : 150 , md : 180}}
-              h={{sm : 150 , md : 180}}
+              w={{sm : 170 , md : 180}}
+              h={{sm : 170 , md : 180}}
               position={"relative"}
               bg={"whiteAlpha.200"}
-              m={{sm : 1 , md : 0}}
+              mx={{sm : 2 , md : 0}}
+              rounded={"md"}
+              overflow={"hidden"}
             >
               <Image
                 onClick={() => router.push(`/new-releases-albums/${id}`)}
@@ -146,44 +149,17 @@ export const NewReleasesAlbums = () => {
   };
 
   return (
-    <VStack w={"full"} h={{sm : 210 , md : "auto"}} position={"relative"} zIndex={1000}>
+    <VStack w={"full"} h={{sm : 230 , md : "auto"}} position={"relative"} zIndex={1000}>
 
-      <HStack  w={"full"} align={"center"}>
-        <Text
-          w={"full"}
-          fontSize={{sm : 15 , md : 40}}
-          fontWeight={"bold"}
-          color={"whiteAlpha.600"}
-        >
-          The latest in the month
-        </Text>
-        <HStack px={3}>
-          <ReactPaginate
-            onPageChange={handlePageClick}
-            marginPagesDisplayed={0}
-            pageRangeDisplayed={4}
-            pageCount={10}
-            breakLabel="..."
-            breakClassName={breakClassName}
-            breakLinkClassName={breakLinkClassName}
-            containerClassName={pagination}
-            pageClassName={page}
-            pageLinkClassName={pageLink}
-            activeClassName={active}
-            previousClassName={previous}
-            nextClassName={next}
-            previousLinkClassName=""
-            nextLinkClassName=""
-            previousLabel=""
-            nextLabel=""
-            renderOnZeroPageCount={null}
-          />
-        </HStack>
+
+      <HStack  w={"full"} align={"center"} justify={"space-between"}>
+        <Title/>
+        <Pagination handlePageClick={handlePageClick}/>
       </HStack>
 
 
 
-
+      {/*mobile render*/}
       <Stack w={"full"} position={"relative"}>
         <Stack position={"absolute"} overflow={"hidden"}  w={"full"}  display={{sm : "flex" , md : "none"}}>
           <ScrollContainer style={{display : "flex"}}>
@@ -193,7 +169,7 @@ export const NewReleasesAlbums = () => {
       </Stack>
 
 
-
+      {/*desktop render*/}
       <motion.div
         key={[currentPage, getGenre, newReleaseLists]}
         initial={{ opacity: 0 }}

@@ -1,12 +1,12 @@
 import {RestLink} from "apollo-link-rest";
 import {ApolloClient, ApolloLink, InMemoryCache} from "@apollo/client";
-import {FETCH_ACCESS_TOKEN_query} from "../../lib/FetcherFuncs/FETCH_ACCESS_TOKEN";
+import {FETCH_ACCESS_TOKEN} from "../../lib/FetcherFuncs/FETCH_ACCESS_TOKEN";
 
 
 
 async function initializeClient() {
 
-    const token = await FETCH_ACCESS_TOKEN_query();
+    const token = await FETCH_ACCESS_TOKEN();
 
     const restLink = new RestLink({
         uri: 'https://api.spotify.com/v1',
