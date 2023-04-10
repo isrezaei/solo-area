@@ -1,6 +1,6 @@
 import React from 'react';
 import {HStack, Text} from "@chakra-ui/react";
-import {SearchBar} from "../Searchbar/SearchBar";
+import {Searchbar} from "../Searchbar/Searchbar";
 import {Account} from "./Account";
 import Greetings from "./Greetings";
 
@@ -16,7 +16,7 @@ const MainHeader = () => {
             </Text>
 
             <HStack>
-                <SearchBar/>
+                <Searchbar/>
                 <Account/>
             </HStack>
 

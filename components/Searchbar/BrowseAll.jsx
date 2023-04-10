@@ -10,7 +10,7 @@ const BrowseAll = () => {
   return (
     <VStack>
       <Text
-        fontSize={35}
+        fontSize={{sm : 25 , md : 35}}
         fontWeight={"bold"}
         color={"whiteAlpha.700"}
       >
@@ -19,7 +19,7 @@ const BrowseAll = () => {
       <Grid
         h={500}
         overflowY={"scroll"}
-        templateColumns={"repeat(6 , 1fr)"}
+        templateColumns={{sm : "repeat(2 , 1fr)" , md : "repeat(6 , 1fr)"}}
         gap={3}
       >
         {categories?.items.map((data) => {
@@ -36,7 +36,6 @@ const BrowseAll = () => {
                   layout={"fill"}
                   objectFit={"cover"}
                   src={data.icons[0].url}
-                  style={{ position: "absolute" }}
                 />
                 <Text
                   position={"absolute"}

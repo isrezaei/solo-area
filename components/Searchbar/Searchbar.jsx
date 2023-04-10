@@ -9,7 +9,7 @@ import {
     ModalOverlay,
     Icon,
     HStack,
-    IconButton,
+    IconButton, Stack,
 } from '@chakra-ui/react';
 import ArtistsResult from './ArtistsResult';
 import Songs from './Songs';
@@ -20,7 +20,7 @@ import {GetSearchResult} from "../../graphQl/query/api/getSearchResult";
 import {RiSearchLine} from 'react-icons/ri';
 import {useDebounce} from 'react-use';
 
-export const SearchBar = () => {
+export const Searchbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [inputSearch, setInputSearch] = useState(null);
     const [status, setStatus] = useState('idle');
@@ -48,13 +48,15 @@ export const SearchBar = () => {
     const handleSearch = () => {
         setIsOpen((prevState) => !prevState);
     };
+
+
     let renderSearch;
     if (status === 'success') {
         renderSearch = (
-            <HStack>
+            <Stack direction={{sm : "column" , md : "row"}} justify={{sm : "flex-start" , md : "center"}}>
                 <ArtistsResult artists={artists}/>
                 <Songs tracks={tracks}/>
-            </HStack>
+            </Stack>
         )
     }
     if (status === 'pending') {
@@ -75,9 +77,9 @@ export const SearchBar = () => {
             />
 
 
-            <Modal size="6xl" onClose={handleSearch} isOpen={isOpen} isCentered>
+            <Modal size={{sm : "sm" , md : "6xl"}} onClose={handleSearch} isOpen={isOpen} isCentered>
                 <ModalOverlay bg="blackAlpha.800"/>
-                <ModalContent bg="black" minH={550}>
+                <ModalContent bg={"black"} h={600} overflow={{sm : "auto" }}>
                     <ModalHeader>
                         <Header setInputSearch={setInputSearch}/>
                     </ModalHeader>

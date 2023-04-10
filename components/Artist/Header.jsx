@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { GoPlay } from "react-icons/go";
 import Image from "next/image";
-import { SearchBar } from "../Searchbar/SearchBar";
+import { Searchbar } from "../Searchbar/Searchbar";
 import { Account } from "../Header/Account";
 import {useQuery} from "@apollo/client";
 import {getSubscribeQuery} from "../../graphQl/query/database/getSubscribedList";
