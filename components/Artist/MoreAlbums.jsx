@@ -1,22 +1,22 @@
-import React from "react";
-import { Box, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, HStack, Text, VStack , Stack} from "@chakra-ui/react";
 import { ScrollContainer } from "react-indiana-drag-scroll";
 import Image from "next/image";
 
 const MoreAlbums = ({ getAlbumsOfArtist, getArtistInfo, setOpen }) => {
   return (
     <VStack w={"full"} zIndex={1000}>
-      <HStack w={"full"} justify={"space-between"} my={5}>
+
+      <Stack direction={{sm : "column" , md : "row"}} w={"full"} justify={"space-between"} align={"center"} my={5}>
         <Text
           align={"left"}
-          fontSize={45}
+          fontSize={{sm : 20 , md : 45}}
           fontWeight={"bold"}
-          color={"whiteAlpha.700"}
+          noOfLines={1}
         >
           More albums from {getArtistInfo.name}
         </Text>
-        <Text onClick={() => setOpen((prevState) => !prevState)}>SHOW ALL</Text>
-      </HStack>
+        <Text fontSize={"sm"} onClick={() => setOpen((prevState) => !prevState)}>SHOW ALL</Text>
+      </Stack>
 
       <HStack w={"full"} h={250} position={"relative"}>
         <ScrollContainer
@@ -27,16 +27,14 @@ const MoreAlbums = ({ getAlbumsOfArtist, getArtistInfo, setOpen }) => {
               key={albums.id}
               flex={"none"}
               spacing={1}
-              bg={"whiteAlpha.200"}
               p={2}
-              mr={3}
-              rounded={".8vw"}
+              rounded={"sm"}
               _hover={{ bg: "whiteAlpha.300", transition: ".3s" }}
             >
               <Box
-                w={190}
-                h={190}
-                rounded={5}
+                w={{sm : 190 , md : 190}}
+                h={{sm : 190 , md : 190}}
+                rounded={"sm"}
                 overflow={"hidden"}
                 position={"relative"}
               >
@@ -44,7 +42,6 @@ const MoreAlbums = ({ getAlbumsOfArtist, getArtistInfo, setOpen }) => {
                   src={albums.images[0].url}
                   layout={"fill"}
                   objectFit={"cover"}
-                  style={{ position: "absolute" }}
                   placeholder={"blur"}
                   blurDataURL={albums.images[2].url}
                 />

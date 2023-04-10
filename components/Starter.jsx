@@ -1,6 +1,6 @@
-import { Account } from "./Account";
+import { Account } from "./Header/Account";
 import { NewReleasesAlbums } from "./NewReleases/NewReleasesAlbums";
-import { RandomPlayed } from "./RandomPlayed";
+import { Suggested } from "./Suggested/Suggested";
 import {
   Box,
   Flex,
@@ -14,7 +14,7 @@ import { SelectGenre } from "./SelectGenre";
 export const Starter = ({ user }) => {
 
   return (
-    <Box w={"full"} position={"relative"} zIndex={"1000"} px={{sm : 0 , md : 5}}>
+    <Box w={"full"} position={"relative"} zIndex={"1000"}>
 
       <VStack spacing={{sm : 10 , md : 5}}>
 
@@ -27,7 +27,7 @@ export const Starter = ({ user }) => {
         <FavouriteArtists user={user} />
 
         {/*RECENTLY PLAYED LIST*/}
-        <RandomPlayed />
+        <Suggested />
 
       </VStack>
 

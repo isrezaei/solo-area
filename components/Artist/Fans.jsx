@@ -1,17 +1,15 @@
 import { useRef } from "react";
-import { Box, HStack, Text, VStack } from "@chakra-ui/react";
+import {Box, HStack, Stack, Text, VStack} from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Grid, Navigation } from "swiper";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import MySwiperControls from "./MySwiperControls";
 import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { useRouter } from "next/router";
-import { useSwiper } from "swiper/react";
-import MySwiperControls from "./MySwiperControls";
-import { createRef } from "react";
+
 
 const Fans = ({ getRelatedArtist }) => {
   const { push } = useRouter();
@@ -20,13 +18,12 @@ const Fans = ({ getRelatedArtist }) => {
 
   return (
     <VStack w={"full"} align={"flex-start"} zIndex={1000}>
-      <HStack w={"full"} justify={"space-between"}>
+
+      <Stack direction={{sm : "column" , md : "row"}}  justify={{sm : "center" , md : "space-between"}} align={"center"} my={5} w={"full"}>
         <Text
           align={"left"}
-          fontSize={45}
+          fontSize={{sm : 20 , md : 45}}
           fontWeight={"bold"}
-          color={"whiteAlpha.700"}
-          my={5}
         >
           Fans also like
         </Text>
@@ -34,9 +31,9 @@ const Fans = ({ getRelatedArtist }) => {
           onPrev={() => swiperRef.current.slidePrev()}
           onNext={() => swiperRef.current.slideNext()}
         />
-      </HStack>
+      </Stack>
 
-      <HStack w={"full"} height={500} position={"relative"}>
+      <Box w={"full"} height={540} position={"relative"}>
         <Swiper
           ref={swiperRef}
           breakpointsBase={true}
@@ -46,6 +43,13 @@ const Fans = ({ getRelatedArtist }) => {
           modules={[Grid, Navigation]}
           style={{ width: "100%", height: 500, position: "absolute" }}
           breakpoints={{
+            340 : {
+              slidesPerView: 2,
+              spaceBetween: 0,
+              grid: {
+                rows: 2,
+              },
+            },
             640: {
               slidesPerView: 3,
               spaceBetween: 2,
@@ -78,8 +82,8 @@ const Fans = ({ getRelatedArtist }) => {
                   bg={"whiteAlpha.200"}
                   boxShadow={"dark-lg"}
                   position={"relative"}
-                  width={190}
-                  height={190}
+                  width={{sm : 180 , md : 190}}
+                  height={{sm : 180 , md : 190}}
                   rounded={"full"}
                   overflow={"hidden"}
                 >
@@ -90,7 +94,6 @@ const Fans = ({ getRelatedArtist }) => {
                     blurDataURL={related?.images[2]?.url}
                     layout={"fill"}
                     objectFit={"cover"}
-                    style={{ position: "absolute" }}
                   />
                 </Box>
                 <Text
@@ -107,7 +110,7 @@ const Fans = ({ getRelatedArtist }) => {
             </SwiperSlide>
           ))}
         </Swiper>
-      </HStack>
+      </Box>
     </VStack>
   );
 };

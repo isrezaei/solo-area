@@ -50,7 +50,7 @@ export const Account = () => {
               _focus={{ bg: "#1c1c1c", boxShadow: "none" }}
           >
 
-            <HStack >
+            <HStack>
               <TriangleDownIcon w={3} h={3} mr={2} color={"whiteAlpha.600"} />
               <Text> {user?.email}</Text>
             </HStack>
@@ -62,7 +62,7 @@ export const Account = () => {
           </MenuList>
         </Menu>
 
-        <Avatar name={user?.email} size={"sm"} display={{sm : "block" , md : "none"}} />
+        <Avatar name={user?.email} size={"md"} display={{sm : "block" , md : "none"}} />
       </>
   );
 };

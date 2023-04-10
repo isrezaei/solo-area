@@ -9,8 +9,8 @@ import {
 } from "@chakra-ui/react";
 import { GoPlay } from "react-icons/go";
 import Image from "next/image";
-import { SearchBar } from "../Search/SearchBar";
-import { Account } from "../Account";
+import { SearchBar } from "../Searchbar/SearchBar";
+import { Account } from "../Header/Account";
 import {useQuery} from "@apollo/client";
 import {getSubscribeQuery} from "../../graphQl/query/database/getSubscribedList";
 import _ from "lodash";
@@ -38,15 +38,22 @@ const Header = ({ getArtistInfo }) => {
   return (
       <HStack
           w={"full"}
-          py={5}
+          py={0}
           justifyContent={"space-between"}
           align={"flex-start"}
           zIndex={1000}
       >
-        <HStack spacing={5}>
+
+        <Stack
+            w={"full"}
+            justify={{sm : "center" , md : "flex-start"}}
+            align={"center"}
+            direction={{sm : "column" , md : "row"}}
+            spacing={{sm : 0 , md : 5}}>
+
           <Box
-              w={250}
-              h={250}
+              w={{sm : 250 , md : 250}}
+              h={{sm : 250 , md : 250}}
               boxShadow={"dark-lg"}
               rounded={"full"}
               position={"relative"}
@@ -56,26 +63,29 @@ const Header = ({ getArtistInfo }) => {
                 layout={"fill"}
                 objectFit={"cover"}
                 src={getArtistInfo?.images[0]?.url}
-                style={{ position: "absolute", borderRadius: "100%" }}
                 placeholder={"blur"}
                 blurDataURL={getArtistInfo?.images[2]?.url}
             />
           </Box>
-          <Box spacing={0}>
-            <Text fontSize={50} fontWeight={"bold"} color={"whiteAlpha.700"}>
+
+          <VStack align={{sm : "center" , md : "flex-start"}} spacing={0}>
+            <Text fontSize={{sm : 35 , md : 50}} fontWeight={"bold"} >
               {getArtistInfo.name}
             </Text>
             <Button
-                size={"sm"}
-                rounded={"full"}
+                size={"xs"}
+                rounded={5}
                 variant={!!_.find(GET_SUBSCRIBED_LIST, {"id": getArtistInfo.id}) ? "solid" : "outline"}
-                colorScheme={"green"}
+                colorScheme={"blue"}
                 onClick={() => handelSubscribe(getArtistInfo.id , getArtistInfo.name , getArtistInfo?.images)}
             >
               {!!_.find(GET_SUBSCRIBED_LIST, {"id": getArtistInfo.id}) ? " Subscribed" : " Subscribe"}
             </Button>
-          </Box>
-        </HStack>
+          </VStack>
+
+        </Stack>
+
+
       </HStack>
   );
 };

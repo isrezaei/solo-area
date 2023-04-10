@@ -28,8 +28,7 @@ const Subscriptions = ({SSR_GET_SUBSCRIBED_LIST}) => {
               <Header
                   handelHeight={handelHeight}
                   showMore={showMore}/>
-                {SSR_GET_SUBSCRIBED_LIST?.slice(showMore ? undefined : -5).reverse().map((value) => <SubscribeList
-                    key={value.id} value={value}/>)}
+                {SSR_GET_SUBSCRIBED_LIST?.slice(showMore ? undefined : -5).reverse().map((value) => <SubscribeList key={value.id} value={value}/>)}
             </Stack>
         )
     }

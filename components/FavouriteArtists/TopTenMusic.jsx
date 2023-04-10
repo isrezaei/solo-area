@@ -6,7 +6,7 @@ import {useSetRecoilState} from "recoil";
 import {SPOTIFY_TRACKS_ID_ATOM} from "../../atoms/atoms";
 
 
-const TopTen = ({trackInfo : {duration_ms, name, id , preview_url , album: { artists, images }}}) => {
+const TopTenMusic = ({trackInfo : {duration_ms, name, id , preview_url , album: { artists, images }}}) => {
 
     const setTrackForPlay = useSetRecoilState(SPOTIFY_TRACKS_ID_ATOM)
 
@@ -15,18 +15,15 @@ const TopTen = ({trackInfo : {duration_ms, name, id , preview_url , album: { art
     }
 
 
-
     return (
         <Stack
-            key={id}
             direction={{sm : "column" , md : "row"}}
             justify={"center"}
             align={"center"}
             p={{sm : 2 , md :2}}
-            mx={{sm : 1 , md : 0}}
+            mx={{sm : 2 , md : 0}}
             rounded={{sm : 30 , md : 50}}
             bg={"whiteAlpha.200"}>
-
             <Box role={"group"} position={"relative"}>
                     <Box
                         w={{sm : 90 , md : 50}}
@@ -75,4 +72,4 @@ const TopTen = ({trackInfo : {duration_ms, name, id , preview_url , album: { art
     );
 };
 
-export default TopTen;
+export default TopTenMusic;

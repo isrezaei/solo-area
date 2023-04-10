@@ -24,7 +24,6 @@ const SubscribeList = ({value}) => {
                 position={"relative"}
             >
                 <Image
-                    style={{position: "absolute"}}
                     layout={"fill"}
                     placeholder={"blur"}
                     blurDataURL={value.images[2].url}

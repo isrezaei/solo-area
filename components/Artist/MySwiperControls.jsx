@@ -5,7 +5,7 @@ function MySwiperControls({ onPrev, onNext }) {
   return (
     <HStack>
       <Icon
-        boxSize={25}
+        boxSize={{sm : 21 , md : 25}}
         color={"whiteAlpha.600"}
         cursor={"pointer"}
         _hover={{ color: "whiteAlpha.900" }}
@@ -13,7 +13,7 @@ function MySwiperControls({ onPrev, onNext }) {
         as={BiLeftArrow}
       />
       <Icon
-        boxSize={25}
+        boxSize={{sm : 21 , md : 25}}
         color={"whiteAlpha.600"}
         cursor={"pointer"}
         _hover={{ color: "whiteAlpha.900" }}

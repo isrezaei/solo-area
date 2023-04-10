@@ -10,7 +10,7 @@ import {getRandomPlayed} from "../graphQl/query/api/getRandomPlayed";
 import {ApolloProvider} from "@apollo/client";
 import {DataBaseClient} from "../graphQl/client/client";
 import {useRouter} from "next/router";
-import Header from "../components/Header";
+import MainHeader from "../components/Header/MainHeader";
 import {getSubscribeQuery} from "../graphQl/query/database/getSubscribedList";
 import {getSeveralCategories} from "../graphQl/query/api/getSeveralCategories";
 import {slide as Menu} from "react-burger-menu";
@@ -48,8 +48,8 @@ export default function Home({fallback, user, SSR_GET_SUBSCRIBED_LIST}) {
                                 <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>}
                         </Stack>
 
-                        <Stack flex={1} >
-                            {router.pathname !== "/login_signup" && <Header/>}
+                        <Stack flex={1} px={{sm : 0 , md : 5}}>
+                            {router.pathname !== "/login_signup" && <MainHeader/>}
                             <Starter user={user}/>
                         </Stack>
 
@@ -69,7 +69,6 @@ export const getServerSideProps = async ({req, res}) => {
         supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
         supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_KEY
     })
-    // const {data: { user } , error} = await supabaseServerClient.auth.getUser()
 
     const {data: {session: {user}}, error} = await supabaseServerClient.auth.getSession()
 
@@ -89,7 +88,6 @@ export const getServerSideProps = async ({req, res}) => {
         variables: {userId: user.id}
     })
 
-    console.log(GET_SUBSCRIBED_LIST)
 
     return {
         props: {

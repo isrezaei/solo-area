@@ -31,19 +31,14 @@ export const Artist = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <HStack w={"full"}>
-      <VStack
-        w={"full"}
-        h={"100vh"}
-        px={5}
-        overflowY={"scroll"}
-        overflowX={"hidden"}
-      >
+    <>
+
+      <VStack>
         <Image
           layout={"fill"}
           objectFit={"cover"}
           src={getArtistInfo?.images[0]?.url}
-          style={{ position: "absolute", opacity: "20%", zIndex: 1 }}
+          style={{opacity: "20%" , zIndex : -1}}
           placeholder={"blur"}
           blurDataURL={getArtistInfo?.images[2]?.url || ""}
         />
@@ -68,6 +63,6 @@ export const Artist = () => {
         open={open}
         setOpen={setOpen}
       />
-    </HStack>
+    </>
   );
 };

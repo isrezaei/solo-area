@@ -52,6 +52,7 @@ const style = css`
 
   .bm-menu {
     background: #101010;
+    padding: 2em;
   }
 
   /* Morph shape necessary with bubble or elastic */
