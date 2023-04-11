@@ -6,7 +6,7 @@ import {
     AbsoluteCenter,
     Text,
     VStack,
-    Button, HStack,
+    Button, HStack, IconButton,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import {useState} from "react";
@@ -17,19 +17,13 @@ import {useToast} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import useSWR from "swr";
 import {getSeveralArtistsForPickup} from "../graphQl/query/api/getSeveralArtistsForPickup";
-import {Swiper, SwiperSlide} from "swiper/react";
+
+import {Swiper} from "swiper/react";
+import {SwiperSlide} from "swiper/react";
 import {EffectCards} from "swiper";
-
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/effect-cards";
-
-
-// import required modules
-import {Grid as SwiperGrid} from "swiper";
-
-
+import {BsHeart, BsHeartFill, BsSuitHeart} from "react-icons/bs";
 
 
 export const PickFavouriteArtists = () => {
@@ -102,23 +96,20 @@ export const PickFavouriteArtists = () => {
     };
 
     return (
-        <Box maxW={"md"} align={"center"} h={"100vh"} overflow={"hidden"} m={"auto"} position={"relative"}>
+        <Box maxW={"sm"} overflow={"hidden"} m={"auto"} position={"relative"}>
 
 
-                <Image layout={"fill"}
-                       objectFit={"cover"}
-                       priority placeholder={"blur"}
-                       blurDataURL={'/pickupBgLowQ.jpg'}
-                       src={"/pickupBg.jpg"}
-                       style={{opacity: "30%"}}/>
+            <VStack h={"100vh"} spacing={5} justify={"center"} align={"center"}>
 
+                <Box>
+                    <Text color={"whiteAlpha.600"} fontSize={18}>Welcome to solo area music</Text>
+                    <Text fontWeight={"semibold"} fontSize={23}>Pick 10 of your favourite artists</Text>
+                </Box>
 
-
-            <VStack h={"full"} justify={"center"} align={"center"}>
                 <Swiper
                     effect={"cards"}
                     modules={[EffectCards]}
-                    style={{width: "70%"}}
+                    style={{maxWidth: "70%"}}
                 >
 
                     {
@@ -140,24 +131,36 @@ export const PickFavouriteArtists = () => {
                                         placeholder={"blur"}
                                         blurDataURL={artistsInfo.images[2].url}
                                         src={artistsInfo.images[0].url}
-                                        onClick={() => handelSelect(artistsInfo)}
                                     />
 
+                                    <VStack w={"70%"} position={"absolute"} bg={"blackAlpha.600"} p={3}>
+                                        <Text fontSize={20} noOfLines={1} fontWeight={"bold"}>{artistsInfo.name}</Text>
 
-                                    <Text fontSize={"2xl"} fontWeight={"bold"} position={"absolute"}>{artistsInfo.name}</Text>
 
-                                    {!!_.find(selectFavourite, { id: artistsInfo.id }) && <Text position={"absolute"}>selected</Text>}
+                                        <IconButton
+                                                    icon={!!_.find(selectFavourite, {id: artistsInfo.id}) ? <BsHeartFill size={30}/> : <BsHeart size={30}/>}
+                                                    size={"sm"}
+                                                    variant={"link"}
+                                                    colorScheme={"purple"}
+                                                    aria-label={'select favourite'}
+                                                    onClick={() => handelSelect(artistsInfo)}/>
+
+
+                                    </VStack>
 
 
                                 </SwiperSlide>
+
+
                             )
                         })
                     }
 
 
                 </Swiper>
-            </VStack>
+                <Button onClick={confirm} rounded={0} colorScheme={"purple"}>Confirm</Button>
 
+            </VStack>
 
         </Box>
     );
