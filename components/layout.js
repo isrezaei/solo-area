@@ -43,7 +43,7 @@ export default function Layout({children}) {
 
     return (
 
-        <Stack maxW={'1950px'} m={"auto"}>
+        <Stack maxW={1990} m={"auto"}>
             <Flex zIndex={2} position={"relative"}>
                 {
                     pathname === '/' &&

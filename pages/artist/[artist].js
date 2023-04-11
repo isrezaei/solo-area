@@ -28,9 +28,10 @@ export default function artist({fallback, SSR_GET_SUBSCRIBED_LIST}) {
                     <Stack display={{base: "none", md: "flex"}} w={{sm: 0, md: 265}} zIndex={1000} position={"sticky"} top={0}>
                             <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
                     </Stack>
+
                     <Stack flex={1}
                            px={{sm: 0, md: 5}}
-                           h={"100vh"}
+                           h={"100svh"}
                            overflowY={"scroll"}
                            overflowX={"hidden"}>
                         <MainHeader/>

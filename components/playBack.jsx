@@ -181,10 +181,12 @@ export const PlayBack = () => {
     const trackInfo = useRecoilValue(SPOTIFY_TRACKS_ID_ATOM);
     console.log(trackInfo)
 
+    console.log(trackInfo)
+
     return (
         <HStack
             w={{sm : "90%" , md : "100%"}}
-            h={{sm : 65 , md : 85}}
+            h={{sm : 65 , md : 70}}
             p={3}
             bg={"#1a1a1a"}
             justify={"space-around"}
@@ -209,7 +211,7 @@ export const PlayBack = () => {
 
 
 
-                <HStack flex={0.3}>
+                <HStack flex={0.1}>
 
 
                     {!trackInfo && (
@@ -221,7 +223,7 @@ export const PlayBack = () => {
                         />
                     )}
                     {trackInfo && (
-                        <Stack w={{sm : 45 , md : 65}} h={{sm : 45 , md : 65}} rounded={20} overflow={"hidden"} position={"relative"}>
+                        <Stack w={{sm : 45 , md : 55}} h={{sm : 45 , md : 55}}  overflow={"hidden"} position={"relative"}>
                             <Image
                                 layout={"fill"}
                                 objectFit={"cover"}

@@ -33,7 +33,7 @@ export const Artist = () => {
   return (
     <>
 
-      <VStack>
+      <VStack >
         <Image
           layout={"fill"}
           objectFit={"cover"}

@@ -14,12 +14,11 @@ const Albums = ({albumsInfo: {images, name, artists, id}}) => {
                 overflow={"hidden"}
             >
                 <Stack
-                    w={{sm: 170, md: 180}}
-                    h={{sm: 170, md: 180}}
+                    w={{sm: 190, md: 180}}
+                    h={{sm: 190, md: 180}}
                     position={"relative"}
                     bg={"whiteAlpha.200"}
                     mx={{sm: 2, md: 0}}
-                    rounded={"md"}
                     overflow={"hidden"}
                 >
                     <Image

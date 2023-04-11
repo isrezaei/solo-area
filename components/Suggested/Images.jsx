@@ -33,6 +33,7 @@ const Images = ({track}) => {
                     alt={track.name}
                 />
             </Box>
+
             <AbsoluteCenter>
                 <Icon
                     onClick={() => handelPlay(track.name , track.preview_url , track.id , track.artists ,track.album.images ,track.duration_ms)}

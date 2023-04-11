@@ -14,9 +14,6 @@ const Popular = ({getArtistTopTracks}) => {
     }
 
 
-    //           onClick={() => handelPlay(track.album , track.preview_url , track.id , track.artists ,track.album.images ,track.duration_ms)}
-
-
     return (
         <VStack w={"full"} spacing={3} zIndex={1000}>
             <Text
@@ -26,6 +23,9 @@ const Popular = ({getArtistTopTracks}) => {
                 Popular
             </Text>
             {getArtistTopTracks.tracks.slice(0, 5).map((track, index) => {
+
+                console.log(track)
+
                 return (
                     <HStack
                         key={track.id}
@@ -37,14 +37,12 @@ const Popular = ({getArtistTopTracks}) => {
                         bg={"whiteAlpha.200"}
                     >
 
-                        <HStack >
+                        <HStack>
                             <Text w={5}>{index + 1}</Text>
-
                             <Box
-                                w={{sm : 65 , md : 50}}
-                                h={{sm : 65 , md : 50}}
+                                w={{sm : 65 , md : 70}}
+                                h={{sm : 65 , md : 70}}
                                 position={"relative"}
-                                rounded={5}
                                 _groupHover={{ opacity: "30%" }}
                                 overflow={"hidden"}
                             >
@@ -55,17 +53,9 @@ const Popular = ({getArtistTopTracks}) => {
                                     placeholder={"blur"}
                                     blurDataURL={track.album?.images?.[2]?.url}
                                 />
-
-                                <AbsoluteCenter>
-                                    <Icon
-                                        display={"block"}
-                                        cursor={"pointer"}
-                                        _groupHover={{ display: "block" }}
-                                        fontSize={{sm : 45 , md : 25}}
-                                        as={CgPlayButtonO}
-                                    />
-                                </AbsoluteCenter>
                             </Box>
+
+
 
 
                             <Box align={"start"}>
@@ -84,9 +74,17 @@ const Popular = ({getArtistTopTracks}) => {
                             </Box>
                         </HStack>
 
-                        <Text w={210} display={{sm : "none" , md : "flex"}} fontSize={13} noOfLines={1} color={"whiteAlpha.800"}>
+                        <Text w={200} display={{sm : "none" , md : "flex"}} fontSize={13} noOfLines={1} color={"whiteAlpha.800"}>
                             {track.album?.name}
                         </Text>
+
+                        <Icon
+                            onClick={() => handelPlay(track.name , track.preview_url , track.id , track.album.artists ,track.album.images ,track.duration_ms)}
+                            cursor={"pointer"}
+                            _groupHover={{ display: "block" }}
+                            fontSize={{sm : 23 , md : 25}}
+                            as={CgPlayButtonO}
+                        />
 
                         <Text fontSize={13} color={"whiteAlpha.800"}>
                             {prettyMilliseconds(track.duration_ms, {

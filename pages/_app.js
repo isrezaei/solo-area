@@ -32,7 +32,7 @@ function MyApp({Component, pageProps: {session , ...pageProps}}) {
                         <ColorModeProvider options={{initialColorMode: "dark", useSystemColorMode: false}}>
                             <Layout>
                                 <Component {...pageProps} />
-                                {router.pathname !== "login_signup" && <PlayBack/>}
+                                {router.pathname !== "/login_signup" && router.pathname !== "/pickFavouriteArtists" && <PlayBack/>}
                             </Layout>
                         </ColorModeProvider>
                     </ChakraProvider>

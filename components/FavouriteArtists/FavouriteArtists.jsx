@@ -15,8 +15,7 @@ export const FavouriteArtists = ({user}) => {
 
     const [artistID, setArtistID] = useState(null);
 
-    const {data: {GET_FAVOURITE_ARTISTS: favouriteArtists}} = useSWR(["api", "GET_FAVORITE_ARTISTS", user?.id],
-        () => getFavouriteArtists(user?.id));
+    const {data: {GET_FAVOURITE_ARTISTS: favouriteArtists}} = useSWR(["api", "GET_FAVORITE_ARTISTS", user?.id], () => getFavouriteArtists(user?.id));
 
 
     const {data: {getArtistTopTracks} = {}} = useSWR(artistID ? ["GET_ARTIST_DATA", artistID] : null,

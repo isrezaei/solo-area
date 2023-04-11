@@ -18,6 +18,7 @@ const MoreAlbums = ({ getAlbumsOfArtist, getArtistInfo, setOpen }) => {
         <Text fontSize={"sm"} onClick={() => setOpen((prevState) => !prevState)}>SHOW ALL</Text>
       </Stack>
 
+
       <HStack w={"full"} h={250} position={"relative"}>
         <ScrollContainer
           style={{ display: "flex", width: "100%", position: "absolute" }}

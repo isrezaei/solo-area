@@ -36,14 +36,13 @@ const Fans = ({ getRelatedArtist }) => {
       <Box w={"full"} height={540} position={"relative"}>
         <Swiper
           ref={swiperRef}
-          breakpointsBase={true}
           pagination={{
             clickable: true,
           }}
           modules={[Grid, Navigation]}
           style={{ width: "100%", height: 500, position: "absolute" }}
           breakpoints={{
-            340 : {
+            320 : {
               slidesPerView: 2,
               spaceBetween: 0,
               grid: {
