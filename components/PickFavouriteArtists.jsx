@@ -6,7 +6,7 @@ import {
     AbsoluteCenter,
     Text,
     VStack,
-    Button,
+    Button, HStack,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import {useState} from "react";
@@ -18,16 +18,19 @@ import {useRouter} from "next/router";
 import useSWR from "swr";
 import {getSeveralArtistsForPickup} from "../graphQl/query/api/getSeveralArtistsForPickup";
 import {Swiper, SwiperSlide} from "swiper/react";
+import {EffectCards} from "swiper";
 
 
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/grid";
-
+import "swiper/css/effect-cards";
 
 
 // import required modules
 import {Grid as SwiperGrid} from "swiper";
+
+
+
 
 export const PickFavouriteArtists = () => {
 
@@ -41,7 +44,6 @@ export const PickFavouriteArtists = () => {
 
     const [selectFavourite, setFavourite] = useState([]);
     const [loading, setLoading] = useState(false);
-
 
 
     const handelSelect = (ARTIST_INFO) => {
@@ -100,62 +102,53 @@ export const PickFavouriteArtists = () => {
     };
 
     return (
-        <VStack maxW={"sm"} align={"center"}  h={"100svh"} p={3}  m={"auto"} position={"relative"}>
-
-            <Image layout={"fill"}
-                   objectFit={"cover"}
-                   priority placeholder={"blur"}
-                   blurDataURL={'/pickupBgLowQ.jpg'}
-                   src={"/pickupBg.jpg"}
-                   style={{opacity : "30%" , zIndex : -1}}/>
+        <Box maxW={"md"} align={"center"} h={"100vh"} overflow={"hidden"} m={"auto"} position={"relative"}>
 
 
-            <Text fontSize={20} fontWeight={"bold"}>Choose more artists you like</Text>
+                <Image layout={"fill"}
+                       objectFit={"cover"}
+                       priority placeholder={"blur"}
+                       blurDataURL={'/pickupBgLowQ.jpg'}
+                       src={"/pickupBg.jpg"}
+                       style={{opacity: "30%"}}/>
 
 
 
+            <VStack h={"full"} justify={"center"} align={"center"}>
                 <Swiper
-                    slidesPerView={3}
-                    spaceBetween={5}
-                    grid={{
-                      rows: 4,
-                    }}
-
-                    modules={[SwiperGrid]}
-                    style={{width: "100%", height: 550}}
+                    effect={"cards"}
+                    modules={[EffectCards]}
+                    style={{width: "70%"}}
                 >
 
                     {
                         _.sortBy(artists, 'name')?.map((artistsInfo) => {
                             return (
-                                <SwiperSlide style={{ height: "8rem"}} key={artistsInfo.id}>
+                                <SwiperSlide style={{
+                                    width: "390px",
+                                    height: "390px",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }} key={artistsInfo.id}>
 
-                                        <VStack
-                                            p={3}
-                                            cursor={"pointer"}
-                                            opacity={
-                                                !!_.find(selectFavourite, {id: artistsInfo.id}) ? "30%" : "100%"
-                                            }
-                                            transition={".5s"}
-                                        >
-                                            <Tilt scale={0.9} transitionSpeed={1000}>
 
-                                                <Box w={94} h={94} rounded={100} overflow={"hidden"} position={"relative"}>
-                                                    <Image
-                                                        layout={"fill"}
-                                                        objectFit={"cover"}
-                                                        loading={"lazy"}
-                                                        placeholder={"blur"}
-                                                        blurDataURL={artistsInfo.images[2].url}
-                                                        src={artistsInfo.images[0].url}
-                                                        onClick={() => handelSelect(artistsInfo)}
-                                                    />
-                                                </Box>
+                                    <Image
+                                        layout={"fill"}
+                                        objectFit={"cover"}
+                                        loading={"lazy"}
+                                        placeholder={"blur"}
+                                        blurDataURL={artistsInfo.images[2].url}
+                                        src={artistsInfo.images[0].url}
+                                        onClick={() => handelSelect(artistsInfo)}
+                                    />
 
-                                            </Tilt>
-                                            <Text fontSize={"xs"}>{artistsInfo.name}</Text>
 
-                                        </VStack>
+                                    <Text fontSize={"2xl"} fontWeight={"bold"} position={"absolute"}>{artistsInfo.name}</Text>
+
+                                    {!!_.find(selectFavourite, { id: artistsInfo.id }) && <Text position={"absolute"}>selected</Text>}
+
+
                                 </SwiperSlide>
                             )
                         })
@@ -163,20 +156,9 @@ export const PickFavouriteArtists = () => {
 
 
                 </Swiper>
+            </VStack>
 
 
-
-
-            <Button
-                onClick={confirm}
-                isLoading={loading}
-                size={"sm"}
-                rounded={"full"}
-                loadingText="Submitting"
-                colorScheme="gray">
-                Confirm
-            </Button>
-
-        </VStack>
+        </Box>
     );
 };

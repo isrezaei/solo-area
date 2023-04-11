@@ -30,7 +30,7 @@ export const customTheme = extendTheme({
     },
 
     breakpoints: {
-        sm: "20em",
+        sm: "10em",
         md: "30em",
         lg: "48em",
         xl: "62em",

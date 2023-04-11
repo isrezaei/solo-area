@@ -40,7 +40,7 @@ export const Artist = () => {
           src={getArtistInfo?.images[0]?.url}
           style={{opacity: "20%" , zIndex : -1}}
           placeholder={"blur"}
-          blurDataURL={getArtistInfo?.images[2]?.url || ""}
+          blurDataURL={getArtistInfo?.images[2]?.url}
         />
 
         <Header getArtistInfo={getArtistInfo} />
