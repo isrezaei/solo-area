@@ -24,16 +24,19 @@ export default function Login_signup ()
 
         if (user)
         {
-            switch (true) {
-                case FAVOURITE_ARTISTS.length === 0 :
-                   return router.push("/pickFavouriteArtists")
-                case FAVOURITE_ARTISTS.length > 0 :
-                default :
-                    return router.push("/")
+            if (FAVOURITE_ARTISTS.length === 0 )
+            {
+                return router.push("/pickFavouriteArtists")
+            }
+            if (FAVOURITE_ARTISTS.length > 0)
+            {
+               return router.push("/")
             }
         }
 
     } , [user] )
+
+    if (user) return null
 
     return (
         <VStack w={"full"} justify={"center"} m={"auto"} maxW={'sm'} p={5}  h={'100vh'}   position={'relative'}>
