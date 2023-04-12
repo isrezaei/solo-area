@@ -47,6 +47,7 @@
     "react-burger-menu": "^3.0.9",
     "react-dom": "18.2.0",
     "react-h5-audio-player": "^3.8.6",
+    "react-horizontal-scrolling-menu": "^4.0.3",
     "react-icons": "^4.6.0",
     "react-indiana-drag-scroll": "^3.0.3-alpha",
     "react-ios-pwa-prompt": "^1.8.4",

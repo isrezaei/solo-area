@@ -5138,6 +5138,11 @@
     "safe-buffer" "5.1.2"
     "vary" "~1.1.2"
 
+"compute-scroll-into-view@^1.0.20":
+  "integrity" "sha512-UCB0ioiyj8CRjtrvaceBLqqhZCVP+1B8+NWQhmdsm0VXOJtobBCf1dBQmebCCo34qZmUwZfIH2MZLqNHazrfjg=="
+  "resolved" "https://registry.npmjs.org/compute-scroll-into-view/-/compute-scroll-into-view-1.0.20.tgz"
+  "version" "1.0.20"
+
 "compute-scroll-into-view@1.0.14":
   "integrity" "sha512-mKDjINe3tc6hGelUMNDzuhorIUZ7kS7BwyY0r2wQd2HOH2tRuJykiC06iSEX8y1TuhNzvz4GcJnK16mM2J1NMQ=="
   "resolved" "https://registry.npmjs.org/compute-scroll-into-view/-/compute-scroll-into-view-1.0.14.tgz"
@@ -10761,6 +10766,13 @@
     "@iconify/icons-mdi" "~1.1.0"
     "@iconify/react" "^3.1.3"
 
+"react-horizontal-scrolling-menu@^4.0.3":
+  "integrity" "sha512-Tt3Gn2psKdy3m4rd6OsrHcaCNf20Varwwrgp9Dyjc7EDQv2iL+Hh6BpN0Ww4Af7goPzim93kmf2iHkoNoKgcXQ=="
+  "resolved" "https://registry.npmjs.org/react-horizontal-scrolling-menu/-/react-horizontal-scrolling-menu-4.0.3.tgz"
+  "version" "4.0.3"
+  dependencies:
+    "smooth-scroll-into-view-if-needed" "~1.1"
+
 "react-icons@^4.6.0":
   "integrity" "sha512-rR/L9m9340yO8yv1QT1QurxWQvWpbNHqVX0fzMln2HEb9TEIrQRGsqiNFQfiv9/JEUbyHmHPlNTB2LWm2Ttz0g=="
   "resolved" "https://registry.npmjs.org/react-icons/-/react-icons-4.6.0.tgz"
@@ -11445,6 +11457,13 @@
   "resolved" "https://registry.npmjs.org/screenfull/-/screenfull-5.2.0.tgz"
   "version" "5.2.0"
 
+"scroll-into-view-if-needed@^2.2.28":
+  "integrity" "sha512-dGCXy99wZQivjmjIqihaBQNjryrz5rueJY7eHfTdyWEiR4ttYpsajb14rn9s5d4DY4EcY6+4+U/maARBXJedkA=="
+  "resolved" "https://registry.npmjs.org/scroll-into-view-if-needed/-/scroll-into-view-if-needed-2.2.31.tgz"
+  "version" "2.2.31"
+  dependencies:
+    "compute-scroll-into-view" "^1.0.20"
+
 "select-hose@^2.0.0":
   "integrity" "sha512-mEugaLK+YfkijB4fx0e6kImuJdCIt2LxCRcbEYPqRGCs4F2ogyfZU5IAZRdjCP8JPq2AtdNoC/Dux63d9Kiryg=="
   "resolved" "https://registry.npmjs.org/select-hose/-/select-hose-2.0.0.tgz"
@@ -11623,6 +11642,13 @@
 
 "smart-buffer@^4.2.0":
   "version" "4.2.0"
+
+"smooth-scroll-into-view-if-needed@~1.1":
+  "integrity" "sha512-crS8NfAaoPrtVYOCMSAnO2vHRgUp22NiiDgEQ7YiaAy5xe2jmR19Jm+QdL8+97gO8ENd7PUyQIAQojJyIiyRHw=="
+  "resolved" "https://registry.npmjs.org/smooth-scroll-into-view-if-needed/-/smooth-scroll-into-view-if-needed-1.1.33.tgz"
+  "version" "1.1.33"
+  dependencies:
+    "scroll-into-view-if-needed" "^2.2.28"
 
 "snapsvg-cjs@0.0.6":
   "integrity" "sha512-7NNvoGrc3BQvWz5rWK1DsD5/Vni4STswz5B3JrBADboQWcN8OBVGjYVJFPT5JkUXb2iVnEflZANhufEpEcTHXw=="

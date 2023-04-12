@@ -27,7 +27,6 @@ export const Artist = () => {
     async (key, id, artistId) => await getArtistInformation(artistId)
   );
 
-
   const [open, setOpen] = useState(false);
 
   return (
