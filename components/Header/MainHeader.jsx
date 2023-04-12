@@ -7,7 +7,7 @@ import Greetings from "./Greetings";
 const MainHeader = () => {
 
     return (
-        <HStack w={"full"} h={{sm: 65, md: 110}} justify={"space-between"} py={5} px={{sm : 2 , md : 0}} >
+        <HStack zIndex={2000} w={"full"} h={{sm: 65, md: 110}} justify={"space-between"} py={5} px={{sm : 2 , md : 0}} >
             <Text
                 fontSize={{sm: 20, md: "4xl"}}
                 fontWeight={"bold"}

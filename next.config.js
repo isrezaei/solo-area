@@ -5,12 +5,8 @@ const withPWA = require('next-pwa')({
     disable: process.env.NODE_ENV === 'development',
     register: true,
     scope: "/",
-    skipWaiting: true,
     sw: 'service-worker.js',
-    icon: {
-        // path: 'static/logo.png',
-        // purpose: 'maskable any',
-    }
+
 })
 
 module.exports = withPWA({

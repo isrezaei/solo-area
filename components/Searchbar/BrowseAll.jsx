@@ -5,6 +5,7 @@ import useSWR from "swr";
 import { getSeveralCategories } from "../../graphQl/query/api/getSeveralCategories";
 
 const BrowseAll = () => {
+
   const { data: { GET_SEVERAL_CATEGORIES : {categories}}} = useSWR("GET_SEARCH_CATEGORIES", () => getSeveralCategories());
 
   return (

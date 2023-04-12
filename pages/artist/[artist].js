@@ -12,6 +12,8 @@ import {getSubscribeQuery} from "../../graphQl/query/database/getSubscribedList"
 import {createServerSupabaseClient} from "@supabase/auth-helpers-nextjs";
 import {useState} from "react";
 import Image from "next/image";
+import {getRandomPlayed} from "../../graphQl/query/api/getRandomPlayed";
+import {getSeveralCategories} from "../../graphQl/query/api/getSeveralCategories";
 
 
 export default function artist({fallback, SSR_GET_SUBSCRIBED_LIST}) {
@@ -28,6 +30,7 @@ export default function artist({fallback, SSR_GET_SUBSCRIBED_LIST}) {
                 </Box>
 
                 <HStack overflowY={"scroll"}  h={"100vh"} align={'flex-start'} position={"relative"}>
+
                     <Stack display={{base: "none", md: "flex"}} w={{sm: 0, md: 265}} zIndex={1000} position={"sticky"} top={0}>
                             <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
                     </Stack>
@@ -69,9 +72,12 @@ export const getServerSideProps = async ({req, res, params: {artist: artistId}})
         variables: {userId: user.id}
     })
 
+    const GET_SEARCH_CATEGORIES = await getSeveralCategories()
+
     return {
         props: {
             fallback: {
+                "GET_SEARCH_CATEGORIES": GET_SEARCH_CATEGORIES,
                 [unstable_serialize(['api', 'GET_ARTISTS_INFO', artistId])]: GET_ARTIST_INFO,
             },
             SSR_GET_SUBSCRIBED_LIST: GET_SUBSCRIBED_LIST
