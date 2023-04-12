@@ -4,7 +4,7 @@ const withPWA = require('next-pwa')({
     dest: 'public',
     disable: process.env.NODE_ENV === 'development',
     register: true,
-    scope: ['/' , '/artist/' , '/login_signup/' , '/manage_account/' , '/pickFavouriteArtists/'].join(""),
+    skipWaiting: true,
     sw: 'service-worker.js'
 })
 
