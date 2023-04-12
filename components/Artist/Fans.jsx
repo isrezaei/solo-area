@@ -42,7 +42,7 @@ const Fans = ({ getRelatedArtist }) => {
           modules={[Grid, Navigation]}
           style={{ width: "100%", height: 500, position: "absolute" }}
           breakpoints={{
-            320 : {
+            310 : {
               slidesPerView: 2,
               spaceBetween: 0,
               grid: {

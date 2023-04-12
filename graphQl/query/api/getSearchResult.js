@@ -9,7 +9,7 @@ export const GetSearchResult = async (value) => {
 
     const query = gql`
         query SEARCH_RESULT($value : String) {
-            SEARCH_RESULT(value : $value) @rest(type : "search" , path : "/search?q={args.value}&type=album,track,artist&market=es&limit=50"){
+            SEARCH_RESULT(value : $value) @rest(type : "search" , path : "/search?q={args.value}&type=album,track,artist&market=es&limit=20"){
                 albums {
                     items {
                         id
@@ -35,6 +35,7 @@ export const GetSearchResult = async (value) => {
                         name
                         popularity
                         duration_ms
+                        preview_url
                         album {
                             id
                             images

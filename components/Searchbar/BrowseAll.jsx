@@ -10,24 +10,32 @@ const BrowseAll = () => {
   return (
     <VStack>
       <Text
-        fontSize={{sm : 25 , md : 35}}
+        fontSize={{sm : 20 , md : 35}}
         fontWeight={"bold"}
         color={"whiteAlpha.700"}
       >
         Browse all
       </Text>
       <Grid
-        h={500}
+        h={450}
         overflowY={"scroll"}
         templateColumns={{sm : "repeat(2 , 1fr)" , md : "repeat(6 , 1fr)"}}
         gap={3}
+        sx={{
+            "&::-webkit-scrollbar": {
+                width: "0",
+                height: "0",
+            },
+            scrollbarWidth: "none",
+            "-ms-overflow-style": "none",
+        }}
       >
         {categories?.items.map((data) => {
           return (
             <VStack key={data.id}>
               <VStack
-                w={150}
-                h={95}
+                w={{sm : 120 , md : 150}}
+                h={{sm : 85 , md : 95}}
                 position={"relative"}
                 rounded={5}
                 overflow={"hidden"}

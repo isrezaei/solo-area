@@ -16,7 +16,7 @@ const Directions = () => {
                 onClick={() => router.push("/")}
                 leftIcon={<RiHome6Line color={"#989898"} />}
                 variant={router.pathname === "/" ? "solid" : "outline"}
-                rounded={"xl"}
+                rounded={0}
                 colorScheme={"gray"}
                 size={"sm"}
             >
@@ -28,11 +28,22 @@ const Directions = () => {
                 onClick={() => router.push("/")}
                 leftIcon={<RiMusicFill color={"#989898"} />}
                 variant={"outline"}
-                rounded={"xl"}
+                rounded={0}
                 colorScheme={"gray"}
                 size={"sm"}
             >
                 Favourite
+            </Button>
+            <Button
+                justifyContent={"flex-start"}
+                onClick={() => router.push("/pickFavouriteArtists")}
+                leftIcon={<RiMusicFill color={"#989898"} />}
+                variant={router.pathname === "/pickFavouriteArtists" ? "solid" : "outline"}
+                rounded={0}
+                colorScheme={"gray"}
+                size={"sm"}
+            >
+                Pick Top Ten
             </Button>
         </Stack>
     );

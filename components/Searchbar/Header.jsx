@@ -9,12 +9,13 @@ const Header = ({setInputSearch}) => {
                 {/*<InputLeftElement pointerEvents="none" children={<Icon as={RiSearchLine}/>}/>*/}
                 <Input
                     type="text"
-                    w="xl"
-                    fontSize={12}
+                    w={{sm : 210 , md : "sm"}}
+                    fontSize={{sm : 10 , md : 12}}
                     bg="whiteAlpha.200"
                     color="white"
                     _placeholder={{color: 'whiteAlpha.800'}}
                     rounded="full"
+                    border={"none"}
                     focusBorderColor="transparent"
                     placeholder="What do you want to listen to?"
                     onChange={handleInputChange}

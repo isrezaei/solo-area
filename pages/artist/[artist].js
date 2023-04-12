@@ -11,6 +11,7 @@ import MainHeader from "../../components/Header/MainHeader";
 import {getSubscribeQuery} from "../../graphQl/query/database/getSubscribedList";
 import {createServerSupabaseClient} from "@supabase/auth-helpers-nextjs";
 import {useState} from "react";
+import Image from "next/image";
 
 
 export default function artist({fallback, SSR_GET_SUBSCRIBED_LIST}) {
@@ -34,14 +35,22 @@ export default function artist({fallback, SSR_GET_SUBSCRIBED_LIST}) {
                     <Stack flex={1}
                            px={{sm: 0, md: 5}}
                            h={"100vh"}
-                           overflowY={"scroll"}
-                           overflowX={"hidden"}>
+                           overflowY={"auto"}
+
+                           sx={{
+                               "&::-webkit-scrollbar": {
+                                   display : "none"
+                               },
+                               scrollbarWidth: "none",
+                               "-ms-overflow-style": "none",
+                           }}>
                         <MainHeader/>
                         <Artist/>
                     </Stack>
                 </HStack>
 
             </SWRConfig>
+
         </ApolloProvider>
     )
 }

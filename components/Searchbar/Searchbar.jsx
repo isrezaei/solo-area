@@ -9,7 +9,7 @@ import {
     ModalOverlay,
     Icon,
     HStack,
-    IconButton, Stack,
+    IconButton, Stack, Button,
 } from '@chakra-ui/react';
 import ArtistsResult from './ArtistsResult';
 import Songs from './Songs';
@@ -45,6 +45,7 @@ export const Searchbar = () => {
         500,
         [inputSearch]
     );
+
     const handleSearch = () => {
         setIsOpen((prevState) => !prevState);
     };
@@ -53,7 +54,7 @@ export const Searchbar = () => {
     let renderSearch;
     if (status === 'success') {
         renderSearch = (
-            <Stack direction={{sm : "column" , md : "row"}} justify={{sm : "flex-start" , md : "center"}}>
+            <Stack direction={{sm : "column" , md : "row"}} justify={{sm : "flex-start" , md : "center"}} >
                 <ArtistsResult artists={artists}/>
                 <Songs tracks={tracks}/>
             </Stack>
@@ -77,14 +78,23 @@ export const Searchbar = () => {
             />
 
 
-            <Modal size={{sm : "sm" , md : "6xl"}} onClose={handleSearch} isOpen={isOpen} isCentered>
+            <Modal size={{sm : "xs" , md : "6xl"}} onClose={handleSearch} isOpen={isOpen} isCentered>
                 <ModalOverlay bg="blackAlpha.800"/>
-                <ModalContent bg={"black"} h={600} overflow={{sm : "auto" }}>
-                    <ModalHeader>
-                        <Header setInputSearch={setInputSearch}/>
-                    </ModalHeader>
-                    <ModalCloseButton/>
+                <ModalContent bg={"#212121"} h={600} overflow={{sm : "auto" }} >
+
+
+                        <ModalHeader>
+                            <HStack>
+                                <Header setInputSearch={setInputSearch}/>
+                                <Button size={"sm"} rounded={"full"} colorScheme='red' mr={3} onClick={handleSearch}>
+                                    Close
+                                </Button>
+                            </HStack>
+                        </ModalHeader>
+
+
                     <ModalBody>
+
                         {renderSearch}
                     </ModalBody>
                 </ModalContent>

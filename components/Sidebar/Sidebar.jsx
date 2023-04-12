@@ -16,6 +16,14 @@ export const Sidebar = ({SSR_GET_SUBSCRIBED_LIST}) => {
             overflowX={"hidden"}
             overflowY={"auto"}
             zIndex={1000}
+            sx={{
+                "&::-webkit-scrollbar": {
+                    width: "0",
+                    height: "0",
+                },
+                scrollbarWidth: "none",
+                "-ms-overflow-style": "none",
+            }}
         >
 
             <Directions/>

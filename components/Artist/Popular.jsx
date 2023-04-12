@@ -15,7 +15,7 @@ const Popular = ({getArtistTopTracks}) => {
 
 
     return (
-        <VStack w={"full"} spacing={3} zIndex={1000}>
+        <VStack w={"full"} spacing={3} zIndex={1000} >
             <Text
                 w={"full"}
                 fontSize={{sm : 20 , md : 45}}
@@ -55,12 +55,9 @@ const Popular = ({getArtistTopTracks}) => {
                                 />
                             </Box>
 
-
-
-
                             <Box align={"start"}>
                                 <Text
-                                    w={210}
+                                    w={50}
                                     fontSize={15}
                                     noOfLines={1}
                                     fontWeight={"bold"}
@@ -68,7 +65,7 @@ const Popular = ({getArtistTopTracks}) => {
                                 >
                                     {track.album?.name}
                                 </Text>
-                                <Text w={210} fontSize={12} color={"whiteAlpha.600"}>
+                                <Text w={50} fontSize={12} color={"whiteAlpha.600"}>
                                     {track.album?.artists?.[0]?.name}
                                 </Text>
                             </Box>

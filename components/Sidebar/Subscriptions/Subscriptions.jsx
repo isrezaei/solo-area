@@ -6,6 +6,7 @@ import {useUser} from "@supabase/auth-helpers-react";
 import SubscribeList from "./SubscribeList";
 import Header from "./Header";
 import Empty from "./Empty";
+import DontHaveSubscribed from "../DontHaveSubscribed";
 
 
 const Subscriptions = ({SSR_GET_SUBSCRIBED_LIST}) => {
@@ -21,16 +22,24 @@ const Subscriptions = ({SSR_GET_SUBSCRIBED_LIST}) => {
 
     const handelHeight = () => setShowMore(prev => !prev)
 
+    console.log(SSR_GET_SUBSCRIBED_LIST)
 
     if (loading) {
-        return (
-            <Stack>
-              <Header
-                  handelHeight={handelHeight}
-                  showMore={showMore}/>
-                {SSR_GET_SUBSCRIBED_LIST?.slice(showMore ? undefined : -5).reverse().map((value) => <SubscribeList key={value.id} value={value}/>)}
-            </Stack>
-        )
+        switch (true) {
+            case SSR_GET_SUBSCRIBED_LIST?.length > 0 :
+                return (
+                    <Stack>
+                        <Header
+                            handelHeight={handelHeight}
+                            showMore={showMore}/>
+                        {SSR_GET_SUBSCRIBED_LIST?.slice(showMore ? undefined : -5).reverse().map((value) => <SubscribeList key={value.id} value={value}/>)}
+                    </Stack>
+                )
+            case  SSR_GET_SUBSCRIBED_LIST?.length < 0 :
+            default:
+                return <DontHaveSubscribed/>
+        }
+
     }
 
     if (!loading) {
@@ -46,7 +55,7 @@ const Subscriptions = ({SSR_GET_SUBSCRIBED_LIST}) => {
                 )
             case  GET_SUBSCRIBED_LIST?.length < 0 :
             default :
-                return <Empty/>
+                return <DontHaveSubscribed/>
         }
     }
 };

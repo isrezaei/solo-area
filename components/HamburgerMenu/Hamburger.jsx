@@ -1,7 +1,8 @@
 import {css} from "@emotion/css";
 import {slide as Menu} from "react-burger-menu";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Sidebar} from "../Sidebar/Sidebar";
+import {useRouter} from "next/router";
 
 const style = css`
   .bm-burger-button {
@@ -29,7 +30,7 @@ const style = css`
   .bm-cross-button {
     height: 24px;
     width: 24px;
-    
+
   }
 
   /* Color/shape of close button cross */
@@ -53,6 +54,9 @@ const style = css`
   .bm-menu {
     background: #101010;
     padding: 2em;
+    ::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   /* Morph shape necessary with bubble or elastic */
@@ -67,39 +71,39 @@ const style = css`
     padding: 0;
   }
 
- 
 
-  
   /* Styling of overlay */
 
   .bm-overlay {
     background: rgba(0, 0, 0, 0.3);
   }
+
 ,
 `
 
 
+const Hamburger = ({SSR_GET_SUBSCRIBED_LIST, setIsOpen, isOpen}) => {
 
-const Hamburger = ({SSR_GET_SUBSCRIBED_LIST , setIsOpen , isOpen}) => {
+    const {query : {artist}} = useRouter()
 
-
-
-
-    const handleMenuStateChange = (state) => {
-        setIsOpen(prev =>!prev);
+    const handleMenuStateChange = () => {
+        setIsOpen(prev => !prev);
     };
 
+    useEffect(() => {
+        setIsOpen(false);
+    } , [artist])
 
     return (
         <Menu
             isOpen={isOpen}
             onOpen={handleMenuStateChange}
             onClose={handleMenuStateChange}
-            className = {style}
+            className={style}
             height={"100vhs"}
             width={"100%"}>
 
-            <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
+            <Sidebar handleMenuStateChange={handleMenuStateChange} SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
 
         </Menu>
     );

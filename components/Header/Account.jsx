@@ -11,10 +11,8 @@ import { TriangleDownIcon } from "@chakra-ui/icons";
 import {
   useSupabaseClient,
   useUser,
-  useSession,
 } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
-import { useAsync } from "react-use";
 
 export const Account = () => {
 
@@ -23,14 +21,13 @@ export const Account = () => {
   const user = useUser();
 
   const singOut = async () => {
-    router.push("/login_signup");
-
     const { error } = await supabase.auth.signOut();
 
     if (error) {
       console.log("Error signing out:", error.message);
     } else {
       console.log("Signed out successfully");
+      router.push("/login_signup");
     }
   };
 

@@ -4,6 +4,7 @@ import {useSupabaseClient, useUser} from "@supabase/auth-helpers-react";
 import {useRouter} from "next/router";
 import {useAsync} from "react-use";
 import _ from 'lodash'
+import {useEffect} from "react";
 
 export default function Login_signup ()
 {
@@ -12,34 +13,33 @@ export default function Login_signup ()
     const router = useRouter()
     const supabase = useSupabaseClient()
 
+    console.log(user)
+
 
     useAsync(async () => {
 
+        let { data: FAVOURITE_ARTISTS, error } = await supabase
+            .from('FAVOURITE_ARTISTS')
+            .select('id').eq("id" , user.id)
 
-        const { data : ALREADY_EXIST_USERS , error } = await supabase
-            .from('USERS')
-            .select(`id`)
-
-        if (user){
-            const checkRouter = _.find(ALREADY_EXIST_USERS , {id : user.id})
-            //? IF USER ALREADY EXIST IN USERS COLUMN IN SUPABASE GO TO HOME
-            if (checkRouter) return  router.push('/')
-            //! IF USER NOT EXIST IN USERS COLUMN IN SUPABASE GO TO MANAGE ACCOUNT
-            if (!checkRouter) return router.push('/manage_account')
+        if (user)
+        {
+            switch (true) {
+                case FAVOURITE_ARTISTS.length === 0 :
+                   return router.push("/pickFavouriteArtists")
+                case FAVOURITE_ARTISTS.length > 0 :
+                default :
+                    return router.push("/")
+            }
         }
 
     } , [user] )
-
-
-
-
-    if (user) return null
 
     return (
         <VStack w={"full"} justify={"center"} m={"auto"} maxW={'sm'} p={5}  h={'100vh'}   position={'relative'}>
             <Box w={"full"} zIndex={1000}>
                 <Auth
-                    providers={['google', 'facebook', 'twitter']}
+                    onClick={()=> router.push('/')}
                     socialLayout="horizontal"
                     supabaseClient={supabase}
                     appearance={{

@@ -39,10 +39,15 @@ export default function Home({fallback, user, SSR_GET_SUBSCRIBED_LIST}) {
                         <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST} setIsOpen={setIsOpen} isOpen={isOpen}/>
                     </Box>
 
-
-                    <HStack overflowY={"scroll"}  h={"100svh"}  align={'flex-start'}  position={"relative"}>
-
-
+                    <HStack overflowY={"scroll"}  h={"100svh"}  align={'flex-start'}  position={"relative"}
+                            sx={{
+                                "&::-webkit-scrollbar": {
+                                    width: "0",
+                                    height: "0",
+                                },
+                                scrollbarWidth: "none",
+                                "-ms-overflow-style": "none",
+                            }}>
                         <Stack display={{base: "none", md: "flex"}} w={{sm: 0, md: 265}}  position={"sticky"} top={0}>
                             {router.pathname !== "/login_signup" &&
                                 <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>}
@@ -52,7 +57,6 @@ export default function Home({fallback, user, SSR_GET_SUBSCRIBED_LIST}) {
                             {router.pathname !== "/login_signup" && <MainHeader/>}
                             <Starter user={user}/>
                         </Stack>
-
                     </HStack>
 
 
@@ -85,12 +89,13 @@ export const getServerSideProps = async ({req, res}) => {
 
     const {data: {GET_SUBSCRIBED_LIST}} = await DataBaseClient.query({
         query: getSubscribeQuery,
-        variables: {userId: user.id}
+        variables: {userId: user?.id},
     })
-
 
     return {
         props: {
+            user,
+            SSR_GET_SUBSCRIBED_LIST: GET_SUBSCRIBED_LIST,
             fallback: {
                 "GET_RANDOM_PLAYED": GET_RECENTLY_PLAYED_TRACK,
                 "GET_SEARCH_CATEGORIES": GET_SEARCH_CATEGORIES,
@@ -98,8 +103,6 @@ export const getServerSideProps = async ({req, res}) => {
                 [unstable_serialize(["api", "GET_RANDOM_ARTISTS", 0, "a"])]: GET_RANDOM_ARTISTS_LIST,
                 [unstable_serialize(['api', 'GET_FAVORITE_ARTISTS', user.id])]: GET_FAVORITE_ARTISTS,
             },
-            user,
-            SSR_GET_SUBSCRIBED_LIST: GET_SUBSCRIBED_LIST
         },
     }
 }

@@ -13,7 +13,8 @@ export const removeFromSubscribeList = async (artistId , userId) =>
         }
     `
     try {
-        const {error} = DataBaseClient.mutate({mutation : REMOVE_FROM_SUBSCRIBE_LIST , variables : {artistId} , refetchQueries : [{query : getSubscribeQuery , variables : {userId}}]})
+        const {error} = DataBaseClient.mutate({mutation : REMOVE_FROM_SUBSCRIBE_LIST , variables : {artistId} ,
+            refetchQueries : [{query : getSubscribeQuery , variables : {userId}}]})
         if (error) return error
     }
     catch (error) {
