@@ -5,6 +5,7 @@ import {useRouter} from "next/router";
 import {useAsync} from "react-use";
 import _ from 'lodash'
 import {useEffect} from "react";
+import Head from "next/head";
 
 export default function Login_signup ()
 {
@@ -39,22 +40,28 @@ export default function Login_signup ()
     if (user) return null
 
     return (
-        <VStack w={"full"} justify={"center"} m={"auto"} maxW={'sm'} p={5}  h={'100vh'}   position={'relative'}>
-            <Box w={"full"} zIndex={1000}>
-                <Auth
-                    onClick={()=> router.push('/')}
-                    socialLayout="horizontal"
-                    supabaseClient={supabase}
-                    appearance={{
-                        theme : ThemeSupa,
-                        style : {
-                            button : {background : 'rgba(255,255,255,0.13)'},
-                            input : {background: 'rgba(255,255,255,0.13)'}
-                        }
-                    }}
-                    theme="dark"
-                />
-            </Box>
-        </VStack>
+        <>
+            <Head>
+                <title>Authentication</title>
+            </Head>
+            <VStack w={"full"} justify={"center"} m={"auto"} maxW={'sm'} p={5}  h={'100vh'}   position={'relative'}>
+                <Box w={"full"} zIndex={1000}>
+                    <Auth
+                        onClick={()=> router.push('/')}
+                        socialLayout="horizontal"
+                        supabaseClient={supabase}
+                        appearance={{
+                            theme : ThemeSupa,
+                            style : {
+                                button : {background : 'rgba(255,255,255,0.13)'},
+                                input : {background: 'rgba(255,255,255,0.13)'}
+                            }
+                        }}
+                        theme="dark"
+                    />
+                </Box>
+            </VStack>
+        </>
+
     )
 }

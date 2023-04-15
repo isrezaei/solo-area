@@ -63,7 +63,6 @@ export const PickFavouriteArtists = () => {
                             dependent_to: user?.email,
                             id: user?.id,
                             list: selectFavourite,
-                            user_Id: user?.id,
                         },
                     ]);
 
