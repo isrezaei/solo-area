@@ -23,9 +23,6 @@ const Popular = ({getArtistTopTracks}) => {
                 Popular
             </Text>
             {getArtistTopTracks.tracks.slice(0, 5).map((track, index) => {
-
-                console.log(track)
-
                 return (
                     <HStack
                         key={track.id}

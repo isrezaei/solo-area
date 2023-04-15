@@ -14,19 +14,23 @@ import {useState} from "react";
 import Image from "next/image";
 import {getRandomPlayed} from "../../graphQl/query/api/getRandomPlayed";
 import {getSeveralCategories} from "../../graphQl/query/api/getSeveralCategories";
+import Head from "next/head";
 
 
 export default function artist({fallback, SSR_GET_SUBSCRIBED_LIST}) {
 
-    const [isOpen, setIsOpen] = useState(false);
 
     return (
         <ApolloProvider client={DataBaseClient}>
+
+            <Head>
+                <title>Artists</title>
+            </Head>
+
             <SWRConfig value={{fallback}}>
 
-                <Box display={{sm: "block", md: "none"}} position={"relative"} zIndex={2000}>
-                    <Button size={"sm"} position={"absolute"} onClick={() => setIsOpen(prev => !prev)}>O</Button>
-                    <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST} setIsOpen={setIsOpen} isOpen={isOpen}/>
+                <Box display={{sm: "block", md: "none"}} position={"relative"} zIndex={3000}>
+                    <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
                 </Box>
 
                 <HStack overflowY={"scroll"}  h={"100vh"} align={'flex-start'} position={"relative"}>

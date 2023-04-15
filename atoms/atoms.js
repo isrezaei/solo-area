@@ -1,17 +1,17 @@
 import {atom} from "recoil";
 
 export const SPOTIFY_TRACKS_ID_ATOM = atom({
-    key : 'SPOTIFY TRACKS ID',
+    key : Math.random().toString(),
     default : undefined
 })
 
 
 export const selectGenre = atom({
-    key : 'select genre',
+    key : Math.random().toString(),
     default : 'pop'
 })
 
 export const HAMBURGER_MENU = atom({
-    key : "hamburger",
+    key : Math.random().toString(),
     default : false
 })

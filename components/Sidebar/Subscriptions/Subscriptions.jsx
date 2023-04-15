@@ -7,6 +7,8 @@ import SubscribeList from "./SubscribeList";
 import Header from "./Header";
 import Empty from "./Empty";
 import DontHaveSubscribed from "../DontHaveSubscribed";
+import {useSetRecoilState} from "recoil";
+import {HAMBURGER_MENU} from "../../../atoms/atoms";
 
 
 const Subscriptions = ({SSR_GET_SUBSCRIBED_LIST}) => {
@@ -16,6 +18,7 @@ const Subscriptions = ({SSR_GET_SUBSCRIBED_LIST}) => {
     const {loading, data: {GET_SUBSCRIBED_LIST} = {}} = useQuery(getSubscribeQuery, {
         variables: {userId: user?.id}
     });
+
 
 
     const [showMore, setShowMore] = useState(false)

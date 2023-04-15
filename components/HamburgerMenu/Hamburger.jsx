@@ -1,8 +1,6 @@
 import {css} from "@emotion/css";
 import {slide as Menu} from "react-burger-menu";
-import {useEffect, useState} from "react";
 import {Sidebar} from "../Sidebar/Sidebar";
-import {useRouter} from "next/router";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {HAMBURGER_MENU} from "../../atoms/atoms";
 
@@ -86,18 +84,11 @@ const style = css`
 
 const Hamburger = ({SSR_GET_SUBSCRIBED_LIST}) => {
 
-    const {query : {artist}} = useRouter()
-
     const [openHamburger , setOpenHamburger] = useRecoilState(HAMBURGER_MENU)
-
 
     const handleMenuStateChange = () => {
         setOpenHamburger(prev => !prev);
     };
-
-    useEffect(() => {
-        setOpenHamburger(false);
-    } , [artist])
 
     return (
         <Menu

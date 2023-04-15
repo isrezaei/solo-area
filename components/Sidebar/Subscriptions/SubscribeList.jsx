@@ -1,9 +1,13 @@
 import {Box, HStack, Text} from "@chakra-ui/react";
 import Image from "next/image";
 import {useRouter} from "next/router";
+import {useSetRecoilState} from "recoil";
+import {HAMBURGER_MENU} from "../../../atoms/atoms";
 
 
 const SubscribeList = ({value}) => {
+
+    const setOpenHamburger = useSetRecoilState(HAMBURGER_MENU)
 
     const router = useRouter()
 
@@ -12,7 +16,10 @@ const SubscribeList = ({value}) => {
             key={value.id}
             rounded={"full"}
             cursor={"pointer"}
-            onClick={() => router.push(`/artist/${value.id}`)}
+            onClick={() => {
+                setOpenHamburger(false)
+                router.push(`/artist/${value.id}`)
+            }}
             _hover={{bg: "whiteAlpha.200"}}
         >
             <Box
