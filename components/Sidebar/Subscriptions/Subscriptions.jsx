@@ -22,8 +22,6 @@ const Subscriptions = ({SSR_GET_SUBSCRIBED_LIST}) => {
 
     const handelHeight = () => setShowMore(prev => !prev)
 
-    console.log(SSR_GET_SUBSCRIBED_LIST)
-
     if (loading) {
         switch (true) {
             case SSR_GET_SUBSCRIBED_LIST?.length > 0 :

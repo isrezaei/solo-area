@@ -3,6 +3,8 @@ import {slide as Menu} from "react-burger-menu";
 import {useEffect, useState} from "react";
 import {Sidebar} from "../Sidebar/Sidebar";
 import {useRouter} from "next/router";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {HAMBURGER_MENU} from "../../atoms/atoms";
 
 const style = css`
   .bm-burger-button {
@@ -82,28 +84,31 @@ const style = css`
 `
 
 
-const Hamburger = ({SSR_GET_SUBSCRIBED_LIST, setIsOpen, isOpen}) => {
+const Hamburger = ({SSR_GET_SUBSCRIBED_LIST}) => {
 
     const {query : {artist}} = useRouter()
 
+    const [openHamburger , setOpenHamburger] = useRecoilState(HAMBURGER_MENU)
+
+
     const handleMenuStateChange = () => {
-        setIsOpen(prev => !prev);
+        setOpenHamburger(prev => !prev);
     };
 
     useEffect(() => {
-        setIsOpen(false);
+        setOpenHamburger(false);
     } , [artist])
 
     return (
         <Menu
-            isOpen={isOpen}
+            isOpen={openHamburger}
             onOpen={handleMenuStateChange}
             onClose={handleMenuStateChange}
             className={style}
             height={"100vhs"}
             width={"100%"}>
 
-            <Sidebar handleMenuStateChange={handleMenuStateChange} SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
+            <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
 
         </Menu>
     );

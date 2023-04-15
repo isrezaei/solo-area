@@ -13,8 +13,6 @@ import {useRouter} from "next/router";
 import MainHeader from "../components/Header/MainHeader";
 import {getSubscribeQuery} from "../graphQl/query/database/getSubscribedList";
 import {getSeveralCategories} from "../graphQl/query/api/getSeveralCategories";
-import {slide as Menu} from "react-burger-menu";
-import {useState} from "react";
 import Hamburger from "../components/HamburgerMenu/Hamburger";
 import Head from "next/head";
 
@@ -22,9 +20,6 @@ import Head from "next/head";
 export default function Home({fallback, user, SSR_GET_SUBSCRIBED_LIST}) {
 
     const router = useRouter()
-
-    const [isOpen, setIsOpen] = useState(false);
-
 
     return (
         <>
@@ -34,9 +29,9 @@ export default function Home({fallback, user, SSR_GET_SUBSCRIBED_LIST}) {
 
             <ApolloProvider client={DataBaseClient}>
                 <SWRConfig value={{fallback}}>
-                    <Box display={{sm : "block" , md : "none"}} position={"relative"} zIndex={2000}>
-                        <Button size={"sm"} position={"absolute"} onClick={() => setIsOpen(prev => !prev)}>O</Button>
-                        <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST} setIsOpen={setIsOpen} isOpen={isOpen}/>
+
+                    <Box display={{sm : "block" , md : "none"}} position={"relative"} zIndex={3000}>
+                        <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
                     </Box>
 
                     <HStack overflowY={"scroll"}  h={"100svh"}  align={'flex-start'}  position={"relative"}
@@ -48,12 +43,13 @@ export default function Home({fallback, user, SSR_GET_SUBSCRIBED_LIST}) {
                                 scrollbarWidth: "none",
                                 "-ms-overflow-style": "none",
                             }}>
+
                         <Stack display={{base: "none", md: "flex"}} w={{sm: 0, md: 265}}  position={"sticky"} top={0}>
                             {router.pathname !== "/login_signup" &&
                                 <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>}
                         </Stack>
 
-                        <Stack flex={1} px={{sm : 0 , md : 5}}>
+                        <Stack flex={1} px={{sm : 0 , md : 5}} zIndex={2000}>
                             {router.pathname !== "/login_signup" && <MainHeader/>}
                             <Starter user={user}/>
                         </Stack>

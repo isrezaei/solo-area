@@ -34,7 +34,7 @@ export const customTheme = extendTheme({
         md: "30em",
         lg: "48em",
         xl: "62em",
-        xxl : "80em",
-        xxxl: "118em", // add your custom breakpoint here
+        "2xl" : "80em",
+        "3xl": "118em", // add your custom breakpoint here
     },
 })

@@ -10,23 +10,23 @@ import {motion} from "framer-motion";
 const genreWall = {
 
     pop: {
-        image: 'https://user-images.githubusercontent.com/77073972/223062444-5e821892-43be-4774-8421-6828cb6d215c.jpg',
+        image: '/popHeader.jpg',
         variant: 'pop'
     },
     soul: {
-        image: 'https://user-images.githubusercontent.com/77073972/223062438-e50501ba-511b-4f55-9eea-bc3e1b25f30c.jpg',
+        image: '/relaxHeader.jpg',
         variant: 'soul'
     },
     chill: {
-        image: 'https://user-images.githubusercontent.com/77073972/223062438-e50501ba-511b-4f55-9eea-bc3e1b25f30c.jpg',
+        image: '/focusHeader.jpg',
         variant: 'chill'
     },
     techno: {
-        image: 'https://user-images.githubusercontent.com/77073972/223062457-e4ce6b6f-d98e-471d-aa95-175a300f9670.jpg',
+        image: '/technoHeader.jpg',
         variant: 'techno'
     },
     'work-out': {
-        image: 'https://user-images.githubusercontent.com/77073972/223062449-17066c7b-cf15-4bc0-8243-e77032162607.jpg',
+        image: '/workOutHeader.jpg',
         variant: 'work-out'
     }
 
@@ -47,7 +47,9 @@ export default function Layout({children}) {
             <Flex zIndex={2} position={"relative"}>
                 {
                     pathname === '/' &&
+
                     <Box w={"full"} h={400} position={"absolute"} zIndex={1}
+
                          _after={{
                              content: `""`,
                              position: "absolute",

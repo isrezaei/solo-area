@@ -39,7 +39,6 @@ export const Account = () => {
               color={"whiteAlpha.800"}
               height={"auto"}
               rounded={"3xl"}
-              display={{sm : "none" , md : "flex"}}
               pl={3}
               as={IconButton}
               rightIcon={<Avatar name={user?.email} size={{sm : "sm" , md : "md"}} />}
@@ -48,18 +47,17 @@ export const Account = () => {
           >
 
             <HStack>
-              <TriangleDownIcon w={3} h={3} mr={2} color={"whiteAlpha.600"} />
-              <Text> {user?.email}</Text>
+              <TriangleDownIcon fontSize={"xs"} color={"whiteAlpha.600"} />
+              <Text fontSize={"sm"} display={{sm : "none" , md : "block"}}> {user?.email}</Text>
             </HStack>
 
           </MenuButton>
 
-          <MenuList bgColor={"whiteAlpha.200"}>
+          <MenuList bgColor={"black"}>
             <MenuItem onClick={singOut}>Sign Out</MenuItem>
           </MenuList>
         </Menu>
 
-        <Avatar name={user?.email} size={"md"} display={{sm : "block" , md : "none"}} />
       </>
   );
 };

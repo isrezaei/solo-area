@@ -7,7 +7,8 @@ const Songs = ({track}) => {
 
 
     return (
-        <Stack direction={{sm : "column" , md : "row"}}
+        <Stack
+            direction={{sm : "column" , md : "row"}}
             w={"full"}
             justify={"space-between"}
             align={"center"}
@@ -19,7 +20,7 @@ const Songs = ({track}) => {
             mr={{sm : 3 , md : 0}}
         >
 
-            <Stack direction={{sm : "column" , md : "row"}}>
+            <Stack justify={"center"} align={"center"} direction={{sm : "column" , md : "row"}}>
                 <Images track={track}/>
                 <TextInfo track={track}/>
             </Stack>

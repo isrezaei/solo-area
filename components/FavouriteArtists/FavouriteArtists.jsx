@@ -44,12 +44,12 @@ export const FavouriteArtists = ({user}) => {
 
     return (
 
-        <Stack w={"full"} h={{sm: 360, md: 450}}>
+        <Stack w={"full"} h={{sm: 360, md: 410 , "3xl" : 430}} >
 
             <Title/>
 
             {/*top 10 artists list*/}
-            <Stack w={"full"} h={{sm: 175, md: 190}} position={"relative"}>
+            <Stack w={"full"} h={{sm: 175, md: 190 , "3xl" : 220}} position={"relative"}>
                 <Flex w={"full"} position={"absolute"} overflow={"hidden"}>
                     <ScrollContainer style={{display: "flex"}}>
                         {favouriteArtists?.[0]?.list?.map(artist => (

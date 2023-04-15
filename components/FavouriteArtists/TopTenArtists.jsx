@@ -1,16 +1,22 @@
 import {AbsoluteCenter, Box, Stack, Text, HStack} from "@chakra-ui/react";
 import Image from "next/image";
+import Tilt from "react-parallax-tilt";
 
 
 const TopTenArtists = ({artist: {id, name, images}, artistID, handelSelect}) => {
     return (
-        <HStack mr={2} overflow={"hidden"} rounded={"full"} position={"relative"} flex={"none"}>
+        <Tilt
+            className="parallax-effect"
+            perspective={500}
+            scale={0.95}
+        >
 
-            <Box w={{sm: 170, md: 180}}
-                 h={{sm: 170, md: 180}}
-                 transition={".3s"}
+            <Box w={{sm: 170, md: 180 , "3xl" : 210}}
+                 h={{sm: 170, md: 180 , "3xl" : 210}}
                  transform={id === artistID ? "scale(.95)" : "scale(1)"}
+                 transition={".2s"}
                  opacity={id === artistID ? "50%" : "100%"}
+                 mx={2}
                  rounded={"full"}
                  overflow={"hidden"}>
                 <Image
@@ -24,10 +30,11 @@ const TopTenArtists = ({artist: {id, name, images}, artistID, handelSelect}) => 
 
             {id === artistID && (
                 <AbsoluteCenter w={"full"}>
-                    <Text p={2} fontWeight={"bold"} fontSize={{sm: "sm", md: 15}}>{name}</Text>
+                    <Text textAlign={"center"} fontWeight={"bold"} fontSize={{sm: "sm", md: 15}}>{name}</Text>
                 </AbsoluteCenter>
             )}
-        </HStack>
+
+        </Tilt>
     );
 };
 

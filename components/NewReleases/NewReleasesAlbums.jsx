@@ -44,7 +44,7 @@ export const NewReleasesAlbums = () => {
     return (
         <VStack
             w={"full"}
-            h={{sm: 230, md: "auto"}}
+            h={{sm: 250, md: 580 , "3xl" : 710}}
             position={"relative"}
             zIndex={1000}>
 
@@ -74,7 +74,7 @@ export const NewReleasesAlbums = () => {
                 <Grid
                     display={{sm: "none", md: "grid"}}
                     templateColumns={"repeat(6, 1fr)"}
-                    gap={2}
+                    gap={{md : 3 , "3xl" : 15}}
                 >
                     {RenderNewReleases}
                 </Grid>

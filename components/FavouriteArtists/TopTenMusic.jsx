@@ -54,7 +54,7 @@ const TopTenMusic = ({trackInfo : {duration_ms, name, id , preview_url , album: 
                 </AbsoluteCenter>
             </Box>
 
-            <Stack spacing={0} w={"full"} justify={"center"} align={{sm : "center" , md : "flex-start"}}>
+            <Stack spacing={{sm : 1 , md : 0}} w={"full"} justify={"center"} align={{sm : "center" , md : "flex-start"}}>
                     <Text  noOfLines={1} fontWeight={"bold"} fontSize={{sm : 10 , md : "md"}}>
                         {name}
                     </Text>

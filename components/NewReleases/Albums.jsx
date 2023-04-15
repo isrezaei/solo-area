@@ -14,8 +14,8 @@ const Albums = ({albumsInfo: {images, name, artists, id}}) => {
                 overflow={"hidden"}
             >
                 <Stack
-                    w={{sm: 190, md: 180}}
-                    h={{sm: 190, md: 180}}
+                    w={{sm: 190, md: 190 , "3xl" : 250}}
+                    h={{sm: 190, md: 190 , "3xl" : 250}}
                     position={"relative"}
                     bg={"whiteAlpha.200"}
                     mx={{sm: 2, md: 0}}
@@ -36,6 +36,7 @@ const Albums = ({albumsInfo: {images, name, artists, id}}) => {
 
                 <VStack spacing={0}>
                     <Text
+                        w={65}
                         noOfLines={1}
                         fontWeight={"bold"}
                         fontSize={{sm: 10, md: "sm"}}

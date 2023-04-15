@@ -10,3 +10,8 @@ export const selectGenre = atom({
     key : 'select genre',
     default : 'pop'
 })
+
+export const HAMBURGER_MENU = atom({
+    key : "hamburger",
+    default : false
+})

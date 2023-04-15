@@ -7,11 +7,11 @@ import Title from "./Title";
 import Songs from "./Songs";
 
 
+
 export const Suggested = () => {
     const router = useRouter();
 
     const {data: {randomPlayed: {items: randomPlayedList} = []} = {}} = useSWR("GET_RANDOM_PLAYED", async () => await getRandomPlayed());
-
 
     const RenderSuggestedList = randomPlayedList.map(({track}) => <Songs key={track.id} track={track}/>);
 

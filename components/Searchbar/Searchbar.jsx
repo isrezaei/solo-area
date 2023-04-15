@@ -72,7 +72,8 @@ export const Searchbar = () => {
             <IconButton
                 aria-label="search"
                 rounded="full"
-                boxSize={{sm : 7 , md : 10}}
+                boxSize={{sm : 10 , md : 10}}
+                bg={{sm : "none" , md : "whiteAlpha.200"}}
                 icon={<Icon as={RiSearchLine} boxSize={{sm : 4 , md : 5}}/>}
                 onClick={handleSearch}
             />

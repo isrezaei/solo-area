@@ -9,7 +9,7 @@ import {customTheme} from "../theme";
 import NextNprogress from 'nextjs-progressbar';
 import "@fontsource/karla"
 import "@fontsource/acme"
-import {PlayBack} from "../components/playBack";
+import {Playback} from "../components/Playback/Playback";
 
 function MyApp({Component, pageProps: {session , ...pageProps}}) {
 
@@ -32,7 +32,7 @@ function MyApp({Component, pageProps: {session , ...pageProps}}) {
                         <ColorModeProvider options={{initialColorMode: "dark", useSystemColorMode: false}}>
                             <Layout>
                                 <Component {...pageProps} />
-                                {router.pathname !== "/login_signup" && router.pathname !== "/pickFavouriteArtists" && <PlayBack/>}
+                                {router.pathname !== "/login_signup" && router.pathname !== "/pickFavouriteArtists" && <Playback/>}
                             </Layout>
                         </ColorModeProvider>
                     </ChakraProvider>
