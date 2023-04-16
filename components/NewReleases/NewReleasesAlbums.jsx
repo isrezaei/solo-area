@@ -44,14 +44,14 @@ export const NewReleasesAlbums = () => {
     return (
         <VStack
             w={"full"}
-            h={{sm: 250, md: 580 , "3xl" : 710}}
+            h={{sm: 250, md: 810 , lg: 890 , xl : 520 , "2xl" : 560 , "3xl" : 710}}
             position={"relative"}
             zIndex={1000}>
 
-            <HStack w={"full"} align={"center"} justify={"space-between"}>
+            <Stack direction={{sm : "row" , md : "column" , lg : "column" , xl : "row"}} w={"full"} align={"center"} justify={"space-between"}>
                 <Title/>
                 <Pagination handlePageClick={handlePageClick}/>
-            </HStack>
+            </Stack>
 
 
             {/*mobile render*/}
@@ -73,7 +73,7 @@ export const NewReleasesAlbums = () => {
             >
                 <Grid
                     display={{sm: "none", md: "grid"}}
-                    templateColumns={"repeat(6, 1fr)"}
+                    templateColumns={{md : "repeat(4, 1fr)" , lg : "repeat(4, 1fr)" , xl : "repeat(6, 1fr)"}}
                     gap={{md : 3 , "3xl" : 15}}
                 >
                     {RenderNewReleases}

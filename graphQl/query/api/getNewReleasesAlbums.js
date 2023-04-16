@@ -10,7 +10,7 @@ export const getNewReleasesAlbums =  async (genre = 'pop' , currentPage = 0) =>
 
     const query = gql`
         query newReleases($genre : String , $offset : Int) {
-            newReleases (genre : $genre , offset : $offset) @rest(type : "Starter" , path : "/search?q=lil%2520genre%3A{args.genre}&type=album&market=us&limit=12&offset={args.offset}") {
+            newReleases (genre : $genre , offset : $offset) @rest(type : "Main" , path : "/search?q=lil%2520genre%3A{args.genre}&type=album&market=us&limit=12&offset={args.offset}") {
                 albums {
                     items {
                         id

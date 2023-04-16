@@ -14,8 +14,8 @@ const Albums = ({albumsInfo: {images, name, artists, id}}) => {
                 overflow={"hidden"}
             >
                 <Stack
-                    w={{sm: 190, md: 190 , "3xl" : 250}}
-                    h={{sm: 190, md: 190 , "3xl" : 250}}
+                    w={{sm: 190, md: 190 , lg : 210 , xl : 165 , "2xl" : 190 , "3xl" : 250}}
+                    h={{sm: 190, md: 190 , lg : 210 , xl : 165 , "2xl" : 190 , "3xl" : 250}}
                     position={"relative"}
                     bg={"whiteAlpha.200"}
                     mx={{sm: 2, md: 0}}

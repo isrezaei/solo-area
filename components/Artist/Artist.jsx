@@ -1,9 +1,9 @@
-import { Box, Divider, Flex, HStack, Text, VStack } from "@chakra-ui/react";
+import {Box, Divider, Flex, HStack, Text, VStack , Img} from "@chakra-ui/react";
 import Image from "next/image";
 import {useState} from "react";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 import useSWR from "swr";
-import { getArtistInformation } from "../../graphQl/query/api/getArtistInformation";
+import {getArtistInformation} from "../../graphQl/query/api/getArtistInformation";
 import Header from "./Header";
 import Popular from "./Popular";
 import MoreAlbums from "./MoreAlbums";
@@ -11,57 +11,57 @@ import Fans from "./Fans";
 import ShowAll from "./ShowAll";
 
 export const Artist = () => {
-  const {
-    query: { artist: artistId },
-  } = useRouter();
+    const {
+        query: {artist: artistId},
+    } = useRouter();
 
-  const {
-    data: {
-      getArtistInfo,
-      getAlbumsOfArtist,
-      getArtistTopTracks,
-      getRelatedArtist,
-    },
-  } = useSWR(
-    ["api", "GET_ARTISTS_INFO", artistId],
-    async (key, id, artistId) => await getArtistInformation(artistId)
-  );
+    const {
+        data: {
+            getArtistInfo,
+            getAlbumsOfArtist,
+            getArtistTopTracks,
+            getRelatedArtist,
+        },
+    } = useSWR(
+        ["api", "GET_ARTISTS_INFO", artistId],
+        async (key, id, artistId) => await getArtistInformation(artistId)
+    );
 
-  const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false);
 
-  return (
-    <>
+    return (
+        <Box>
 
-      <VStack >
-        <Image
-          layout={"fill"}
-          objectFit={"cover"}
-          src={getArtistInfo?.images[0]?.url}
-          style={{opacity: "20%" , zIndex : -1}}
-          placeholder={"blur"}
-          blurDataURL={getArtistInfo?.images[2]?.url || ""}
-        />
+            {/*<Image*/}
+            {/*    layout={"fill"}*/}
+            {/*    objectFit={"cover"}*/}
+            {/*    src={getArtistInfo?.images[0]?.url}*/}
+            {/*    style={{zIndex: -1, opacity: "20%" }}*/}
+            {/*    placeholder={"blur"}*/}
+            {/*    blurDataURL={getArtistInfo?.images[2]?.url}*/}
+            {/*/>*/}
 
-        <Header getArtistInfo={getArtistInfo} />
 
-        <Popular getArtistTopTracks={getArtistTopTracks} />
+            <Header getArtistInfo={getArtistInfo}/>
 
-        <MoreAlbums
-          getArtistInfo={getArtistInfo}
-          getAlbumsOfArtist={getAlbumsOfArtist}
-          setOpen={setOpen}
-        />
+            <Popular getArtistTopTracks={getArtistTopTracks}/>
 
-        <Fans getRelatedArtist={getRelatedArtist} />
-      </VStack>
+            <MoreAlbums
+                getArtistInfo={getArtistInfo}
+                getAlbumsOfArtist={getAlbumsOfArtist}
+                setOpen={setOpen}
+            />
 
-      {/** modal for show all albums for artist **/}
-      <ShowAll
-        getAlbumsOfArtist={getAlbumsOfArtist}
-        getArtistInfo={getArtistInfo}
-        open={open}
-        setOpen={setOpen}
-      />
-    </>
-  );
+            <Fans getRelatedArtist={getRelatedArtist}/>
+
+
+            {/** modal for show all albums for artist **/}
+            <ShowAll
+                getAlbumsOfArtist={getAlbumsOfArtist}
+                getArtistInfo={getArtistInfo}
+                open={open}
+                setOpen={setOpen}
+            />
+        </Box>
+    );
 };

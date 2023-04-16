@@ -11,7 +11,7 @@ import { FavouriteArtists } from "./FavouriteArtists/FavouriteArtists";
 import { SelectGenre } from "./SelectGenre";
 
 
-export const Starter = ({ user }) => {
+export const Main = ({ user }) => {
 
   return (
     <Box w={"full"} position={"relative"} zIndex={"1000"}>

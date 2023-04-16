@@ -34,7 +34,7 @@ export const Suggested = () => {
                 <Grid
                     display={{sm: "none", md: "grid"}}
                     w={"full"}
-                    templateColumns={{sm: "repeat(1, 1fr)", md: "repeat(4, 1fr)"}}
+                    templateColumns={{sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)" , lg : "repeat(2, 1fr)" , xl : "repeat(4, 1fr)"}}
                     gap={2}
                 >
                     {RenderSuggestedList}

@@ -26,6 +26,8 @@ export const playBackStyle = css`
       margin: 0
     }
   }
+  
+
   @media (min-width: 30em) {
     .rhap_main {
       justify-content: space-between;
@@ -33,12 +35,13 @@ export const playBackStyle = css`
     }
 
     .rhap_progress-section {
-      width: 45rem;
-      display: flex;
+      width: 100%;
+      display: none;
+      
     }
 
     .rhap_volume-controls {
-      display: flex;
+      display: none;
     }
 
     .rhap_additional-controls {
@@ -63,6 +66,24 @@ export const playBackStyle = css`
       color: #e5e5e5 !important;
     }
   }
+
+  @media (min-width: 67em)
+  {
+    .rhap_progress-section {
+      display: none;
+    }
+    .rhap_volume-controls {
+      display: flex;
+    }
+  }
+
+  @media (min-width: 85em)
+  {
+    .rhap_progress-section {
+      display: flex;
+    }
+  }
+
 
 
   .rhap_progress-indicator {

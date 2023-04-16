@@ -44,7 +44,7 @@ export const FavouriteArtists = ({user}) => {
 
     return (
 
-        <Stack w={"full"} h={{sm: 360, md: 410 , "3xl" : 430}} >
+        <Stack w={"full"} h={{sm: 360, md: 650 , lg : 690 , "2xl" : "450" , "3xl" : 460}} >
 
             <Title/>
 
@@ -77,7 +77,7 @@ export const FavouriteArtists = ({user}) => {
                 animate={{opacity: 1}}
                 transition={{duration: 0.5}}>
                 <Grid display={{sm: "none", md: "grid"}} gap={2}
-                      templateColumns={{sm: "repeat(2, 1fr)", md: "repeat(5, 1fr)"}}>
+                      templateColumns={{sm: "repeat(2, 1fr)", md: "repeat(2, 1fr)" , lg : "repeat(2, 1fr)" ,  xl : "repeat(5, 1fr)"}}>
                     {RenderTopTen}
                 </Grid>
             </motion.div>

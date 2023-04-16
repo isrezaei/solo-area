@@ -40,7 +40,7 @@ export const SelectGenre = () => {
   const [genre, setGenre] = useRecoilState(selectGenre);
 
   return (
-    <HStack w={"full"} justify={{sm : "center" , md : "flex-start"}} spacing={{sm : 2 , md : 5}}>
+    <HStack w={"full"} justify={{sm : "center" , md : "center" , lg : "center" , xl : "flex-start"}} spacing={{sm : 2 , md : 5}}>
       {genresList.map(({ name, variant }) => (
         <Button
           key={name}

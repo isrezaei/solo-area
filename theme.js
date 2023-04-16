@@ -1,4 +1,4 @@
-import { extendTheme } from '@chakra-ui/react'
+import {extendTheme} from '@chakra-ui/react'
 
 export const customTheme = extendTheme({
     styles: {
@@ -22,19 +22,13 @@ export const customTheme = extendTheme({
             },
         },
     },
-    colors: {
-        black : {
-            500: "rgba(0, 0, 0, 0.36)",
-            800: "rgba(0, 0, 0, 0.80)",
-        },
-    },
 
     breakpoints: {
-        sm: "10em",
-        md: "30em",
-        lg: "48em",
-        xl: "62em",
-        "2xl" : "80em",
-        "3xl": "118em", // add your custom breakpoint here
+        sm: "10em", //160px
+        md: "53em", //848px
+        lg: "67em", //1072px
+        xl: "85em",//1360
+        "2xl": "95em", //1520
+        "3xl": "118em", //1880px
     },
 })

@@ -1,16 +1,16 @@
-import {Starter} from "../components/Starter";
+import {Main} from "../components/main";
 import {SWRConfig, unstable_serialize} from "swr";
 import {createServerSupabaseClient} from "@supabase/auth-helpers-nextjs"
 import {getFavouriteArtists} from "../graphQl/query/database/getFavouriteArtists";
 import {getNewReleasesAlbums} from "../graphQl/query/api/getNewReleasesAlbums";
 import {getRandomArtists} from "../graphQl/query/api/getRandomArtists";
 import {Sidebar} from "../components/Sidebar/Sidebar";
-import {Box, Button, Divider, HStack, Stack} from "@chakra-ui/react";
+import {Box, Button, Divider, HStack, Stack, VStack} from "@chakra-ui/react";
 import {getRandomPlayed} from "../graphQl/query/api/getRandomPlayed";
 import {ApolloProvider} from "@apollo/client";
 import {DataBaseClient} from "../graphQl/client/client";
 import {useRouter} from "next/router";
-import MainHeader from "../components/Header/MainHeader";
+import Header from "../components/Header/Header";
 import {getSubscribeQuery} from "../graphQl/query/database/getSubscribedList";
 import {getSeveralCategories} from "../graphQl/query/api/getSeveralCategories";
 import Hamburger from "../components/HamburgerMenu/Hamburger";
@@ -30,11 +30,17 @@ export default function Home({fallback, user, SSR_GET_SUBSCRIBED_LIST}) {
             <ApolloProvider client={DataBaseClient}>
                 <SWRConfig value={{fallback}}>
 
-                    <Box display={{sm : "block" , md : "none"}} position={"relative"} zIndex={3000}>
+                    <VStack display={{sm : "block" , md : "block" , lg : "block" , xl : "none"}} position={"relative"} zIndex={3000}>
                         <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
-                    </Box>
+                    </VStack>
 
-                    <HStack overflowY={"scroll"}  h={"100svh"}  align={'flex-start'}  position={"relative"}
+                    <HStack
+                        maxW={{sm : "full" , md : 848 , lg : 1072 , xl : 1990}}
+                        h={"100svh"}
+                        overflowY={"scroll"}
+                        m={"auto"}
+                        align={'flex-start'}
+                        position={"relative"}
                             sx={{
                                 "&::-webkit-scrollbar": {
                                     width: "0",
@@ -44,14 +50,14 @@ export default function Home({fallback, user, SSR_GET_SUBSCRIBED_LIST}) {
                                 "-ms-overflow-style": "none",
                             }}>
 
-                        <Stack display={{base: "none", md: "flex"}} w={{sm: 0, md: 265}}  position={"sticky"} top={0}>
+                        <Stack display={{sm : "none" , md : "none" , lg : "none" , xl : "flex"}} w={{sm: 0, md: 265}}  position={"sticky"} top={0}>
                             {router.pathname !== "/login_signup" &&
                                 <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>}
                         </Stack>
 
                         <Stack flex={1} px={{sm : 0 , md : 5}} zIndex={2000}>
-                            {router.pathname !== "/login_signup" && <MainHeader/>}
-                            <Starter user={user}/>
+                            {router.pathname !== "/login_signup" && <Header/>}
+                            <Main user={user}/>
                         </Stack>
                     </HStack>
 

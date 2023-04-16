@@ -56,6 +56,13 @@ const Fans = ({ getRelatedArtist }) => {
                 rows: 2,
               },
             },
+            1080 :{
+              slidesPerView: 4,
+              spaceBetween: 3,
+              grid: {
+                rows: 2,
+              },
+            },
             1200: {
               slidesPerView: 5,
               spaceBetween: 3,

@@ -1,13 +1,13 @@
 import {Artist} from "../../components/Artist/Artist";
 import {getArtistInformation} from "../../graphQl/query/api/getArtistInformation";
-import {unstable_serialize} from "swr";
+import useSWR, {unstable_serialize} from "swr";
 import {SWRConfig} from "swr";
 import {Sidebar} from "../../components/Sidebar/Sidebar";
-import {Box, Button, HStack, Stack} from "@chakra-ui/react";
+import {Box, Button, HStack, Stack, VStack} from "@chakra-ui/react";
 import {ApolloProvider} from "@apollo/client";
 import {DataBaseClient} from "../../graphQl/client/client";
 import Hamburger from "../../components/HamburgerMenu/Hamburger";
-import MainHeader from "../../components/Header/MainHeader";
+import Header from "../../components/Header/Header";
 import {getSubscribeQuery} from "../../graphQl/query/database/getSubscribedList";
 import {createServerSupabaseClient} from "@supabase/auth-helpers-nextjs";
 import {useState} from "react";
@@ -15,6 +15,8 @@ import Image from "next/image";
 import {getRandomPlayed} from "../../graphQl/query/api/getRandomPlayed";
 import {getSeveralCategories} from "../../graphQl/query/api/getSeveralCategories";
 import Head from "next/head";
+import {useRouter} from "next/router";
+import BgImage from "../../components/Artist/BgImage";
 
 
 export default function artist({fallback, SSR_GET_SUBSCRIBED_LIST}) {
@@ -29,33 +31,42 @@ export default function artist({fallback, SSR_GET_SUBSCRIBED_LIST}) {
 
             <SWRConfig value={{fallback}}>
 
-                <Box display={{sm: "block", md: "none"}} position={"relative"} zIndex={3000}>
+                <BgImage/>
+
+                <Box display={{sm: "block", md: "block", lg: "block", xl: "none"}} position={"relative"}>
                     <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
                 </Box>
 
-                <HStack overflowY={"scroll"}  h={"100vh"} align={'flex-start'} position={"relative"}>
 
-                    <Stack display={{base: "none", md: "flex"}} w={{sm: 0, md: 265}} zIndex={1000} position={"sticky"} top={0}>
-                            <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
+                <HStack
+                    w={"full"}
+                    h={"100svh"}
+                    overflowY={"scroll"}
+                    justify={"center"}
+                    align={'flex-start'}
+                    position={"relative"}>
+
+                    <Stack display={{sm: "none", md: "none", lg: "none", xl: "flex"}} w={{sm: 0, md: 265}} position={"sticky"} top={0} zIndex={1000}>
+                        <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
                     </Stack>
 
-                    <Stack flex={1}
-                           px={{sm: 0, md: 5}}
-                           h={"100vh"}
-                           overflowY={"auto"}
-
-                           sx={{
-                               "&::-webkit-scrollbar": {
-                                   display : "none"
-                               },
-                               scrollbarWidth: "none",
-                               "-ms-overflow-style": "none",
-                           }}>
-                        <MainHeader/>
+                    <Box flex={1}
+                         px={{sm: 0, md: 5}}
+                         maxW={{sm: "full", md: 848, lg: 1072, xl: 1990}}
+                         h={"100vh"}
+                         overflowY={"scroll"}
+                         sx={{
+                             "&::-webkit-scrollbar": {
+                                 display: "none"
+                             },
+                             scrollbarWidth: "none",
+                             "-ms-overflow-style": "none",
+                         }}>
+                        <Header/>
                         <Artist/>
-                    </Stack>
-                </HStack>
+                    </Box>
 
+                </HStack>
             </SWRConfig>
 
         </ApolloProvider>
