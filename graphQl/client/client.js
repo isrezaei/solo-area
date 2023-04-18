@@ -27,7 +27,6 @@ export const client = initializeClient();
 
 
 export const DataBaseClient = new ApolloClient({
-    ssrMode: true,
     cache: new InMemoryCache(),
     uri : `${process.env.NEXT_PUBLIC_BASE_URL}/api/graphql`
 });
