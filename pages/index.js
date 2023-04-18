@@ -85,7 +85,7 @@ export const getServerSideProps = async ({req, res}) => {
 
     const GET_RANDOM_ARTISTS_LIST = await getRandomArtists(0, "a")
 
-    const GET_FAVORITE_ARTISTS = await getFavouriteArtists(user?.id)
+    // const GET_FAVORITE_ARTISTS = await getFavouriteArtists(user?.id)
 
     const GET_SEARCH_CATEGORIES = await getSeveralCategories()
 
@@ -103,7 +103,7 @@ export const getServerSideProps = async ({req, res}) => {
                 "GET_SEARCH_CATEGORIES": GET_SEARCH_CATEGORIES,
                 [unstable_serialize(['api', 'GET_NEW_RELEASES', 'pop', 0])]: GET_NEW_RELEASES,
                 [unstable_serialize(["api", "GET_RANDOM_ARTISTS", 0, "a"])]: GET_RANDOM_ARTISTS_LIST,
-                [unstable_serialize(['api', 'GET_FAVORITE_ARTISTS', user.id])]: GET_FAVORITE_ARTISTS,
+                // [unstable_serialize(['api', 'GET_FAVORITE_ARTISTS', user.id])]: GET_FAVORITE_ARTISTS,
             },
         },
     }
