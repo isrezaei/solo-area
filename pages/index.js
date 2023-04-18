@@ -93,15 +93,15 @@ export const getServerSideProps = async ({req, res}) => {
 
     const GET_SEARCH_CATEGORIES = await getSeveralCategories()
 
-    // const {data: {GET_SUBSCRIBED_LIST}} = await DataBaseClient.query({
-    //     query: getSubscribeQuery,
-    //     variables: {userId: user?.id},
-    // })
+    const {data: {GET_SUBSCRIBED_LIST}} = await DataBaseClient.query({
+        query: getSubscribeQuery,
+        variables: {userId: user.id},
+    })
 
     return {
         props: {
             user,
-            SSR_GET_SUBSCRIBED_LIST: [],
+            SSR_GET_SUBSCRIBED_LIST: GET_SUBSCRIBED_LIST,
             fallback: {
                 "GET_RANDOM_PLAYED": GET_RECENTLY_PLAYED_TRACK,
                 "GET_SEARCH_CATEGORIES": GET_SEARCH_CATEGORIES,
