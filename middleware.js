@@ -15,7 +15,7 @@ export async function middleware(req , res) {
     // Check if we have a session
     const {data: { session } , error} = await supabase.auth.getSession()
 
-    console.log(error)
+    // console.log(error)
 
     if (session?.user.email) {
         return NextResponse.next('/')

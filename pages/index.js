@@ -18,9 +18,13 @@ import Head from "next/head";
 import {useState} from "react";
 import {supabase} from "../supabase/createClient";
 import _ from "lodash"
+import {useUser} from "@supabase/auth-helpers-react";
 
 
 export default function Home({fallback, user, SSR_GET_SUBSCRIBED_LIST, FAVOURITE_ARTISTS}) {
+
+
+    console.log(user)
 
     const router = useRouter()
 
@@ -95,7 +99,10 @@ export const getServerSideProps = async ({req, res}) => {
         supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_KEY
     })
 
-    const {data: {user}} = await supabaseServerClient.auth.getUser()
+    // const {data: {user}} = await supabaseServerClient.auth.getUser()
+
+    const {data: { session : {user} }} = await supabaseServerClient.auth.getSession()
+
 
     const GET_RECENTLY_PLAYED_TRACK = await getRandomPlayed()
 
@@ -103,11 +110,9 @@ export const getServerSideProps = async ({req, res}) => {
 
     const GET_RANDOM_ARTISTS_LIST = await getRandomArtists(0, "a")
 
-    const GET_FAVORITE_ARTISTS = await getFavouriteArtists(user.id)
-
-    console.log(GET_FAVORITE_ARTISTS)
-
     const GET_SEARCH_CATEGORIES = await getSeveralCategories()
+
+    const GET_FAVORITE_ARTISTS = await getFavouriteArtists(user.id)
 
     const {data: {GET_SUBSCRIBED_LIST}} = await DataBaseClient.query({
         query: getSubscribeQuery,

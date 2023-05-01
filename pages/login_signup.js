@@ -14,13 +14,15 @@ export default function Login_signup ()
     const router = useRouter()
     const supabase = useSupabaseClient()
 
-    useAsync(async () => {
+    console.log(user)
 
-        let { data: FAVOURITE_ARTISTS, error } = await supabase
-            .from('FAVOURITE_ARTISTS')
-            .select('id').eq("id" , user.id)
+    useAsync(async () => {
         if (user)
         {
+            let { data: FAVOURITE_ARTISTS, error } = await supabase
+                .from('FAVOURITE_ARTISTS')
+                .select('id').eq("id" , user.id)
+
             if (FAVOURITE_ARTISTS.length === 0 )
             {
                 return router.push("/pickFavouriteArtists")
@@ -35,29 +37,32 @@ export default function Login_signup ()
 
     if (user) return null
 
-    return (
-        <>
-            <Head>
-                <title>Authentication</title>
-            </Head>
-            <VStack w={"full"} justify={"center"} m={"auto"} maxW={'sm'} p={5}  h={'100vh'}   position={'relative'}>
-                <Box w={"full"} zIndex={1000}>
-                    <Auth
-                        onClick={()=> router.push('/')}
-                        socialLayout="horizontal"
-                        supabaseClient={supabase}
-                        appearance={{
-                            theme : ThemeSupa,
-                            style : {
-                                button : {background : 'rgba(255,255,255,0.13)'},
-                                input : {background: 'rgba(255,255,255,0.13)'}
-                            }
-                        }}
-                        theme="dark"
-                    />
-                </Box>
-            </VStack>
-        </>
+    if (!user)
+    {
+        return (
+            <>
+                <Head>
+                    <title>Authentication</title>
+                </Head>
+                <VStack w={"full"} justify={"center"} m={"auto"} maxW={'sm'} p={5}  h={'100vh'}   position={'relative'}>
+                    <Box w={"full"} zIndex={1000}>
+                        <Auth
+                            onClick={()=> router.push('/')}
+                            socialLayout="horizontal"
+                            supabaseClient={supabase}
+                            appearance={{
+                                theme : ThemeSupa,
+                                style : {
+                                    button : {background : 'rgba(255,255,255,0.13)'},
+                                    input : {background: 'rgba(255,255,255,0.13)'}
+                                }
+                            }}
+                            theme="dark"
+                        />
+                    </Box>
+                </VStack>
+            </>
+        )
+    }
 
-    )
 }

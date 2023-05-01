@@ -11,6 +11,7 @@ import "@fontsource/karla"
 import "@fontsource/acme"
 import {Playback} from "../components/Playback/Playback";
 
+
 function MyApp({Component, pageProps: {session , ...pageProps}}) {
 
     const router = useRouter()
