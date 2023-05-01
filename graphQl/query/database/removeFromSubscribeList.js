@@ -4,9 +4,6 @@ import {getSubscribeQuery} from "./getSubscribedList";
 
 export const removeFromSubscribeList = async (artistId , userId) =>
 {
-
-    console.log(artistId)
-
     const REMOVE_FROM_SUBSCRIBE_LIST = gql`
         mutation REMOVE_FROM_SUBSCRIBE_LIST($artistId: String) {
             REMOVE_FROM_SUBSCRIBE_LIST(artistId: $artistId)

@@ -12,8 +12,7 @@ const Header = () => {
     const openHamburger = useSetRecoilState(HAMBURGER_MENU)
 
     return (
-        <HStack zIndex={2} w={"full"} h={{sm: 65, md: 110}} justify={"space-between"} py={5} px={{sm: 2, md: 0}}>
-
+        <HStack zIndex={3000} w={"full"} h={{sm: 65, md: 110}} justify={"space-between"} py={5} px={{sm: 2, md: 0}}>
             <HStack>
                 <IconButton
                     aria-label={'HamburgerMenu'}
@@ -28,13 +27,10 @@ const Header = () => {
                     <Greetings/>
                 </Text>
             </HStack>
-
-
             <HStack>
                 <Searchbar/>
                 <Account/>
             </HStack>
-
         </HStack>
 
     );

@@ -33,7 +33,7 @@ const Fans = ({ getRelatedArtist }) => {
         />
       </Stack>
 
-      <Box w={"full"} height={540} position={"relative"}>
+      <Box w={"full"} height={580} position={"relative"}>
         <Swiper
           ref={swiperRef}
           pagination={{

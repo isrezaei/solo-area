@@ -16,7 +16,6 @@ export default function pickFavouriteArtists({fallback}) {
 
             <SWRConfig value={{fallback}}>
                 <PickFavouriteArtists/>
-                {/*<Text w={"full"} mt={5} bg={"red"}>HELLO</Text>*/}
             </SWRConfig>
         </Box>
 

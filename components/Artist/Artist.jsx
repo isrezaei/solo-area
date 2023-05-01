@@ -1,6 +1,5 @@
-import {Box, Divider, Flex, HStack, Text, VStack , Img} from "@chakra-ui/react";
-import Image from "next/image";
-import {useState} from "react";
+import {Box} from "@chakra-ui/react";
+import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import useSWR from "swr";
 import {getArtistInformation} from "../../graphQl/query/api/getArtistInformation";
@@ -31,16 +30,6 @@ export const Artist = () => {
 
     return (
         <Box>
-
-            {/*<Image*/}
-            {/*    layout={"fill"}*/}
-            {/*    objectFit={"cover"}*/}
-            {/*    src={getArtistInfo?.images[0]?.url}*/}
-            {/*    style={{zIndex: -1, opacity: "20%" }}*/}
-            {/*    placeholder={"blur"}*/}
-            {/*    blurDataURL={getArtistInfo?.images[2]?.url}*/}
-            {/*/>*/}
-
 
             <Header getArtistInfo={getArtistInfo}/>
 

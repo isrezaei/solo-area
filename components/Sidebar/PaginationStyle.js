@@ -33,7 +33,7 @@ export const pageLink  = css
 
 export const active  = css
     `
-      background: #ad1457!important;
+      background: #151515 !important;
       color: #fff;
       border: none;
       font-weight: bolder;

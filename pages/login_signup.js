@@ -14,15 +14,11 @@ export default function Login_signup ()
     const router = useRouter()
     const supabase = useSupabaseClient()
 
-    console.log(user)
-
-
     useAsync(async () => {
 
         let { data: FAVOURITE_ARTISTS, error } = await supabase
             .from('FAVOURITE_ARTISTS')
             .select('id').eq("id" , user.id)
-
         if (user)
         {
             if (FAVOURITE_ARTISTS.length === 0 )

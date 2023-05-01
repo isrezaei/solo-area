@@ -9,7 +9,7 @@ export const Sidebar = ({SSR_GET_SUBSCRIBED_LIST}) => {
     return (
         <Flex
             w={"full"}
-            h={"100svh"}
+            h={"90svh"}
             mt={{sm : 22 , xl : 0}}
             direction={"column"}
             justify={"flex-start"}

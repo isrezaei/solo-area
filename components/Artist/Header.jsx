@@ -17,16 +17,21 @@ import _ from "lodash";
 import {removeFromSubscribeList} from "../../graphQl/query/database/removeFromSubscribeList";
 import {setToSubscribedList} from "../../graphQl/query/database/setToSubscribedList";
 import {useUser} from "@supabase/auth-helpers-react";
+import {useState} from "react";
 
 const Header = ({ getArtistInfo }) => {
 
   const user = useUser()
 
+  const [loading, setLoading] = useState(false);
+
   const {loading: subscribeStatus, data: {GET_SUBSCRIBED_LIST} = {}} = useQuery(getSubscribeQuery, {
-    variables: {userId: user?.id}
+    variables: {userId: user?.id},
+    onCompleted : () => setLoading(false)
   });
 
   const handelSubscribe = async (id , name , images) => {
+    setLoading(true)
     if (!!_.find(GET_SUBSCRIBED_LIST, {"id": id})) {
       return await removeFromSubscribeList(id, user?.id);
     }
@@ -73,6 +78,7 @@ const Header = ({ getArtistInfo }) => {
               {getArtistInfo.name}
             </Text>
             <Button
+                isLoading={loading}
                 size={"xs"}
                 rounded={5}
                 variant={!!_.find(GET_SUBSCRIBED_LIST, {"id": getArtistInfo.id}) ? "solid" : "outline"}
@@ -84,8 +90,6 @@ const Header = ({ getArtistInfo }) => {
           </VStack>
 
         </Stack>
-
-
       </HStack>
   );
 };

@@ -1,26 +1,20 @@
 import {Artist} from "../../components/Artist/Artist";
 import {getArtistInformation} from "../../graphQl/query/api/getArtistInformation";
-import useSWR, {unstable_serialize} from "swr";
-import {SWRConfig} from "swr";
+import {SWRConfig, unstable_serialize} from "swr";
 import {Sidebar} from "../../components/Sidebar/Sidebar";
-import {Box, Button, HStack, Stack, VStack} from "@chakra-ui/react";
+import {Box, HStack, Stack} from "@chakra-ui/react";
 import {ApolloProvider} from "@apollo/client";
 import {DataBaseClient} from "../../graphQl/client/client";
 import Hamburger from "../../components/HamburgerMenu/Hamburger";
 import Header from "../../components/Header/Header";
 import {getSubscribeQuery} from "../../graphQl/query/database/getSubscribedList";
 import {createServerSupabaseClient} from "@supabase/auth-helpers-nextjs";
-import {useState} from "react";
-import Image from "next/image";
-import {getRandomPlayed} from "../../graphQl/query/api/getRandomPlayed";
 import {getSeveralCategories} from "../../graphQl/query/api/getSeveralCategories";
 import Head from "next/head";
-import {useRouter} from "next/router";
 import BgImage from "../../components/Artist/BgImage";
 
 
 export default function artist({fallback, SSR_GET_SUBSCRIBED_LIST}) {
-
 
     return (
         <ApolloProvider client={DataBaseClient}>
@@ -46,7 +40,8 @@ export default function artist({fallback, SSR_GET_SUBSCRIBED_LIST}) {
                     align={'flex-start'}
                     position={"relative"}>
 
-                    <Stack display={{sm: "none", md: "none", lg: "none", xl: "flex"}} w={{sm: 0, md: 265}} position={"sticky"} top={0} zIndex={1000}>
+                    <Stack display={{sm: "none", md: "none", lg: "none", xl: "flex"}} w={{sm: 0, md: 265}}
+                           position={"sticky"} top={0} zIndex={1000}>
                         <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
                     </Stack>
 

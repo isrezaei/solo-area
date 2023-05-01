@@ -1,10 +1,8 @@
-import {Flex, Box, Container, Button, Img, Stack} from "@chakra-ui/react";
+import {Box, Flex, Stack} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {useRecoilValue} from "recoil";
-import {selectGenre} from "../atoms/atoms";
+import {SELECT_GENRE} from "../atoms/atoms";
 import Image from "next/image";
-import {useEffect, useState} from "react";
-import _ from 'lodash'
 import {motion} from "framer-motion";
 
 const genreWall = {
@@ -32,14 +30,13 @@ const genreWall = {
 
 }
 
-
 export default function Layout({children}) {
 
     const router = useRouter();
 
     const {pathname} = router;
 
-    const getGenre = useRecoilValue(selectGenre)
+    const getGenre = useRecoilValue(SELECT_GENRE)
 
     return (
 
@@ -47,9 +44,7 @@ export default function Layout({children}) {
             <Flex zIndex={2} position={"relative"}>
                 {
                     pathname === '/' &&
-
                     <Box w={"full"} h={400} position={"absolute"} zIndex={1}
-
                          _after={{
                              content: `""`,
                              position: "absolute",
@@ -62,7 +57,7 @@ export default function Layout({children}) {
                                  "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1))"
                          }}>
 
-                        <Box w={{base : "full"}} h={400} zIndex={1} opacity={'30%'}>
+                        <Box w={{base: "full"}} h={400} zIndex={1} opacity={'30%'}>
 
                             <motion.div key={genreWall[getGenre]?.image} initial={{opacity: 0}} animate={{opacity: 1}}
                                         transition={{duration: .5}}>

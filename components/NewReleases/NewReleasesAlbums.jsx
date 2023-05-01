@@ -4,7 +4,7 @@ import {
     Grid,
     Stack,
 } from "@chakra-ui/react";
-import {selectGenre} from "../../atoms/atoms";
+import {SELECT_GENRE} from "../../atoms/atoms";
 import {useRecoilValue} from "recoil";
 import {useState} from "react";
 import {motion} from "framer-motion";
@@ -19,7 +19,7 @@ import Albums from "./Albums";
 
 export const NewReleasesAlbums = () => {
 
-    const getGenre = useRecoilValue(selectGenre);
+    const getGenre = useRecoilValue(SELECT_GENRE);
     const [currentPage, setCurrentPage] = useState(0);
     const {data: {newReleases: {albums: {items: newReleaseLists} = []} = {}} = {}} = useSWR(["api", "GET_NEW_RELEASES", getGenre, currentPage],
         async (key, ip, getGenre, currentPage) =>

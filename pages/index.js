@@ -5,7 +5,7 @@ import {getFavouriteArtists} from "../graphQl/query/database/getFavouriteArtists
 import {getNewReleasesAlbums} from "../graphQl/query/api/getNewReleasesAlbums";
 import {getRandomArtists} from "../graphQl/query/api/getRandomArtists";
 import {Sidebar} from "../components/Sidebar/Sidebar";
-import {Box, Button, Divider, HStack, Stack, VStack} from "@chakra-ui/react";
+import {HStack, Stack, VStack} from "@chakra-ui/react";
 import {getRandomPlayed} from "../graphQl/query/api/getRandomPlayed";
 import {ApolloProvider} from "@apollo/client";
 import {DataBaseClient} from "../graphQl/client/client";
@@ -15,11 +15,25 @@ import {getSubscribeQuery} from "../graphQl/query/database/getSubscribedList";
 import {getSeveralCategories} from "../graphQl/query/api/getSeveralCategories";
 import Hamburger from "../components/HamburgerMenu/Hamburger";
 import Head from "next/head";
+import {useRecoilValue} from "recoil";
+import {PICK_ARTISTS} from "../atoms/atoms";
+import {useEffect} from "react";
 
 
 export default function Home({fallback, user, SSR_GET_SUBSCRIBED_LIST}) {
 
     const router = useRouter()
+
+    const favouriteArtists = useRecoilValue(PICK_ARTISTS)
+
+    useEffect(() => {
+        if (favouriteArtists.length < 10)
+        {
+            return async () => router.push("/pickFavouriteArtists")
+        }
+    } , [])
+
+    if (favouriteArtists.length < 10) return null
 
     return (
         <>
@@ -30,38 +44,38 @@ export default function Home({fallback, user, SSR_GET_SUBSCRIBED_LIST}) {
             <ApolloProvider client={DataBaseClient}>
                 <SWRConfig value={{fallback}}>
 
-                    <VStack display={{sm : "block" , md : "block" , lg : "block" , xl : "none"}} position={"relative"} zIndex={3000}>
+                    <VStack display={{sm: "block", md: "block", lg: "block", xl: "none"}} position={"relative"}
+                            zIndex={3000}>
                         <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
                     </VStack>
 
                     <HStack
-                        maxW={{sm : "full" , md : 848 , lg : 1072 , xl : 1990}}
+                        maxW={{sm: "full", md: 848, lg: 1072, xl: 1990}}
                         h={"100svh"}
                         overflowY={"scroll"}
                         m={"auto"}
                         align={'flex-start'}
                         position={"relative"}
-                            sx={{
-                                "&::-webkit-scrollbar": {
-                                    width: "0",
-                                    height: "0",
-                                },
-                                scrollbarWidth: "none",
-                                "-ms-overflow-style": "none",
-                            }}>
+                        sx={{
+                            "&::-webkit-scrollbar": {
+                                width: "0",
+                                height: "0",
+                            },
+                            scrollbarWidth: "none",
+                            "-ms-overflow-style": "none",
+                        }}>
 
-                        <Stack display={{sm : "none" , md : "none" , lg : "none" , xl : "flex"}} w={{sm: 0, md: 265}}  position={"sticky"} top={0}>
+                        <Stack display={{sm: "none", md: "none", lg: "none", xl: "flex"}} w={{sm: 0, md: 265}}
+                               position={"sticky"} top={0}>
                             {router.pathname !== "/login_signup" &&
                                 <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>}
                         </Stack>
 
-                        <Stack flex={1} px={{sm : 0 , md : 5}} zIndex={2000}>
+                        <Stack flex={1} px={{sm: 0, md: 5}} zIndex={2000}>
                             {router.pathname !== "/login_signup" && <Header/>}
                             <Main user={user}/>
                         </Stack>
                     </HStack>
-
-
                 </SWRConfig>
             </ApolloProvider>
         </>
@@ -77,9 +91,6 @@ export const getServerSideProps = async ({req, res}) => {
     })
 
     const {data: {user}} = await supabaseServerClient.auth.getUser()
-
-    // console.log(user.id)
-
 
     const GET_RECENTLY_PLAYED_TRACK = await getRandomPlayed()
 

@@ -1,17 +1,6 @@
-import { Button, HStack } from "@chakra-ui/react";
-import { useRecoilState } from "recoil";
-import { selectGenre } from "../atoms/atoms";
-import ReactPaginate from "react-paginate";
-import {
-  active,
-  breakClassName,
-  breakLinkClassName,
-  next,
-  page,
-  pageLink,
-  pagination,
-  previous,
-} from "./Sidebar/PaginationStyle";
+import {Button, HStack} from "@chakra-ui/react";
+import {useRecoilState} from "recoil";
+import {SELECT_GENRE} from "../atoms/atoms";
 
 const genresList = [
   {
@@ -37,21 +26,22 @@ const genresList = [
 ];
 
 export const SelectGenre = () => {
-  const [genre, setGenre] = useRecoilState(selectGenre);
+  const [genre, setGenre] = useRecoilState(SELECT_GENRE);
 
   return (
-    <HStack w={"full"} justify={{sm : "center" , md : "center" , lg : "center" , xl : "flex-start"}} spacing={{sm : 2 , md : 5}}>
-      {genresList.map(({ name, variant }) => (
-        <Button
-          key={name}
-          rounded={"full"}
-          size={"xs"}
-          onClick={() => setGenre(variant)}
-          variant={genre === variant ? "solid" : "outline"}
-        >
-          {name}
-        </Button>
-      ))}
-    </HStack>
+      <HStack w={"full"} justify={{sm: "center", md: "center", lg: "center", xl: "flex-start"}}
+              spacing={{sm: 2, md: 5}}>
+        {genresList.map(({name, variant}) => (
+            <Button
+                key={name}
+                rounded={"full"}
+                size={"xs"}
+                onClick={() => setGenre(variant)}
+                variant={genre === variant ? "solid" : "outline"}
+            >
+              {name}
+            </Button>
+        ))}
+      </HStack>
   );
 };
