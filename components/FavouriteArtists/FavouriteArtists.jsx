@@ -26,7 +26,7 @@ export const FavouriteArtists = ({user}) => {
 
 
     useEffect(() => {
-        setArtistID(favouriteArtists?.[0].list[0].id);
+        setArtistID(favouriteArtists?.[0]?.list[0].id);
     }, [favouriteArtists]);
 
 

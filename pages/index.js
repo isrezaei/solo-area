@@ -5,7 +5,7 @@ import {getFavouriteArtists} from "../graphQl/query/database/getFavouriteArtists
 import {getNewReleasesAlbums} from "../graphQl/query/api/getNewReleasesAlbums";
 import {getRandomArtists} from "../graphQl/query/api/getRandomArtists";
 import {Sidebar} from "../components/Sidebar/Sidebar";
-import {HStack, Stack, VStack} from "@chakra-ui/react";
+import {Button, HStack, Stack, VStack} from "@chakra-ui/react";
 import {getRandomPlayed} from "../graphQl/query/api/getRandomPlayed";
 import {ApolloProvider} from "@apollo/client";
 import {DataBaseClient} from "../graphQl/client/client";
@@ -15,71 +15,76 @@ import {getSubscribeQuery} from "../graphQl/query/database/getSubscribedList";
 import {getSeveralCategories} from "../graphQl/query/api/getSeveralCategories";
 import Hamburger from "../components/HamburgerMenu/Hamburger";
 import Head from "next/head";
-import {useRecoilValue} from "recoil";
-import {PICK_ARTISTS} from "../atoms/atoms";
-import {useEffect} from "react";
+import {useState} from "react";
+import {supabase} from "../supabase/createClient";
+import _ from "lodash"
 
 
-export default function Home({fallback, user, SSR_GET_SUBSCRIBED_LIST}) {
+export default function Home({fallback, user, SSR_GET_SUBSCRIBED_LIST, FAVOURITE_ARTISTS}) {
 
     const router = useRouter()
 
-    const favouriteArtists = useRecoilValue(PICK_ARTISTS)
+    const [favouriteList,] = useState(_.size(FAVOURITE_ARTISTS?.[0]?.list))
 
-    useEffect(() => {
-        if (favouriteArtists.length < 10)
-        {
-            return async () => router.push("/pickFavouriteArtists")
-        }
-    } , [])
 
-    if (favouriteArtists.length < 10) return null
+    if (favouriteList < 10) {
+        return (
 
-    return (
-        <>
-            <Head>
-                <title>Home</title>
-            </Head>
+            <VStack w={"full"} h={"100vh"} justifyContent={"center"} alignItems={"center"}>
+                <Button size={"lg"} onClick={() => router.push("/pickFavouriteArtists")}>Please pickup some artists
+                    first </Button>
+            </VStack>
 
-            <ApolloProvider client={DataBaseClient}>
-                <SWRConfig value={{fallback}}>
+        )
+    }
 
-                    <VStack display={{sm: "block", md: "block", lg: "block", xl: "none"}} position={"relative"}
-                            zIndex={3000}>
-                        <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
-                    </VStack>
+    if (favouriteList >= 10) {
+        return (
+            <>
+                <Head>
+                    <title>Home</title>
+                </Head>
 
-                    <HStack
-                        maxW={{sm: "full", md: 848, lg: 1072, xl: 1990}}
-                        h={"100svh"}
-                        overflowY={"scroll"}
-                        m={"auto"}
-                        align={'flex-start'}
-                        position={"relative"}
-                        sx={{
-                            "&::-webkit-scrollbar": {
-                                width: "0",
-                                height: "0",
-                            },
-                            scrollbarWidth: "none",
-                            "-ms-overflow-style": "none",
-                        }}>
+                <ApolloProvider client={DataBaseClient}>
+                    <SWRConfig value={{fallback}}>
 
-                        <Stack display={{sm: "none", md: "none", lg: "none", xl: "flex"}} w={{sm: 0, md: 265}}
-                               position={"sticky"} top={0}>
-                            {router.pathname !== "/login_signup" &&
-                                <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>}
-                        </Stack>
+                        <VStack display={{sm: "block", md: "block", lg: "block", xl: "none"}} position={"relative"}
+                                zIndex={3000}>
+                            <Hamburger SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>
+                        </VStack>
 
-                        <Stack flex={1} px={{sm: 0, md: 5}} zIndex={2000}>
-                            {router.pathname !== "/login_signup" && <Header/>}
-                            <Main user={user}/>
-                        </Stack>
-                    </HStack>
-                </SWRConfig>
-            </ApolloProvider>
-        </>
-    )
+                        <HStack
+                            maxW={{sm: "full", md: 848, lg: 1072, xl: 1990}}
+                            h={"100svh"}
+                            overflowY={"scroll"}
+                            m={"auto"}
+                            align={'flex-start'}
+                            position={"relative"}
+                            sx={{
+                                "&::-webkit-scrollbar": {
+                                    width: "0",
+                                    height: "0",
+                                },
+                                scrollbarWidth: "none",
+                                "-ms-overflow-style": "none",
+                            }}>
+
+                            <Stack display={{sm: "none", md: "none", lg: "none", xl: "flex"}} w={{sm: 0, md: 265}}
+                                   position={"sticky"} top={0}>
+                                {router.pathname !== "/login_signup" &&
+                                    <Sidebar SSR_GET_SUBSCRIBED_LIST={SSR_GET_SUBSCRIBED_LIST}/>}
+                            </Stack>
+
+                            <Stack flex={1} px={{sm: 0, md: 5}} zIndex={2000}>
+                                {router.pathname !== "/login_signup" && <Header/>}
+                                <Main user={user}/>
+                            </Stack>
+                        </HStack>
+                    </SWRConfig>
+                </ApolloProvider>
+            </>
+        )
+    }
 }
 
 
@@ -109,10 +114,15 @@ export const getServerSideProps = async ({req, res}) => {
         variables: {userId: user.id},
     })
 
+    let {data: FAVOURITE_ARTISTS, error} = await supabase
+        .from('FAVOURITE_ARTISTS')
+        .select('list').eq("id", user.id)
+
     return {
         props: {
             user,
             SSR_GET_SUBSCRIBED_LIST: GET_SUBSCRIBED_LIST,
+            FAVOURITE_ARTISTS,
             fallback: {
                 "GET_RANDOM_PLAYED": GET_RECENTLY_PLAYED_TRACK,
                 "GET_SEARCH_CATEGORIES": GET_SEARCH_CATEGORIES,
