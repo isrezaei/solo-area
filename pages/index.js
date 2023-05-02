@@ -103,6 +103,14 @@ export const getServerSideProps = async ({req, res}) => {
 
     const {data: { session : {user} }} = await supabaseServerClient.auth.getSession()
 
+    if (!user)
+        return {
+            redirect: {
+                destination: '/login_signup',
+                permanent: false,
+            },
+        }
+
 
     const GET_RECENTLY_PLAYED_TRACK = await getRandomPlayed()
 
